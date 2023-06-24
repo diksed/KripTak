@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/dailyFavoriteCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
+
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/containerColor"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/dailyFavoriteCryptoImageView"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dailyFavoriteCryptoSymbolTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dailyFavoriteCryptoNameTextView"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/dailyFavoriteCryptoNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/dailyFavoriteCryptoImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Bitcoin" />
+
+        <TextView
+            android:id="@+id/dailyFavoriteCryptoSymbolTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/dailyFavoriteCryptoNameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/dailyFavoriteCryptoNameTextView"
+            tools:text="BTC" />
+
+        <ImageView
+            android:id="@+id/dailyFavoriteCryptoChartImageView"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/dailyFavoriteCryptoImageView"
+            app:layout_constraintStart_toEndOf="@id/dailyFavoriteCryptoNameTextView"
+            app:layout_constraintEnd_toStartOf="@id/dailyFavoriteCryptoPriceTextView"
+            app:layout_constraintTop_toTopOf="@id/dailyFavoriteCryptoImageView"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/dailyFavoriteCryptoPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/dailyFavoriteCryptoChartImageView"
+            app:layout_constraintEnd_toStartOf="@id/dailyFavoriteCryptoChangeImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="123.35 $" />
+
+        <ImageView
+            android:id="@+id/dailyFavoriteCryptoChangeImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/dailyFavoriteCryptoPriceTextView"
+            app:layout_constraintEnd_toStartOf="@id/dailyFavoriteCryptoChangeTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/dailyFavoriteCryptoChangeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/dailyFavoriteCryptoChangeImageView"
+            app:layout_constraintTop_toTopOf="@id/dailyFavoriteCryptoPriceTextView"
+            app:layout_constraintBottom_toBottomOf="@id/dailyFavoriteCryptoPriceTextView"
+            tools:text="%12.45" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

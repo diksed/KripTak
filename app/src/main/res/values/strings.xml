@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KripTak</string>
+    <string name="favorites_of_the_day">Günün Favorileri</string>
 </resources>
