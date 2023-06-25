@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">KripTak</string>
     <string name="favorites_of_the_day">Günün Favorileri</string>
+    <string name="allCrypto">Tüm Kripto Paralar</string>
+    <string name="news">Haberler</string>
+    <string name="allNews">Tüm Haberler</string>
+    <string name="myFavorites">Favorilerim</string>
+    <string name="allMyFavorites">Tüm Favorilerim</string>
+
 </resources>
