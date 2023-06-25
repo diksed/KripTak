@@ -6,4 +6,5 @@
     <color name="gray">#808080</color>
     <color name="appBackground">#1a233b</color>
     <color name="containerColor">#263459</color>
+    <color  name="iconPurple">#7118f1</color>
 </resources>
