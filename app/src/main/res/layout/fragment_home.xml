@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/homepageDailyFavoritesLayout"
-                layout="@layout/homepage_daily_favorites"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topCurrencyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logoImageView" />
+                tools:listitem="@layout/homepage_daily_favorites" />
 
             <include
                 android:id="@+id/homepageNewsLayout"

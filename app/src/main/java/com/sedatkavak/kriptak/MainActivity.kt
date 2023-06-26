@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.sedatkavak.kriptak.adapters.ViewPagerAdapter
+import com.sedatkavak.kriptak.adapter.ViewPagerAdapter
 import com.sedatkavak.kriptak.databinding.ActivityMainBinding
 
 
@@ -22,8 +22,10 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView = binding.bottomNavigationBar
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
+        swipeViewPager()
 
-
+    }
+    private fun swipeViewPager(){
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> viewPager.currentItem = 0
@@ -34,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 bottomNavigationView.menu.getItem(position).isChecked = true

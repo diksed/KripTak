@@ -12,13 +12,13 @@
             android:id="@+id/favoritesOfTheDayTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/favorites_of_the_day"
-            android:textColor="@color/white"
-            android:textAllCaps="true"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:text="@string/favorites_of_the_day"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/menuButton"
@@ -34,37 +34,37 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@id/favoritesOfTheDayTextView"
             android:layout_above="@+id/llAllCrypto"
+            android:layout_below="@id/favoritesOfTheDayTextView"
             tools:listitem="@layout/homepage_daily_favorite_item_layout" />
 
         <LinearLayout
-            android:layout_marginTop="6dp"
             android:id="@+id/llAllCrypto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
             android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/allCryptoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:text="@string/allCrypto"
-                android:textColor="@color/white"
-                android:padding="8dp" />
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/allCryptoIconImageView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/baseline_arrow_forward_24"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:src="@drawable/baseline_arrow_forward_24" />
 
         </LinearLayout>
 

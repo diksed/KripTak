@@ -1,4 +1,4 @@
-package com.sedatkavak.kriptak.adapters
+package com.sedatkavak.kriptak.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
