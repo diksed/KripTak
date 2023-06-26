@@ -11,6 +11,4 @@
     <string name="menu_crypto_list">Kripto Listesi</string>
     <string name="menu_news">Haberler</string>
     <string name="menu_settings">Ayarlar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

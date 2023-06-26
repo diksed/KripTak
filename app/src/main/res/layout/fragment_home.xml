@@ -4,31 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
-    tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:pivotX="50%"
-        android:pivotY="-120%"
-        android:src="@drawable/kriptak_logo"
-        app:layout_constraintBottom_toTopOf="@+id/homepageScrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintWidth_percent="0.5" />
+    tools:context=".screens.home_fragment.HomeFragment">
 
     <ScrollView
         android:id="@+id/homepageScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="60dp"
         android:overScrollMode="never"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/logoImageView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,17 +48,5 @@
                 app:layout_constraintTop_toBottomOf="@id/homepageNewsLayout" />
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/containerColor"
-        app:itemTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,62 +14,18 @@
         android:pivotX="50%"
         android:pivotY="-120%"
         android:src="@drawable/kriptak_logo"
-        app:layout_constraintBottom_toTopOf="@+id/homepageScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <ScrollView
-        android:id="@+id/homepageScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/logoImageView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/homepageDailyFavoritesLayout"
-                layout="@layout/homepage_daily_favorites"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logoImageView" />
-
-            <include
-                android:id="@+id/homepageNewsLayout"
-                layout="@layout/homepage_news"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homepageDailyFavoritesLayout" />
-
-            <include
-                android:id="@+id/homepageMyFavoritesLayout"
-                layout="@layout/homepage_my_favorites"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homepageNewsLayout" />
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintWidth_percent="0.45" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_background"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/gradient_icon_selector"
         app:labelVisibilityMode="labeled"
         app:itemIconSize="32dp"
         app:itemIconTint="@color/gradient_icon_selector"
@@ -78,5 +34,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/fragmentLayout"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
