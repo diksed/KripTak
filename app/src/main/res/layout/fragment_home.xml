@@ -68,23 +68,54 @@
 
             </LinearLayout>
 
-            <include
-                android:id="@+id/homepageNewsLayout"
-                layout="@layout/homepage_news"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/dailyNewsTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homepageDailyFavoritesLayout" />
+                android:layout_marginTop="16dp"
+                android:text="@string/news"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <include
-                android:id="@+id/homepageMyFavoritesLayout"
-                layout="@layout/homepage_my_favorites"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dailyNewsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homepageNewsLayout" />
+                tools:listitem="@layout/homepage_news_item_layout" />
+
+            <LinearLayout
+                android:id="@+id/llAllNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/allNewsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/allNews"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/allNewsIconImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/baseline_arrow_forward_24" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>

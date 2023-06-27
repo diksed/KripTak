@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.sedatkavak.kriptak.R
+import com.sedatkavak.kriptak.adapter.NewsAdapter
 import com.sedatkavak.kriptak.adapter.TopMarketAdapter
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiService
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiUtilities
+import com.sedatkavak.kriptak.api.service.NewsApiService
+import com.sedatkavak.kriptak.api.service.NewsApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentHomeBinding
 import com.sedatkavak.kriptak.utils.CustomLinearLayoutManager
 import kotlinx.coroutines.Dispatchers
@@ -30,12 +33,24 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewPager = activity?.findViewById(R.id.viewPager)!!
         getTrendingCoins()
+        getNews()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.llAllCrypto.setOnClickListener {
             viewPager.currentItem = 2
+        }
+    }
+    private fun getNews() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java).getNews()
+            withContext(Dispatchers.Main) {
+                binding.dailyNewsRecyclerView.adapter = NewsAdapter(res.body()!!.articles)
+                val layoutManager = CustomLinearLayoutManager(requireContext())
+                binding.dailyNewsRecyclerView.layoutManager = layoutManager
+                binding.dailyNewsRecyclerView.isNestedScrollingEnabled = false
+            }
         }
     }
     private fun getTrendingCoins() {

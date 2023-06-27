@@ -20,3 +20,12 @@ object CoinMarketCapApiUtilities {
             .build()
     }
 }
+
+object NewsApiUtilities {
+    fun getInstance(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://newsapi.org/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+}
