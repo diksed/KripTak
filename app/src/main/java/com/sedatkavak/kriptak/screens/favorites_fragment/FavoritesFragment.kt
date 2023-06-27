@@ -5,14 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.sedatkavak.kriptak.api.adapter.TopMarketAdapter
-import com.sedatkavak.kriptak.api.service.ApiService
-import com.sedatkavak.kriptak.api.service.ApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentFavoritesBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FavoritesFragment : Fragment() {
     private lateinit var binding: FragmentFavoritesBinding
