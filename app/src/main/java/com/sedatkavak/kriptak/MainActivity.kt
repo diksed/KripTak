@@ -10,7 +10,7 @@ import com.sedatkavak.kriptak.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewPager: ViewPager
+    lateinit var viewPager: ViewPager
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         swipeViewPager()
 
     }
-    private fun swipeViewPager(){
+    private fun swipeViewPager() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> viewPager.currentItem = 0
@@ -41,11 +41,7 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigationView.menu.getItem(position).isChecked = true
             }
             override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
         })
     }
 }

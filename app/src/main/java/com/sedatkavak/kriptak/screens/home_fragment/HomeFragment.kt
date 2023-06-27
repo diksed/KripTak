@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager.widget.ViewPager
+import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.TopMarketAdapter
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
@@ -20,14 +22,21 @@ import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-
+    private lateinit var viewPager: ViewPager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewPager = activity?.findViewById(R.id.viewPager)!!
         getTrendingCoins()
         return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.llAllCrypto.setOnClickListener {
+            viewPager.currentItem = 2
+        }
     }
     private fun getTrendingCoins() {
         lifecycleScope.launch(Dispatchers.IO) {
@@ -52,7 +61,6 @@ class HomeFragment : Fragment() {
     private fun getTrendCoinDetails(coinSymbols: List<String>) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val symbolList = coinSymbols.joinToString(",")
                 val response = CoinMarketCapApiUtilities.getInstance()
                     .create(CoinMarketCapApiService::class.java).getMarketData()
                 val coinList = response.body()?.data?.cryptoCurrencyList
@@ -76,6 +84,4 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-
 }
