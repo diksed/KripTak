@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
 import com.sedatkavak.kriptak.adapter.TopMarketAdapter
+import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiService
@@ -54,17 +55,19 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val apiKey = document.getString("key")
-                    getNews(apiKey)
+                    val searchQuery = document.getString("searchQuery")
+                    val language = document.getString("language")
+                    getNews(apiKey, searchQuery, language)
                 } else {
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
-    private fun getNews(apiKey: String?) {
+    private fun getNews(apiKey: String?, searchQuery : String?, language : String?) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
-                .getNews(apiKey = apiKey!!)
+                .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
             withContext(Dispatchers.Main) {
                 binding.dailyNewsRecyclerView.adapter = NewsAdapter(res.body()!!.articles)
                 val layoutManager = CustomLinearLayoutManager(requireContext())
@@ -81,31 +84,8 @@ class HomeFragment : Fragment() {
                         .getTrendingCoins()
                 val coins = response.body()?.coins
                 coins?.let { trendingCoins ->
-                    val coinSymbols = trendingCoins.take(3).map { it.item.symbol }
-                    getTrendCoinDetails(coinSymbols)
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Kripto detayları alınamadı.",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
-        }
-    }
-
-    private fun getTrendCoinDetails(coinSymbols: List<String>) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val response = CoinMarketCapApiUtilities.getInstance()
-                    .create(CoinMarketCapApiService::class.java).getMarketData()
-                val coinList = response.body()?.data?.cryptoCurrencyList
-                coinList?.let { coinData ->
-                    val filteredCoins =
-                        coinData.filter { coin -> coinSymbols.contains(coin.symbol) }
+                    val coinSymbols = trendingCoins.map { it.item.symbol }
+                    val filteredCoins = MatchCoinsSymbol().getFilteredCoins(coinSymbols)
                     withContext(Dispatchers.Main) {
                         binding.topCurrencyRecyclerView.adapter =
                             TopMarketAdapter(requireContext(), filteredCoins)
@@ -114,7 +94,6 @@ class HomeFragment : Fragment() {
                         binding.topCurrencyRecyclerView.isNestedScrollingEnabled = false
                     }
                 }
-
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
