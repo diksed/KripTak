@@ -54,7 +54,7 @@
                     android:id="@+id/allCryptoTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:paddingRight="8dp"
                     android:text="@string/allCrypto"
                     android:textColor="@color/white" />
 
@@ -62,8 +62,6 @@
                     android:id="@+id/allCryptoIconImageView"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:src="@drawable/baseline_arrow_forward_24" />
 
             </LinearLayout>
@@ -102,7 +100,7 @@
                     android:id="@+id/allNewsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:paddingRight="8dp"
                     android:text="@string/allNews"
                     android:textColor="@color/white" />
 
@@ -110,8 +108,6 @@
                     android:id="@+id/allNewsIconImageView"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:src="@drawable/baseline_arrow_forward_24" />
 
             </LinearLayout>

@@ -43,6 +43,9 @@ class HomeFragment : Fragment() {
         binding.llAllCrypto.setOnClickListener {
             viewPager.currentItem = 2
         }
+        binding.llAllNews.setOnClickListener {
+            viewPager.currentItem = 3
+        }
     }
     private fun fetchApiKeyFromFirestore() {
         val db = FirebaseFirestore.getInstance()
