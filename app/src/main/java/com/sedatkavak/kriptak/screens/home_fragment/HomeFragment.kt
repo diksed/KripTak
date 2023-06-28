@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
 import com.sedatkavak.kriptak.adapter.TopMarketAdapter
@@ -33,18 +34,34 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewPager = activity?.findViewById(R.id.viewPager)!!
         getTrendingCoins()
-        getNews()
+        fetchApiKeyFromFirestore()
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.llAllCrypto.setOnClickListener {
             viewPager.currentItem = 2
         }
     }
-    private fun getNews() {
+    private fun fetchApiKeyFromFirestore() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("NewsApi").document("apiKey")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val apiKey = document.getString("key")
+                    getNews(apiKey)
+                } else {
+                }
+            }
+            .addOnFailureListener { exception ->
+            }
+    }
+    private fun getNews(apiKey: String?) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java).getNews()
+            val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
+                .getNews(apiKey = apiKey!!)
             withContext(Dispatchers.Main) {
                 binding.dailyNewsRecyclerView.adapter = NewsAdapter(res.body()!!.articles)
                 val layoutManager = CustomLinearLayoutManager(requireContext())
@@ -66,7 +83,11 @@ class HomeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Kripto detayları alınamadı.", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        "Kripto detayları alınamadı.",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }
@@ -93,7 +114,11 @@ class HomeFragment : Fragment() {
 
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Kripto detayları alınamadı.", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        "Kripto detayları alınamadı.",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }
