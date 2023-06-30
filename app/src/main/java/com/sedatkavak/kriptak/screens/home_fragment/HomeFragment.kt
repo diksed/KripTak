@@ -65,10 +65,12 @@ class HomeFragment : Fragment() {
             }
     }
     private fun getNews(apiKey: String?, searchQuery : String?, language : String?) {
+        binding.newsLoadingProgressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
             withContext(Dispatchers.Main) {
+                binding.newsLoadingProgressBar.visibility = View.GONE
                 binding.dailyNewsRecyclerView.adapter = NewsAdapter(res.body()!!.articles)
                 val layoutManager = CustomLinearLayoutManager(requireContext())
                 binding.dailyNewsRecyclerView.layoutManager = layoutManager
@@ -77,6 +79,7 @@ class HomeFragment : Fragment() {
         }
     }
     private fun getTrendingCoins() {
+        binding.dailyCryptoLoadingProgressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response =
@@ -87,6 +90,7 @@ class HomeFragment : Fragment() {
                     val coinSymbols = trendingCoins.map { it.item.symbol }
                     val filteredCoins = MatchCoinsSymbol().getFilteredCoins(coinSymbols)
                     withContext(Dispatchers.Main) {
+                        binding.dailyCryptoLoadingProgressBar.visibility = View.GONE
                         binding.topCurrencyRecyclerView.adapter =
                             TopMarketAdapter(requireContext(), filteredCoins)
                         val layoutManager = CustomLinearLayoutManager(requireContext())
@@ -96,6 +100,7 @@ class HomeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    binding.dailyCryptoLoadingProgressBar.visibility = View.GONE
                     Toast.makeText(
                         requireContext(),
                         "Kripto detayları alınamadı.",

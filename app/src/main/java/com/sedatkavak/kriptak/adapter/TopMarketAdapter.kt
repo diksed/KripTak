@@ -30,12 +30,12 @@ class TopMarketAdapter(var context: Context, val list: List<CryptoCurrency>) :
 
         Glide.with(context).load(
             "https://s2.coinmarketcap.com/static/img/coins/64x64/" + item.id + ".png"
-        ).thumbnail(Glide.with(context).load(android.R.drawable.stat_sys_download))
+        ).thumbnail(Glide.with(context).load(android.R.drawable.gallery_thumb))
             .into(itemBinding.dailyFavoriteCryptoImageView)
 
         Glide.with(context).load(
             "https://s3.coinmarketcap.com/generated/sparklines/web/1d/usd/" + item.id + ".png"
-        ).thumbnail(Glide.with(context).load(android.R.drawable.ic_menu_upload))
+        ).thumbnail(Glide.with(context).load(android.R.drawable.gallery_thumb))
             .into(itemBinding.dailyFavoriteCryptoChartImageView)
 
         if (item.quotes!![0].percentChange24h > 0) {
