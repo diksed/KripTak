@@ -2,8 +2,10 @@ package com.sedatkavak.kriptak.screens.home_fragment
 
 import android.content.Context
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
 import com.sedatkavak.kriptak.adapter.TopMarketAdapter
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
@@ -65,6 +67,7 @@ class DataUpdater(
     }
 
     private fun getNews(apiKey: String?, searchQuery: String?, language: String?) {
+        binding.newsLoadingProgressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
         binding.newsLoadingProgressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
@@ -82,6 +85,7 @@ class DataUpdater(
     }
 
     private fun getTrendingCoins() {
+        binding.dailyCryptoLoadingProgressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
         binding.dailyCryptoLoadingProgressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             try {

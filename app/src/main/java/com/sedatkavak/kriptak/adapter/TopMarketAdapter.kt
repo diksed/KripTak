@@ -1,8 +1,10 @@
 package com.sedatkavak.kriptak.adapter
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sedatkavak.kriptak.R
@@ -42,12 +44,14 @@ class TopMarketAdapter(var context: Context, val list: List<CryptoCurrency>) :
             itemBinding.dailyFavoriteCryptoChangeImageView.setImageResource(R.drawable.baseline_arrow_drop_up_24)
             itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.green))
             itemBinding.dailyFavoriteCryptoChangeTextView.text = "%${String.format("%.02f", item.quotes[0].percentChange24h)}"
+            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(ContextCompat.getColor(context, R.color.green), PorterDuff.Mode.MULTIPLY);
         } else {
             itemBinding.dailyFavoriteCryptoChangeImageView.setImageResource(R.drawable.baseline_arrow_drop_down_24)
-            itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.red))
+            itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.lightRed))
             val percentChange = item.quotes[0].percentChange24h
             val formattedPercentChange = String.format("%.02f", percentChange).replace("-", "")
             itemBinding.dailyFavoriteCryptoChangeTextView.text = "%$formattedPercentChange"
+            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(ContextCompat.getColor(context, R.color.lightRed), PorterDuff.Mode.MULTIPLY);
         }
 
         holder.itemView.setOnClickListener {
