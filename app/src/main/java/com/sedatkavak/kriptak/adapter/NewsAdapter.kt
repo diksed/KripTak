@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.databinding.HomepageNewsItemLayoutBinding
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class NewsAdapter(private val articles: List<Article>, private val itemCount : Int) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -31,6 +33,19 @@ class NewsAdapter(private val articles: List<Article>, private val itemCount : I
 
         fun bind(article: Article) {
             binding.dailyNewsTitleTextView.text = article.title
+            val dateTimeString = article.publishedAt
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val date = inputFormat.parse(dateTimeString)
+
+            val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val timeFormat = SimpleDateFormat("HH.mm", Locale.getDefault())
+
+            val formattedDate = dateFormat.format(date!!)
+            val formattedTime = timeFormat.format(date)
+            binding.newsDateTextView.text = formattedDate
+            binding.newsDateTimeTextView.text = formattedTime
+
+
 
             Picasso.get()
                 .load(article.urlToImage)
