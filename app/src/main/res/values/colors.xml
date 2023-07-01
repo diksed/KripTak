@@ -9,5 +9,6 @@
     <color name="transparent">#00000000</color>
     <color name="appBackground">#1a233b</color>
     <color name="containerColor">#263459</color>
-    <color name="iconPurple">#7118f1</color>
+    <color name="deActiveButton">#131a2b</color>
+    <color name="iconPurple">#8435f4</color>
 </resources>

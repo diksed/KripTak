@@ -75,7 +75,7 @@ class DataUpdater(
             withContext(Dispatchers.Main) {
                 binding.newsLoadingProgressBar.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    binding.dailyNewsRecyclerView.adapter = NewsAdapter(articles)
+                    binding.dailyNewsRecyclerView.adapter = NewsAdapter(articles,3)
                     val layoutManager = LinearLayoutManager(context)
                     binding.dailyNewsRecyclerView.layoutManager = layoutManager
                     binding.dailyNewsRecyclerView.isNestedScrollingEnabled = false

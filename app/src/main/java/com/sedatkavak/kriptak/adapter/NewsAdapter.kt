@@ -10,7 +10,7 @@ import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.databinding.HomepageNewsItemLayoutBinding
 import com.squareup.picasso.Picasso
 
-class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(private val articles: List<Article>, private val itemCount : Int) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -24,7 +24,7 @@ class NewsAdapter(private val articles: List<Article>) : RecyclerView.Adapter<Ne
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return itemCount
     }
 
     inner class NewsViewHolder(private val binding: HomepageNewsItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {

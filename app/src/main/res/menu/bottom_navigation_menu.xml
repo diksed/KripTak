@@ -10,7 +10,7 @@
         android:title="@string/menu_favorites" />
     <item
         android:id="@+id/menu_crypto_list"
-        android:icon="@drawable/baseline_list_24"
+        android:icon="@drawable/baseline_format_list_bulleted_24"
         android:title="@string/menu_crypto_list" />
     <item
         android:id="@+id/menu_news"

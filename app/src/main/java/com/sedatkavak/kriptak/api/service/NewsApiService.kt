@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NewsApiService {
-    @GET("http://newsapi.org/v2/everything?sortBy=publishedAt&pageSize=3")
+    @GET("http://newsapi.org/v2/everything?sortBy=publishedAt")
     suspend fun getNews(
         @Query("q")
         searchQuery: String,
