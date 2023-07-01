@@ -2,8 +2,10 @@ package com.sedatkavak.kriptak.screens.news_fragment
 
 import android.content.Context
 import android.view.View
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
@@ -16,32 +18,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NewsDataUpdater(
-    private val binding: FragmentNewsBinding,
+    private val binding : FragmentNewsBinding? = null,
     private val lifecycleScope: CoroutineScope,
     private val context: Context
 ) {
-    private val updateInterval: Long = 60000
-    private val updateHandler = android.os.Handler()
-    private val updateRunnable = object : Runnable {
-        override fun run() {
-            fetchData()
-            updateHandler.postDelayed(this, updateInterval)
-        }
-    }
-
-    fun startUpdating() {
-        updateHandler.postDelayed(updateRunnable, updateInterval)
-    }
-
-    fun stopUpdating() {
-        updateHandler.removeCallbacks(updateRunnable)
-    }
-
     fun fetchData(document : String = "apiTrKey") {
-        fetchApiKeyFromFirestore(document)
+        fetchApiKeyFromFirestore(document, binding!!.newsProgressBar, binding.newsRecyclerView)
     }
-
-    private fun fetchApiKeyFromFirestore(document: String) {
+    fun fetchApiKeyFromFirestore(document: String, progressBar: ProgressBar, recyclerView: RecyclerView) {
         val db = FirebaseFirestore.getInstance()
         db.collection("NewsApi").document(document)
             .get()
@@ -51,27 +35,26 @@ class NewsDataUpdater(
                     val searchQuery = document.getString("searchQuery")
                     val language = document.getString("language")
                     val newsSize = document.getLong("newsSize")!!.toInt()
-                    getNews(apiKey, searchQuery, language, newsSize)
+                    getNews(apiKey, searchQuery, language, newsSize, progressBar, recyclerView)
                 } else {
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
-
-    private fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize : Int) {
-        binding.newsProgressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
-        binding.newsProgressBar.visibility = View.VISIBLE
+    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize : Int, progressBar: ProgressBar, recyclerView: RecyclerView) {
+        progressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
             withContext(Dispatchers.Main) {
-                binding.newsProgressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    binding.newsRecyclerView.adapter = NewsAdapter(articles, newsSize)
+                    recyclerView.adapter = NewsAdapter(articles, newsSize)
                     val layoutManager = LinearLayoutManager(context)
-                    binding.newsRecyclerView.layoutManager = layoutManager
-                    binding.newsRecyclerView.isNestedScrollingEnabled = false
+                    recyclerView.layoutManager = layoutManager
+                    recyclerView.isNestedScrollingEnabled = false
                 }
             }
         }

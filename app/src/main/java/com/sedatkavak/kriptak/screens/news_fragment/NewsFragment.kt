@@ -42,7 +42,7 @@ class NewsFragment : Fragment() {
             btnEnglishNews.isEnabled = true
         }
         btnEnglishNews.setOnClickListener {
-            newsDataUpdater.fetchData(document = "apiKey")
+            newsDataUpdater.fetchData(document = "apiEnKey")
             btnEnglishNews.isEnabled = false
             btnEnglishNews.background = resources.getDrawable(R.drawable.news_language_deactive_button, null)
             btnTurkishNews.background = resources.getDrawable(R.drawable.news_language_active_button, null)
@@ -54,5 +54,3 @@ class NewsFragment : Fragment() {
         return view
     }
 }
-
-
