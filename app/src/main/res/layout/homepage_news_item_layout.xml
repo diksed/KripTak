@@ -83,7 +83,7 @@
         <TextView
             android:id="@+id/newsDateTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="10sp"
@@ -95,7 +95,7 @@
         <TextView
             android:id="@+id/newsDateTimeTextView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="10sp"

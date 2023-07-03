@@ -40,7 +40,7 @@ class TopMarketAdapter(var context: Context, val list: List<CryptoCurrency>) :
         ).thumbnail(Glide.with(context).load(android.R.drawable.gallery_thumb))
             .into(itemBinding.dailyFavoriteCryptoChartImageView)
 
-        if (item.quotes!![0].percentChange24h > 0) {
+        if (item.quotes[0].percentChange24h > 0) {
             itemBinding.dailyFavoriteCryptoChangeImageView.setImageResource(R.drawable.baseline_arrow_drop_up_24)
             itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.green))
             itemBinding.dailyFavoriteCryptoChangeTextView.text = "%${String.format("%.02f", item.quotes[0].percentChange24h)}"

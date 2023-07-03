@@ -30,13 +30,22 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/dailyCryptoLoadingProgressBar"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:id="@+id/dailyCryptoLoadingFrameLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp">
+
+                <ProgressBar
+                    android:id="@+id/dailyCryptoLoadingProgressBar"
+                    android:layout_width="256dp"
+                    android:layout_height="256dp"
+                    android:indeterminateDrawable="@drawable/loading_animation"
+                    android:layout_gravity="center"
+                    />
+            </FrameLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topCurrencyRecyclerView"
@@ -84,12 +93,21 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <FrameLayout
+                android:id="@+id/dailyNewsLoadingFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp">
+
             <ProgressBar
                 android:id="@+id/newsLoadingProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="256dp"
+                android:layout_height="256dp"
+                android:indeterminateDrawable="@drawable/loading_animation"
                 android:layout_gravity="center"
-                android:visibility="gone" />
+                />
+            </FrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dailyNewsRecyclerView"

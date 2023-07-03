@@ -2,6 +2,7 @@ package com.sedatkavak.kriptak.screens.news_fragment
 
 import android.content.Context
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,9 @@ class NewsDataUpdater(
     private val context: Context
 ) {
     fun fetchData(document : String = "apiTrKey") {
-        fetchApiKeyFromFirestore(document, binding!!.newsProgressBar, binding.newsRecyclerView)
+        fetchApiKeyFromFirestore(document, binding!!.newsProgressBar, binding.newsLoadingFrameLayout,binding.newsRecyclerView)
     }
-    fun fetchApiKeyFromFirestore(document: String, progressBar: ProgressBar, recyclerView: RecyclerView) {
+    fun fetchApiKeyFromFirestore(document: String, progressBar: ProgressBar,progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
         val db = FirebaseFirestore.getInstance()
         db.collection("NewsApi").document(document)
             .get()
@@ -35,21 +36,20 @@ class NewsDataUpdater(
                     val searchQuery = document.getString("searchQuery")
                     val language = document.getString("language")
                     val newsSize = document.getLong("newsSize")!!.toInt()
-                    getNews(apiKey, searchQuery, language, newsSize, progressBar, recyclerView)
+                    getNews(apiKey, searchQuery, language, newsSize, progressBar,progressBarFrameLayout, recyclerView)
                 } else {
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
-    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize : Int, progressBar: ProgressBar, recyclerView: RecyclerView) {
-        progressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
-        progressBar.visibility = View.VISIBLE
+    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize : Int, progressBar: ProgressBar,progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
             withContext(Dispatchers.Main) {
                 progressBar.visibility = View.GONE
+                progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
                     recyclerView.adapter = NewsAdapter(articles, newsSize)
                     val layoutManager = LinearLayoutManager(context)

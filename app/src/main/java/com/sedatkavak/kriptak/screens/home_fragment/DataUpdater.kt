@@ -38,12 +38,10 @@ class DataUpdater(
         updateHandler.removeCallbacks(updateRunnable)
     }
     fun fetchData() {
-        newsDataUpdater.fetchApiKeyFromFirestore(document = "apiDailyKey", progressBar = binding.newsLoadingProgressBar, recyclerView = binding.dailyNewsRecyclerView)
+        newsDataUpdater.fetchApiKeyFromFirestore(document = "apiDailyKey", progressBar = binding.newsLoadingProgressBar,binding.dailyNewsLoadingFrameLayout, recyclerView = binding.dailyNewsRecyclerView)
         getTrendingCoins()
     }
     private fun getTrendingCoins() {
-        binding.dailyCryptoLoadingProgressBar.setIndeterminateDrawable(ContextCompat.getDrawable(context, R.drawable.loading_animation))
-        binding.dailyCryptoLoadingProgressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response =
@@ -55,6 +53,7 @@ class DataUpdater(
                     val filteredCoins = MatchCoinsSymbol().getFilteredCoins(coinSymbols)
                     withContext(Dispatchers.Main) {
                         binding.dailyCryptoLoadingProgressBar.visibility = View.GONE
+                        binding.dailyCryptoLoadingFrameLayout.visibility = View.GONE
                         binding.topCurrencyRecyclerView.adapter =
                             TopMarketAdapter(context, filteredCoins)
                         val layoutManager = LinearLayoutManager(context)

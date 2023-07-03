@@ -2,6 +2,7 @@ package com.sedatkavak.kriptak.adapter
 
 import android.content.Intent
 import android.net.Uri
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -12,7 +13,8 @@ import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class NewsAdapter(private val articles: List<Article>, private val itemCount : Int) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(private val articles: List<Article>, private val itemCount: Int) :
+    RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,7 +31,8 @@ class NewsAdapter(private val articles: List<Article>, private val itemCount : I
         return itemCount
     }
 
-    inner class NewsViewHolder(private val binding: HomepageNewsItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NewsViewHolder(private val binding: HomepageNewsItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(article: Article) {
             binding.dailyNewsTitleTextView.text = article.title
@@ -37,12 +40,15 @@ class NewsAdapter(private val articles: List<Article>, private val itemCount : I
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
             val date = inputFormat.parse(dateTimeString)
 
-            val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd MMMM", Locale.getDefault())
+            val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
             val timeFormat = SimpleDateFormat("HH.mm", Locale.getDefault())
 
             val formattedDate = dateFormat.format(date!!)
+            val formattedYear = yearFormat.format(date)
             val formattedTime = timeFormat.format(date)
-            binding.newsDateTextView.text = formattedDate
+            val htmlText = "$formattedDate<br/>$formattedYear"
+            binding.newsDateTextView.text = Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
             binding.newsDateTimeTextView.text = formattedTime
 
 
