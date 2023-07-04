@@ -10,7 +10,7 @@ import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
 class SplashActivity : AppCompatActivity() {
-    private val splashDelay: Long = 2000 // 1.5 saniye
+    private val splashDelay: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
