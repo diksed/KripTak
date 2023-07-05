@@ -11,17 +11,17 @@ import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.databinding.HomepageDailyFavoriteItemLayoutBinding
 
-class TopMarketAdapter(var context: Context, val list: List<CryptoCurrency>) :
-    RecyclerView.Adapter<TopMarketAdapter.TopMarketViewHolder>() {
+class CryptoAdapter(var context: Context, val list: List<CryptoCurrency>) :
+    RecyclerView.Adapter<CryptoAdapter.CryptoAdapterViewHolder>() {
 
-    inner class TopMarketViewHolder(val binding: HomepageDailyFavoriteItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class CryptoAdapterViewHolder(val binding: HomepageDailyFavoriteItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopMarketViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoAdapterViewHolder {
         val binding = HomepageDailyFavoriteItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TopMarketViewHolder(binding)
+        return CryptoAdapterViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TopMarketViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CryptoAdapterViewHolder, position: Int) {
         val item = list[position]
         val itemBinding = holder.binding
 
@@ -60,6 +60,6 @@ class TopMarketAdapter(var context: Context, val list: List<CryptoCurrency>) :
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return list.size
     }
 }
