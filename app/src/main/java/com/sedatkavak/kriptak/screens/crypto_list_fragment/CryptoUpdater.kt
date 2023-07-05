@@ -1,17 +1,11 @@
 package com.sedatkavak.kriptak.screens.crypto_list_fragment
 
 import android.content.Context
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedatkavak.kriptak.adapter.CryptoAdapter
-import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
-import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiService
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentCryptoListBinding
-import com.sedatkavak.kriptak.databinding.FragmentHomeBinding
-import com.sedatkavak.kriptak.screens.home_fragment.MatchCoinsSymbol
-import com.sedatkavak.kriptak.screens.news_fragment.NewsDataUpdater
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,29 +27,42 @@ class CryptoUpdater(
             updateHandler.postDelayed(this, updateInterval)
         }
     }
+
     fun startUpdating() {
         updateHandler.postDelayed(updateRunnable, updateInterval)
     }
+
     fun stopUpdating() {
         updateHandler.removeCallbacks(updateRunnable)
     }
+
     fun fetchData() {
         getCoins()
     }
+
     private fun getCoins() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val response =
-                    CoinMarketCapApiUtilities.getInstance().create(CoinMarketCapApiService::class.java)
-                        .getMarketData()
+                val response = CoinMarketCapApiUtilities.getInstance()
+                    .create(CoinMarketCapApiService::class.java)
+                    .getMarketData()
 
+                if (response.isSuccessful) {
+                    val coins = response.body()?.data?.cryptoCurrencyList
 
-
+                    coins?.let { coinList ->
+                        withContext(Dispatchers.Main) {
+                            binding.coinRecyclerView.adapter = CryptoAdapter(context, coinList)
+                            val layoutManager = LinearLayoutManager(context)
+                            binding.coinRecyclerView.layoutManager = layoutManager
+                        }
+                    }
+                } else {
+                }
             } catch (e: IOException) {
-                // IOException için işlemler yapılabilir
             } catch (e: HttpException) {
-                // HttpException için işlemler yapılabilir
             }
         }
     }
+
 }

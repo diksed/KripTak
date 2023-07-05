@@ -13,4 +13,5 @@
     <string name="menu_settings">Ayarlar</string>
     <string name="turkishNews">Türkçe Haberler</string>
     <string name="englishNews">İngilizce Haberler</string>
+    <string name="searchCoin">Kripto Para Ara…</string>
 </resources>
