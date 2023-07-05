@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import com.sedatkavak.kriptak.MainActivity
 import com.sedatkavak.kriptak.R
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
@@ -22,9 +24,17 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             gifDrawable.stop()
+            checkInternetConnection()
+        }, splashDelay)
+    }
+    private fun checkInternetConnection() {
+        if (ConnectionUtils.isNetworkAvailable(this)) {
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
-            finish()
-        }, splashDelay)
+        } else {
+            val intent = Intent(this@SplashActivity, ConnectionActivity::class.java)
+            startActivity(intent)
+        }
+        finish()
     }
 }
