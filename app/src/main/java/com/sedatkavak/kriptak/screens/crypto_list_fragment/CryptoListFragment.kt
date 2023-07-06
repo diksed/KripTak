@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.databinding.FragmentCryptoListBinding
 
 class CryptoListFragment : Fragment() {
@@ -23,6 +25,8 @@ class CryptoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupClickListeners()
+
         val lifecycleScope = viewLifecycleOwner.lifecycleScope
         cryptoUpdater = CryptoUpdater(binding, lifecycleScope, requireContext())
     }
@@ -38,5 +42,15 @@ class CryptoListFragment : Fragment() {
         cryptoUpdater.stopUpdating()
     }
 
+    private fun setupClickListeners() {
+        binding.sortByNameButton.setOnClickListener {
+            cryptoUpdater.sortByCryptoName()
+            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(
+                0, 0,
+                if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24,
+                0
+            )
+        }
+    }
 
 }

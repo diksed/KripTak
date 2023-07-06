@@ -11,7 +11,7 @@ import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.databinding.HomepageDailyFavoriteItemLayoutBinding
 
-class CryptoAdapter(var context: Context, val list: List<CryptoCurrency>) :
+class CryptoAdapter(var context: Context, var list: List<CryptoCurrency>) :
     RecyclerView.Adapter<CryptoAdapter.CryptoAdapterViewHolder>() {
 
     inner class CryptoAdapterViewHolder(val binding: HomepageDailyFavoriteItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
