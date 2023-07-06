@@ -14,4 +14,7 @@
     <string name="turkishNews">Türkçe Haberler</string>
     <string name="englishNews">İngilizce Haberler</string>
     <string name="searchCoin">Kripto Para Ara…</string>
+    <string name="name">İsim</string>
+    <string name="price">Fiyat</string>
+    <string name="change">1G %</string>
 </resources>

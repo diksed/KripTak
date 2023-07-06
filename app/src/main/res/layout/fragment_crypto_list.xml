@@ -58,7 +58,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textColor="@color/white"
-                            android:textColorHint="@color/white"
+                            android:textColorHint="@color/gray"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -66,42 +66,111 @@
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/sortByNameButton"
+                <LinearLayout
+                    android:id="@+id/sortByNameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Sort by Name" />
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/sortByPriceLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/sortByChangeButton"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/containerColor"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="10dp">
+
+                        <Button
+                            android:id="@+id/sortByNameButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:drawableEnd="@drawable/baseline_remove_24"
+                            android:text="@string/name"
+                            android:textSize="13sp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sortByPriceLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Sort by 7-Day Change" />
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/sortByChangeLayout"
+                    app:layout_constraintStart_toEndOf="@id/sortByNameLayout"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/sortByPriceButton"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/containerColor"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="10dp">
+
+                        <Button
+                            android:id="@+id/sortByPriceButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:drawableEnd="@drawable/baseline_remove_24"
+                            android:text="@string/price"
+                            android:textSize="13sp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sortByChangeLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Sort by Price" />
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sortByPriceLayout"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/containerColor"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="10dp">
+
+                        <Button
+                            android:id="@+id/sortByChangeButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:drawableEnd="@drawable/baseline_remove_24"
+                            android:text="@string/change"
+                            android:textSize="13sp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/coinRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/homepage_daily_favorite_item_layout"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                tools:listitem="@layout/homepage_daily_favorite_item_layout" />
 
         </LinearLayout>
+
 
     </ScrollView>
 
