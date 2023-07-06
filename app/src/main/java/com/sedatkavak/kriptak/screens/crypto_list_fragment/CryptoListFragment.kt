@@ -44,13 +44,28 @@ class CryptoListFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.sortByNameButton.setOnClickListener {
-            cryptoUpdater.sortByCryptoName()
+            cryptoUpdater.sortByCrypto("name")
             binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(
                 0, 0,
                 if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24,
                 0
             )
+            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        }
+        binding.sortByPriceButton.setOnClickListener{
+            cryptoUpdater.sortByCrypto("price")
+            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(
+                0, 0, if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24, 0)
+            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        }
+        binding.sortByChangeButton.setOnClickListener{
+            cryptoUpdater.sortByCrypto("change")
+            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(
+                0, 0, if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24, 0)
+            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
         }
     }
-
 }
