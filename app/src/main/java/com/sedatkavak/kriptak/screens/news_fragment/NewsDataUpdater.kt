@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
+import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.api.service.NewsApiService
 import com.sedatkavak.kriptak.api.service.NewsApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentNewsBinding
@@ -43,7 +44,7 @@ class NewsDataUpdater(
             .addOnFailureListener { exception ->
             }
     }
-    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize : Int, progressBar: ProgressBar,progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
+    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize: Int, progressBar: ProgressBar, progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
@@ -51,12 +52,24 @@ class NewsDataUpdater(
                 progressBar.visibility = View.GONE
                 progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    recyclerView.adapter = NewsAdapter(articles, newsSize)
+                    val uniqueArticles = removeDuplicateArticles(articles)
+                    recyclerView.adapter = NewsAdapter(uniqueArticles, newsSize)
                     val layoutManager = LinearLayoutManager(context)
                     recyclerView.layoutManager = layoutManager
                     recyclerView.isNestedScrollingEnabled = false
                 }
             }
         }
+    }
+    private fun removeDuplicateArticles(articles: List<Article>): List<Article> {
+        val uniqueArticleList = mutableListOf<Article>()
+        val titleSet = mutableSetOf<String>()
+        for (article in articles) {
+            if (!titleSet.contains(article.title)) {
+                titleSet.add(article.title)
+                uniqueArticleList.add(article)
+            }
+        }
+        return uniqueArticleList
     }
 }
