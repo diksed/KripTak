@@ -37,14 +37,16 @@ class NewsDataUpdater(
                     val searchQuery = document.getString("searchQuery")
                     val language = document.getString("language")
                     val newsSize = document.getLong("newsSize")!!.toInt()
-                    getNews(apiKey, searchQuery, language, newsSize, progressBar,progressBarFrameLayout, recyclerView)
+                    val unwantedSources = document.get("unwantedSources") as List<String>
+                    println(unwantedSources)
+                    getNews(apiKey, searchQuery, language, newsSize, unwantedSources ,progressBar,progressBarFrameLayout, recyclerView)
                 } else {
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
-    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize: Int, progressBar: ProgressBar, progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
+    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize: Int,unwantedSources: List<String>, progressBar: ProgressBar, progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
@@ -52,7 +54,7 @@ class NewsDataUpdater(
                 progressBar.visibility = View.GONE
                 progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    val uniqueArticles = removeDuplicateArticles(articles)
+                    val uniqueArticles = filterNews(articles,unwantedSources)
                     recyclerView.adapter = NewsAdapter(uniqueArticles, newsSize)
                     val layoutManager = LinearLayoutManager(context)
                     recyclerView.layoutManager = layoutManager
@@ -61,11 +63,11 @@ class NewsDataUpdater(
             }
         }
     }
-    private fun removeDuplicateArticles(articles: List<Article>): List<Article> {
+    private fun filterNews(articles: List<Article>, unwantedSources : List<String>): List<Article> {
         val uniqueArticleList = mutableListOf<Article>()
         val titleSet = mutableSetOf<String>()
         for (article in articles) {
-            if (!titleSet.contains(article.title)) {
+            if (!titleSet.contains(article.title) && !unwantedSources.contains(article.source.name)) {
                 titleSet.add(article.title)
                 uniqueArticleList.add(article)
             }
