@@ -1,6 +1,8 @@
 package com.sedatkavak.kriptak.screens.crypto_list_fragment
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.CryptoAdapter
@@ -24,31 +26,15 @@ class CryptoUpdater(
 ) {
 
     private val coinList = mutableListOf<CryptoCurrency>()
+    private val filteredCoinList = mutableListOf<CryptoCurrency>()
     var sortAscending = false
     private var sortByClicked = false
-
-    private val updateInterval: Long = 30000
-    private val updateHandler = android.os.Handler()
-    private val updateRunnable = object : Runnable {
-        override fun run() {
-            fetchData()
-            updateHandler.postDelayed(this, updateInterval)
-        }
-    }
-
-    fun startUpdating() {
-        updateHandler.postDelayed(updateRunnable, updateInterval)
-    }
-
-    fun stopUpdating() {
-        updateHandler.removeCallbacks(updateRunnable)
-    }
 
     fun fetchData() {
         getCoins()
         binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-        binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0,  R.drawable.baseline_remove_24, 0)
-        binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0,  R.drawable.baseline_remove_24, 0)
+        binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
     }
 
     private fun getCoins() {
@@ -65,8 +51,9 @@ class CryptoUpdater(
                         coinList.clear()
                         coinList.addAll(fetchedCoins)
                         sortCryptoList()
+                        filterCryptoList(binding.coinSearchEditText.text.toString())
                         withContext(Dispatchers.Main) {
-                            binding.coinRecyclerView.adapter = CryptoAdapter(context, coinList)
+                            binding.coinRecyclerView.adapter = CryptoAdapter(context, filteredCoinList)
                             val layoutManager = LinearLayoutManager(context)
                             binding.coinRecyclerView.layoutManager = layoutManager
                             binding.coinRecyclerView.scrollToPosition(0)
@@ -80,45 +67,66 @@ class CryptoUpdater(
         }
     }
 
-    private fun sortCryptoList(sortType : String = ""){
-        if (sortByClicked){
-            when(sortType){
+    private fun sortCryptoList(sortType: String = "") {
+        if (sortByClicked) {
+            when (sortType) {
                 "name" -> {
                     val collator = Collator.getInstance(Locale("tr", "TR"))
-                    coinList.sortWith(compareBy(collator) { it.name })
+                    filteredCoinList.sortWith(compareBy(collator) { it.name })
                     if (!sortAscending) {
-                        coinList.reverse()
+                        filteredCoinList.reverse()
                     }
                 }
                 "price" -> {
-                    coinList.sortBy { it.quotes[0].price }
+                    filteredCoinList.sortBy { it.quotes[0].price }
                     if (!sortAscending) {
-                        coinList.reverse()
+                        filteredCoinList.reverse()
                     }
                 }
                 "change" -> {
-                    coinList.sortBy { it.quotes[0].percentChange24h }
+                    filteredCoinList.sortBy { it.quotes[0].percentChange24h }
                     if (!sortAscending) {
-                        coinList.reverse()
+                        filteredCoinList.reverse()
                     }
                 }
             }
         }
     }
 
-    fun sortByCrypto(sortType: String = "name"){
+    fun sortByCrypto(sortType: String = "name") {
         sortByClicked = true
         sortAscending = !sortAscending
-        if (sortType == "name"){
-            sortCryptoList("name")
-    }
-        else if (sortType == "price"){
-            sortCryptoList("price")
-        }
-        else if (sortType == "change"){
-            sortCryptoList("change")
-        }
+        sortCryptoList(sortType)
         binding.coinRecyclerView.scrollToPosition(0)
         binding.coinRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    fun filterCryptoList(filter: String) {
+        filteredCoinList.clear()
+        if (filter.isEmpty()) {
+            filteredCoinList.addAll(coinList)
+        } else {
+            val lowerCaseFilter = filter.toLowerCase(Locale.getDefault())
+            for (coin in coinList) {
+                if (coin.name.toLowerCase(Locale.getDefault()).contains(lowerCaseFilter)) {
+                    filteredCoinList.add(coin)
+                }
+            }
+        }
+        binding.coinRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    init {
+        binding.coinSearchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filterCryptoList(s.toString())
+            }
+        })
     }
 }

@@ -33,13 +33,7 @@ class CryptoListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        cryptoUpdater.startUpdating()
         cryptoUpdater.fetchData()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        cryptoUpdater.stopUpdating()
     }
 
     private fun setupClickListeners() {
