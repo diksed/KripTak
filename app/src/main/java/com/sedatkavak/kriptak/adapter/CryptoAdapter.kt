@@ -55,7 +55,6 @@ class CryptoAdapter(var context: Context, var list: List<CryptoCurrency>) :
         }
 
         holder.itemView.setOnClickListener {
-            // Click event işlemleri
         }
     }
 
