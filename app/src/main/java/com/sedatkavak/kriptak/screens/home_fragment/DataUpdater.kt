@@ -60,9 +60,9 @@ class DataUpdater(
                     }
                 }
             } catch (e: IOException) {
-                // IOException için işlemler yapılabilir
+
             } catch (e: HttpException) {
-                // HttpException için işlemler yapılabilir
+                
             }
         }
     }
