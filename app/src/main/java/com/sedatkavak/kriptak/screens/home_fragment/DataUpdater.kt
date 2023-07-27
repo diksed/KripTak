@@ -62,7 +62,7 @@ class DataUpdater(
             } catch (e: IOException) {
 
             } catch (e: HttpException) {
-                
+
             }
         }
     }

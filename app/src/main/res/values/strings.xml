@@ -17,4 +17,7 @@
     <string name="name">İsim</string>
     <string name="price">Fiyat</string>
     <string name="change">1G %</string>
+    <string name="noConnection">Bağlantı Yok!</string>
+    <string name="checkConnection">Lütfen internet bağlantınızı kontrol edip tekrar deneyiniz.</string>
+    <string name="tryAgain">Tekrar Dene</string>
 </resources>
