@@ -1,6 +1,7 @@
 package com.sedatkavak.kriptak.screens.crypto_list_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,8 @@ import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiService
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentCryptoListBinding
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +34,11 @@ class CryptoUpdater(
     private var sortByClicked = false
 
     fun fetchData() {
+        if (!ConnectionUtils.isNetworkAvailable(context)) {
+            val intent = Intent(context, ConnectionActivity::class.java)
+            context.startActivity(intent)
+            return
+        }
         getCoins()
         binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
         binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)

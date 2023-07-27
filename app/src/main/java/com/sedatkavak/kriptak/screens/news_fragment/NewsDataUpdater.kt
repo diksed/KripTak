@@ -1,6 +1,7 @@
 package com.sedatkavak.kriptak.screens.news_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
@@ -14,6 +15,8 @@ import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.api.service.NewsApiService
 import com.sedatkavak.kriptak.api.service.NewsApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentNewsBinding
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +28,11 @@ class NewsDataUpdater(
     private val context: Context
 ) {
     fun fetchData(document : String = "apiTrKey") {
+        if (!ConnectionUtils.isNetworkAvailable(context)) {
+            val intent = Intent(context, ConnectionActivity::class.java)
+            context.startActivity(intent)
+            return
+        }
         fetchApiKeyFromFirestore(document, binding!!.newsProgressBar, binding.newsLoadingFrameLayout,binding.newsRecyclerView)
     }
     fun fetchApiKeyFromFirestore(document: String, progressBar: ProgressBar,progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
@@ -38,7 +46,6 @@ class NewsDataUpdater(
                     val language = document.getString("language")
                     val newsSize = document.getLong("newsSize")!!.toInt()
                     val unwantedSources = document.get("unwantedSources") as List<String>
-                    println(unwantedSources)
                     getNews(apiKey, searchQuery, language, newsSize, unwantedSources ,progressBar,progressBarFrameLayout, recyclerView)
                 } else {
                 }

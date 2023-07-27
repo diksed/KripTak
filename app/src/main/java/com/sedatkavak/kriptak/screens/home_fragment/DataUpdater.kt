@@ -1,12 +1,15 @@
 package com.sedatkavak.kriptak.screens.home_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedatkavak.kriptak.adapter.CryptoAdapter
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
 import com.sedatkavak.kriptak.databinding.FragmentHomeBinding
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
+import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import com.sedatkavak.kriptak.screens.news_fragment.NewsDataUpdater
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,11 @@ class DataUpdater(
         updateHandler.removeCallbacks(updateRunnable)
     }
     fun fetchData() {
+        if (!ConnectionUtils.isNetworkAvailable(context)) {
+            val intent = Intent(context, ConnectionActivity::class.java)
+            context.startActivity(intent)
+            return
+        }
         newsDataUpdater.fetchApiKeyFromFirestore(document = "apiDailyKey", progressBar = binding.newsLoadingProgressBar,binding.dailyNewsLoadingFrameLayout, recyclerView = binding.dailyNewsRecyclerView)
         getTrendingCoins()
     }
