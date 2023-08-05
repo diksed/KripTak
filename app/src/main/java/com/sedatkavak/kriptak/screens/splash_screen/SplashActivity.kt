@@ -4,12 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.airbnb.lottie.LottieAnimationView
 import com.sedatkavak.kriptak.MainActivity
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
-import pl.droidsonroids.gif.GifDrawable
-import pl.droidsonroids.gif.GifImageView
 
 class SplashActivity : AppCompatActivity() {
     private val splashDelay: Long = 2000
@@ -17,13 +16,12 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        val lottieAnimationView = findViewById<LottieAnimationView>(R.id.lottieSplashView)
+        lottieAnimationView.setAnimation(R.raw.kriptak_splash)
+        lottieAnimationView.playAnimation()
 
-        val gifImageView: GifImageView = findViewById(R.id.gifImageView)
-        val gifDrawable: GifDrawable = gifImageView.drawable as GifDrawable
-        gifDrawable.start()
 
         Handler().postDelayed({
-            gifDrawable.stop()
             checkInternetConnection()
         }, splashDelay)
     }
