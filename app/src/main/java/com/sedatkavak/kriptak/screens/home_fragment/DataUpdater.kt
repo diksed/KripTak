@@ -23,7 +23,8 @@ class DataUpdater(
     private val lifecycleScope: CoroutineScope,
     private val context: Context
 ) {
-    private val newsDataUpdater = NewsDataUpdater(context = context, lifecycleScope = lifecycleScope)
+    private val newsDataUpdater =
+        NewsDataUpdater(context = context, lifecycleScope = lifecycleScope)
     private val updateInterval: Long = 30000
     private val updateHandler = android.os.Handler()
     private val updateRunnable = object : Runnable {
@@ -32,21 +33,30 @@ class DataUpdater(
             updateHandler.postDelayed(this, updateInterval)
         }
     }
+
     fun startUpdating() {
         updateHandler.postDelayed(updateRunnable, updateInterval)
     }
+
     fun stopUpdating() {
         updateHandler.removeCallbacks(updateRunnable)
     }
+
     fun fetchData() {
         if (!ConnectionUtils.isNetworkAvailable(context)) {
             val intent = Intent(context, ConnectionActivity::class.java)
             context.startActivity(intent)
             return
         }
-        newsDataUpdater.fetchApiKeyFromFirestore(document = "apiDailyKey", progressBar = binding.newsLoadingProgressBar,binding.dailyNewsLoadingFrameLayout, recyclerView = binding.dailyNewsRecyclerView)
+        newsDataUpdater.fetchApiKeyFromFirestore(
+            document = "apiDailyKey",
+            progressBar = binding.newsLoadingProgressBar,
+            binding.dailyNewsLoadingFrameLayout,
+            recyclerView = binding.dailyNewsRecyclerView,
+        )
         getTrendingCoins()
     }
+
     private fun getTrendingCoins() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -68,9 +78,10 @@ class DataUpdater(
                     }
                 }
             } catch (e: IOException) {
+                // To do
 
             } catch (e: HttpException) {
-
+                // To do
             }
         }
     }

@@ -5,11 +5,9 @@ import android.content.Intent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.NewsAdapter
 import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.api.service.NewsApiService
@@ -23,19 +21,30 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NewsDataUpdater(
-    private val binding : FragmentNewsBinding? = null,
+    private val binding: FragmentNewsBinding? = null,
     private val lifecycleScope: CoroutineScope,
-    private val context: Context
+    private val context: Context,
 ) {
-    fun fetchData(document : String = "apiTrKey") {
+    fun fetchData(document: String = "apiTrKey") {
         if (!ConnectionUtils.isNetworkAvailable(context)) {
             val intent = Intent(context, ConnectionActivity::class.java)
             context.startActivity(intent)
             return
         }
-        fetchApiKeyFromFirestore(document, binding!!.newsProgressBar, binding.newsLoadingFrameLayout,binding.newsRecyclerView)
+        fetchApiKeyFromFirestore(
+            document,
+            binding!!.newsProgressBar,
+            binding.newsLoadingFrameLayout,
+            binding.newsRecyclerView,
+        )
     }
-    fun fetchApiKeyFromFirestore(document: String, progressBar: ProgressBar,progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
+
+    fun fetchApiKeyFromFirestore(
+        document: String,
+        progressBar: ProgressBar,
+        progressBarFrameLayout: FrameLayout,
+        recyclerView: RecyclerView,
+    ) {
         val db = FirebaseFirestore.getInstance()
         db.collection("NewsApi").document(document)
             .get()
@@ -46,14 +55,32 @@ class NewsDataUpdater(
                     val language = document.getString("language")
                     val newsSize = document.getLong("newsSize")!!.toInt()
                     val unwantedSources = document.get("unwantedSources") as List<String>
-                    getNews(apiKey, searchQuery, language, newsSize, unwantedSources ,progressBar,progressBarFrameLayout, recyclerView)
-                } else {
+                    getNews(
+                        apiKey,
+                        searchQuery,
+                        language,
+                        newsSize,
+                        unwantedSources,
+                        progressBar,
+                        progressBarFrameLayout,
+                        recyclerView,
+                    )
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
-    fun getNews(apiKey: String?, searchQuery: String?, language: String?, newsSize: Int,unwantedSources: List<String>, progressBar: ProgressBar, progressBarFrameLayout: FrameLayout, recyclerView: RecyclerView) {
+
+    fun getNews(
+        apiKey: String?,
+        searchQuery: String?,
+        language: String?,
+        newsSize: Int,
+        unwantedSources: List<String>,
+        progressBar: ProgressBar,
+        progressBarFrameLayout: FrameLayout,
+        recyclerView: RecyclerView,
+    ) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
                 .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
@@ -61,7 +88,7 @@ class NewsDataUpdater(
                 progressBar.visibility = View.GONE
                 progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    val uniqueArticles = filterNews(articles,unwantedSources)
+                    val uniqueArticles = filterNews(articles, unwantedSources)
                     recyclerView.adapter = NewsAdapter(uniqueArticles, newsSize)
                     val layoutManager = LinearLayoutManager(context)
                     recyclerView.layoutManager = layoutManager
@@ -70,7 +97,8 @@ class NewsDataUpdater(
             }
         }
     }
-    private fun filterNews(articles: List<Article>, unwantedSources : List<String>): List<Article> {
+
+    private fun filterNews(articles: List<Article>, unwantedSources: List<String>): List<Article> {
         val uniqueArticleList = mutableListOf<Article>()
         val titleSet = mutableSetOf<String>()
         for (article in articles) {
