@@ -16,8 +16,4 @@
         android:id="@+id/menu_news"
         android:icon="@drawable/baseline_newspaper_24"
         android:title="@string/menu_news" />
-    <item
-        android:id="@+id/menu_settings"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/menu_settings" />
 </menu>

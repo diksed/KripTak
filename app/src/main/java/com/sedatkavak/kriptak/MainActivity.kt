@@ -25,14 +25,14 @@ class MainActivity : AppCompatActivity() {
         swipeViewPager()
 
     }
+
     private fun swipeViewPager() {
-        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> viewPager.currentItem = 0
                 R.id.menu_favorites -> viewPager.currentItem = 1
                 R.id.menu_crypto_list -> viewPager.currentItem = 2
                 R.id.menu_news -> viewPager.currentItem = 3
-                R.id.menu_settings -> viewPager.currentItem = 4
             }
             true
         }
@@ -40,8 +40,17 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 bottomNavigationView.menu.getItem(position).isChecked = true
             }
-            override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageScrollStateChanged(state: Int) {
+                // Do nothing
+            }
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                // Do nothing
+            }
         })
     }
 }

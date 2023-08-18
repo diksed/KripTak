@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.CryptoAdapter
@@ -40,9 +42,24 @@ class CryptoUpdater(
             return
         }
         getCoins()
-        binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-        binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-        binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            0,
+            R.drawable.baseline_remove_24,
+            0
+        )
+        binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            0,
+            R.drawable.baseline_remove_24,
+            0
+        )
+        binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            0,
+            R.drawable.baseline_remove_24,
+            0
+        )
     }
 
     private fun getCoins() {
@@ -61,16 +78,33 @@ class CryptoUpdater(
                         sortCryptoList()
                         filterCryptoList(binding.coinSearchEditText.text.toString())
                         withContext(Dispatchers.Main) {
-                            binding.coinRecyclerView.adapter = CryptoAdapter(context, filteredCoinList)
+                            binding.coinRecyclerView.adapter =
+                                CryptoAdapter(context, filteredCoinList)
                             val layoutManager = LinearLayoutManager(context)
                             binding.coinRecyclerView.layoutManager = layoutManager
                             binding.coinRecyclerView.scrollToPosition(0)
                         }
                     }
                 } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            "Sunucudan veri alınamadı",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             } catch (e: IOException) {
+                Log.e("Network Error", "IO Exception", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Ağ hatası", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } catch (e: HttpException) {
+                Log.e("Network Error", "HTTP Exception", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Ağ hatası", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -85,12 +119,14 @@ class CryptoUpdater(
                         filteredCoinList.reverse()
                     }
                 }
+
                 "price" -> {
                     filteredCoinList.sortBy { it.quotes[0].price }
                     if (!sortAscending) {
                         filteredCoinList.reverse()
                     }
                 }
+
                 "change" -> {
                     filteredCoinList.sortBy { it.quotes[0].percentChange24h }
                     if (!sortAscending) {
@@ -127,9 +163,11 @@ class CryptoUpdater(
     init {
         binding.coinSearchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Do nothing
             }
 
             override fun afterTextChanged(s: Editable?) {
