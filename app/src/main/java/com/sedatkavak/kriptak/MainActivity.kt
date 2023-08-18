@@ -1,6 +1,7 @@
 package com.sedatkavak.kriptak
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sedatkavak.kriptak.adapter.ViewPagerAdapter
@@ -21,6 +22,19 @@ class MainActivity : BaseActivity() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             hideSystemUI()
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewPager.currentItem == HOME_FRAGMENT_POSITION) {
+                    finish()
+                } else {
+                    viewPager.currentItem = HOME_FRAGMENT_POSITION
+                }
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this, callback)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
