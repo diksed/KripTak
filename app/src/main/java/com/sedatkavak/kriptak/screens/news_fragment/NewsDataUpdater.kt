@@ -81,11 +81,13 @@ class NewsDataUpdater(
                 uiComponents.progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
                     val uniqueArticles = filterNews(articles, newsRequest.unwantedSources)
-                    uiComponents.recyclerView.adapter =
-                        NewsAdapter(uniqueArticles, newsRequest.newsSize)
-                    val layoutManager = LinearLayoutManager(context)
-                    uiComponents.recyclerView.layoutManager = layoutManager
-                    uiComponents.recyclerView.isNestedScrollingEnabled = false
+                    withContext(Dispatchers.Main) {
+                        uiComponents.recyclerView.adapter =
+                            NewsAdapter(uniqueArticles, newsRequest.newsSize)
+                        val layoutManager = LinearLayoutManager(context)
+                        uiComponents.recyclerView.layoutManager = layoutManager
+                        uiComponents.recyclerView.isNestedScrollingEnabled = false
+                    }
                 }
             }
         }

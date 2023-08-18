@@ -29,7 +29,6 @@ class CryptoUpdater(
     private val lifecycleScope: CoroutineScope,
     private val context: Context
 ) {
-
     private val coinList = mutableListOf<CryptoCurrency>()
     private val filteredCoinList = mutableListOf<CryptoCurrency>()
     var sortAscending = false
@@ -76,8 +75,8 @@ class CryptoUpdater(
                         coinList.clear()
                         coinList.addAll(fetchedCoins)
                         sortCryptoList()
-                        filterCryptoList(binding.coinSearchEditText.text.toString())
                         withContext(Dispatchers.Main) {
+                            filterCryptoList(binding.coinSearchEditText.text.toString())
                             binding.coinRecyclerView.adapter =
                                 CryptoAdapter(context, filteredCoinList)
                             val layoutManager = LinearLayoutManager(context)
@@ -159,6 +158,7 @@ class CryptoUpdater(
             }
         }
         binding.coinRecyclerView.adapter?.notifyDataSetChanged()
+
     }
 
     init {
