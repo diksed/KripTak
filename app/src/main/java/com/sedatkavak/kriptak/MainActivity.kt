@@ -1,6 +1,5 @@
 package com.sedatkavak.kriptak
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,13 +11,16 @@ import com.sedatkavak.kriptak.utils.FragmentPositions.HOME_FRAGMENT_POSITION
 import com.sedatkavak.kriptak.utils.FragmentPositions.NEWS_FRAGMENT_POSITION
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var viewPager: ViewPager
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            hideSystemUI()
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

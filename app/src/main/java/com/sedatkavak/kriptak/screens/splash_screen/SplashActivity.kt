@@ -1,21 +1,25 @@
 package com.sedatkavak.kriptak.screens.splash_screen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.airbnb.lottie.LottieAnimationView
+import com.sedatkavak.kriptak.BaseActivity
 import com.sedatkavak.kriptak.MainActivity
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import com.sedatkavak.kriptak.utils.SecondsConstants.SPLASH_DELAY
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            hideSystemUI()
+        }
         setContentView(R.layout.activity_splash)
         val lottieAnimationView = findViewById<LottieAnimationView>(R.id.lottieSplashView)
         lottieAnimationView.setAnimation(R.raw.kriptak_splash)
