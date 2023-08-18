@@ -5,10 +5,10 @@ import android.net.Uri
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.sedatkavak.kriptak.api.model.Article
 import com.sedatkavak.kriptak.databinding.HomepageNewsItemLayoutBinding
+import com.sedatkavak.kriptak.utils.SizeConstants.IMAGE_SIZE
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -55,7 +55,7 @@ class NewsAdapter(private val articles: List<Article>, private val itemCount: In
 
             Picasso.get()
                 .load(article.urlToImage)
-                .resize(300, 300)
+                .resize(IMAGE_SIZE, IMAGE_SIZE)
                 .into(binding.dailyNewsImageView)
 
             binding.root.setOnClickListener {

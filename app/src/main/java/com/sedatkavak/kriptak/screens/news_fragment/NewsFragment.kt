@@ -20,7 +20,11 @@ class NewsFragment : Fragment() {
     private lateinit var newsDataUpdater: NewsDataUpdater
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentNewsBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -28,24 +32,30 @@ class NewsFragment : Fragment() {
         btnEnglishNews = binding.btnEnglishNews
         newsRecyclerView = binding.newsRecyclerView
 
-        newsDataUpdater = NewsDataUpdater(binding, viewLifecycleOwner.lifecycleScope, requireContext())
+        newsDataUpdater =
+            NewsDataUpdater(binding, viewLifecycleOwner.lifecycleScope, requireContext())
 
         btnTurkishNews.isEnabled = false
-        btnTurkishNews.background = resources.getDrawable(R.drawable.news_language_deactive_button, null)
+        btnTurkishNews.background =
+            resources.getDrawable(R.drawable.news_language_deactive_button, null)
         btnEnglishNews.isEnabled = true
 
         btnTurkishNews.setOnClickListener {
             newsDataUpdater.fetchData()
-            btnTurkishNews.background = resources.getDrawable(R.drawable.news_language_deactive_button, null)
+            btnTurkishNews.background =
+                resources.getDrawable(R.drawable.news_language_deactive_button, null)
             btnTurkishNews.isEnabled = false
-            btnEnglishNews.background = resources.getDrawable(R.drawable.news_language_active_button, null)
+            btnEnglishNews.background =
+                resources.getDrawable(R.drawable.news_language_active_button, null)
             btnEnglishNews.isEnabled = true
         }
         btnEnglishNews.setOnClickListener {
             newsDataUpdater.fetchData(document = "apiEnKey")
             btnEnglishNews.isEnabled = false
-            btnEnglishNews.background = resources.getDrawable(R.drawable.news_language_deactive_button, null)
-            btnTurkishNews.background = resources.getDrawable(R.drawable.news_language_active_button, null)
+            btnEnglishNews.background =
+                resources.getDrawable(R.drawable.news_language_deactive_button, null)
+            btnTurkishNews.background =
+                resources.getDrawable(R.drawable.news_language_active_button, null)
             btnTurkishNews.isEnabled = true
         }
 

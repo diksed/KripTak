@@ -5,5 +5,5 @@ data class Platform(
     val name: String,
     val slug: String,
     val symbol: String,
-    val token_address: String
+    val tokenAddress: String
 )

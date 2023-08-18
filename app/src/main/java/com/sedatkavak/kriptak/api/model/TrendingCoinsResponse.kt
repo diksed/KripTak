@@ -9,6 +9,5 @@ data class TrendingCoin(
 )
 
 data class CoinItem(
-
     val symbol: String,
 )

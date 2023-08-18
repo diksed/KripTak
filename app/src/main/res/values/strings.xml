@@ -20,4 +20,6 @@
     <string name="checkConnection">Lütfen internet bağlantınızı kontrol edip tekrar deneyiniz.</string>
     <string name="tryAgain">Tekrar Dene</string>
     <string name="kriptakLogo">KripTak Logo</string>
+    <string name="network_error">Ağ hatası. Lütfen tekrar deneyin.</string>
+    <string name="no_data">Veri alınırken hata oluştu. Lütfen tekrar deneyin.</string>
 </resources>

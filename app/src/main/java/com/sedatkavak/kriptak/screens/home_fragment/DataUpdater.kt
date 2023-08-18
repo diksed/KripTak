@@ -2,8 +2,12 @@ package com.sedatkavak.kriptak.screens.home_fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.adapter.CryptoAdapter
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiService
 import com.sedatkavak.kriptak.api.service.CoinGeckoApiUtilities
@@ -11,6 +15,8 @@ import com.sedatkavak.kriptak.databinding.FragmentHomeBinding
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionActivity
 import com.sedatkavak.kriptak.screens.connection_screen.ConnectionUtils
 import com.sedatkavak.kriptak.screens.news_fragment.NewsDataUpdater
+import com.sedatkavak.kriptak.screens.news_fragment.UIComponents
+import com.sedatkavak.kriptak.utils.SecondsConstants.UPDATE_INTERVAL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,8 +31,8 @@ class DataUpdater(
 ) {
     private val newsDataUpdater =
         NewsDataUpdater(context = context, lifecycleScope = lifecycleScope)
-    private val updateInterval: Long = 30000
-    private val updateHandler = android.os.Handler()
+    private val updateInterval: Long = UPDATE_INTERVAL
+    private val updateHandler = android.os.Handler(Looper.getMainLooper())
     private val updateRunnable = object : Runnable {
         override fun run() {
             fetchData()
@@ -50,9 +56,11 @@ class DataUpdater(
         }
         newsDataUpdater.fetchApiKeyFromFirestore(
             document = "apiDailyKey",
-            progressBar = binding.newsLoadingProgressBar,
-            binding.dailyNewsLoadingFrameLayout,
-            recyclerView = binding.dailyNewsRecyclerView,
+            uiComponents = UIComponents(
+                binding.newsLoadingProgressBar,
+                binding.dailyNewsLoadingFrameLayout,
+                binding.dailyNewsRecyclerView,
+            )
         )
         getTrendingCoins()
     }
@@ -78,10 +86,24 @@ class DataUpdater(
                     }
                 }
             } catch (e: IOException) {
-                // To do
-
+                Log.e("Network Error", "IO Exception", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.network_error),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
             } catch (e: HttpException) {
-                // To do
+                Log.e("Network Error", "HTTP Exception", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.no_data),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }

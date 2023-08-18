@@ -33,66 +33,59 @@ class NewsDataUpdater(
         }
         fetchApiKeyFromFirestore(
             document,
-            binding!!.newsProgressBar,
-            binding.newsLoadingFrameLayout,
-            binding.newsRecyclerView,
+            UIComponents(
+                binding!!.newsProgressBar,
+                binding.newsLoadingFrameLayout,
+                binding.newsRecyclerView,
+            )
         )
     }
 
     fun fetchApiKeyFromFirestore(
         document: String,
-        progressBar: ProgressBar,
-        progressBarFrameLayout: FrameLayout,
-        recyclerView: RecyclerView,
+        uiComponents: UIComponents,
     ) {
         val db = FirebaseFirestore.getInstance()
         db.collection("NewsApi").document(document)
             .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val apiKey = document.getString("key")
-                    val searchQuery = document.getString("searchQuery")
-                    val language = document.getString("language")
-                    val newsSize = document.getLong("newsSize")!!.toInt()
-                    val unwantedSources = document.get("unwantedSources") as List<String>
-                    getNews(
-                        apiKey,
-                        searchQuery,
-                        language,
-                        newsSize,
-                        unwantedSources,
-                        progressBar,
-                        progressBarFrameLayout,
-                        recyclerView,
+            .addOnSuccessListener { documentResult ->
+                if (documentResult != null) {
+                    val newsRequest = NewsRequest(
+                        apiKey = documentResult.getString("key")!!,
+                        searchQuery = documentResult.getString("searchQuery")!!,
+                        language = documentResult.getString("language")!!,
+                        newsSize = documentResult.getLong("newsSize")!!.toInt(),
+                        unwantedSources = documentResult.get("unwantedSources") as? List<String>
+                            ?: emptyList()
                     )
+                    getNews(newsRequest, uiComponents)
                 }
             }
             .addOnFailureListener { exception ->
             }
     }
 
-    fun getNews(
-        apiKey: String?,
-        searchQuery: String?,
-        language: String?,
-        newsSize: Int,
-        unwantedSources: List<String>,
-        progressBar: ProgressBar,
-        progressBarFrameLayout: FrameLayout,
-        recyclerView: RecyclerView,
+    private fun getNews(
+        newsRequest: NewsRequest,
+        uiComponents: UIComponents,
     ) {
         lifecycleScope.launch(Dispatchers.IO) {
             val res = NewsApiUtilities.getInstance().create(NewsApiService::class.java)
-                .getNews(apiKey = apiKey!!, searchQuery = searchQuery!!, language = language!!)
+                .getNews(
+                    apiKey = newsRequest.apiKey,
+                    searchQuery = newsRequest.searchQuery,
+                    language = newsRequest.language
+                )
             withContext(Dispatchers.Main) {
-                progressBar.visibility = View.GONE
-                progressBarFrameLayout.visibility = View.GONE
+                uiComponents.progressBar.visibility = View.GONE
+                uiComponents.progressBarFrameLayout.visibility = View.GONE
                 res.body()?.articles?.let { articles ->
-                    val uniqueArticles = filterNews(articles, unwantedSources)
-                    recyclerView.adapter = NewsAdapter(uniqueArticles, newsSize)
+                    val uniqueArticles = filterNews(articles, newsRequest.unwantedSources)
+                    uiComponents.recyclerView.adapter =
+                        NewsAdapter(uniqueArticles, newsRequest.newsSize)
                     val layoutManager = LinearLayoutManager(context)
-                    recyclerView.layoutManager = layoutManager
-                    recyclerView.isNestedScrollingEnabled = false
+                    uiComponents.recyclerView.layoutManager = layoutManager
+                    uiComponents.recyclerView.isNestedScrollingEnabled = false
                 }
             }
         }
@@ -110,3 +103,17 @@ class NewsDataUpdater(
         return uniqueArticleList
     }
 }
+
+data class NewsRequest(
+    val apiKey: String,
+    val searchQuery: String,
+    val language: String,
+    val newsSize: Int,
+    val unwantedSources: List<String>
+)
+
+data class UIComponents(
+    val progressBar: ProgressBar,
+    val progressBarFrameLayout: FrameLayout,
+    val recyclerView: RecyclerView
+)

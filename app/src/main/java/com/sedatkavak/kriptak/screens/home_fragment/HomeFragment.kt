@@ -9,13 +9,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.databinding.FragmentHomeBinding
+import com.sedatkavak.kriptak.utils.FragmentPositions.CRYPTO_LIST_FRAGMENT_POSITION
+import com.sedatkavak.kriptak.utils.FragmentPositions.NEWS_FRAGMENT_POSITION
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewPager: ViewPager
     private lateinit var dataUpdater: DataUpdater
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewPager = requireActivity().findViewById(R.id.viewPager)
         return binding.root
@@ -48,10 +54,10 @@ class HomeFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.llAllCrypto.setOnClickListener {
-            viewPager.currentItem = 2
+            viewPager.currentItem = CRYPTO_LIST_FRAGMENT_POSITION
         }
         binding.llAllNews.setOnClickListener {
-            viewPager.currentItem = 3
+            viewPager.currentItem = NEWS_FRAGMENT_POSITION
         }
     }
 }

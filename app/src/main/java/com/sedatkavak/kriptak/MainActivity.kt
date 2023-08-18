@@ -6,6 +6,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sedatkavak.kriptak.adapter.ViewPagerAdapter
 import com.sedatkavak.kriptak.databinding.ActivityMainBinding
+import com.sedatkavak.kriptak.utils.FragmentPositions.CRYPTO_LIST_FRAGMENT_POSITION
+import com.sedatkavak.kriptak.utils.FragmentPositions.FAVORITES_FRAGMENT_POSITION
+import com.sedatkavak.kriptak.utils.FragmentPositions.HOME_FRAGMENT_POSITION
+import com.sedatkavak.kriptak.utils.FragmentPositions.NEWS_FRAGMENT_POSITION
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +33,10 @@ class MainActivity : AppCompatActivity() {
     private fun swipeViewPager() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_home -> viewPager.currentItem = 0
-                R.id.menu_favorites -> viewPager.currentItem = 1
-                R.id.menu_crypto_list -> viewPager.currentItem = 2
-                R.id.menu_news -> viewPager.currentItem = 3
+                R.id.menu_home -> viewPager.currentItem = HOME_FRAGMENT_POSITION
+                R.id.menu_favorites -> viewPager.currentItem = FAVORITES_FRAGMENT_POSITION
+                R.id.menu_crypto_list -> viewPager.currentItem = CRYPTO_LIST_FRAGMENT_POSITION
+                R.id.menu_news -> viewPager.currentItem = NEWS_FRAGMENT_POSITION
             }
             true
         }
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
                 // Do nothing
             }
+
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,

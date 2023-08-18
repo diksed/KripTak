@@ -3,6 +3,7 @@ package com.sedatkavak.kriptak.screens.home_fragment
 import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiService
 import com.sedatkavak.kriptak.api.service.CoinMarketCapApiUtilities
+import com.sedatkavak.kriptak.utils.FragmentPositions.MAX_COINS
 
 class MatchCoinsSymbol {
     suspend fun getFilteredCoins(coinSymbols: List<String>): List<CryptoCurrency> {
@@ -18,12 +19,12 @@ class MatchCoinsSymbol {
                 filteredCoins.add(matchingCoin)
                 matchedCount++
             }
-            if (matchedCount == 3) {
+            if (matchedCount == MAX_COINS) {
                 break
             }
         }
 
-        if (filteredCoins.size < 3) {
+        if (filteredCoins.size < MAX_COINS) {
             for (index in filteredCoins.size until coinSymbols.size) {
                 val symbol = coinSymbols[index]
                 val matchingCoin = coinList?.find { coin -> coin.symbol == symbol }
@@ -31,7 +32,7 @@ class MatchCoinsSymbol {
                     filteredCoins.add(matchingCoin)
                     matchedCount++
                 }
-                if (matchedCount == 3) {
+                if (matchedCount == MAX_COINS) {
                     break
                 }
             }

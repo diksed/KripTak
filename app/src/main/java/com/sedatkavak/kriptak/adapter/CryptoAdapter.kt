@@ -10,14 +10,20 @@ import com.bumptech.glide.Glide
 import com.sedatkavak.kriptak.R
 import com.sedatkavak.kriptak.api.model.CryptoCurrency
 import com.sedatkavak.kriptak.databinding.HomepageDailyFavoriteItemLayoutBinding
+import java.util.Locale
 
-class CryptoAdapter(var context: Context, var list: List<CryptoCurrency>) :
+class CryptoAdapter(var context: Context, private var list: List<CryptoCurrency>) :
     RecyclerView.Adapter<CryptoAdapter.CryptoAdapterViewHolder>() {
 
-    inner class CryptoAdapterViewHolder(val binding: HomepageDailyFavoriteItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class CryptoAdapterViewHolder(val binding: HomepageDailyFavoriteItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoAdapterViewHolder {
-        val binding = HomepageDailyFavoriteItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = HomepageDailyFavoriteItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return CryptoAdapterViewHolder(binding)
     }
 
@@ -28,7 +34,7 @@ class CryptoAdapter(var context: Context, var list: List<CryptoCurrency>) :
         itemBinding.dailyFavoriteCryptoNameTextView.text = item.name
         itemBinding.dailyFavoriteCryptoSymbolTextView.text = item.symbol
         itemBinding.dailyFavoriteCryptoPriceTextView.text =
-            "${String.format("%.02f", item.quotes[0].price)} $"
+            "${String.format(Locale.US, "%.02f", item.quotes[0].price)} $"
 
         Glide.with(context).load(
             "https://s2.coinmarketcap.com/static/img/coins/64x64/" + item.id + ".png"
@@ -43,15 +49,27 @@ class CryptoAdapter(var context: Context, var list: List<CryptoCurrency>) :
         if (item.quotes[0].percentChange24h > 0) {
             itemBinding.dailyFavoriteCryptoChangeImageView.setImageResource(R.drawable.baseline_arrow_drop_up_24)
             itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.green))
-            itemBinding.dailyFavoriteCryptoChangeTextView.text = "%${String.format("%.02f", item.quotes[0].percentChange24h)}"
-            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(ContextCompat.getColor(context, R.color.green), PorterDuff.Mode.MULTIPLY);
+            itemBinding.dailyFavoriteCryptoChangeTextView.text =
+                "%${String.format(Locale.US, "%.02f", item.quotes[0].percentChange24h)}"
+            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.green
+                ), PorterDuff.Mode.MULTIPLY
+            )
         } else {
             itemBinding.dailyFavoriteCryptoChangeImageView.setImageResource(R.drawable.baseline_arrow_drop_down_24)
             itemBinding.dailyFavoriteCryptoChangeTextView.setTextColor(context.resources.getColor(R.color.lightRed))
             val percentChange = item.quotes[0].percentChange24h
-            val formattedPercentChange = String.format("%.02f", percentChange).replace("-", "")
+            val formattedPercentChange =
+                String.format(Locale.US, "%.02f", percentChange).replace("-", "")
             itemBinding.dailyFavoriteCryptoChangeTextView.text = "%$formattedPercentChange"
-            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(ContextCompat.getColor(context, R.color.lightRed), PorterDuff.Mode.MULTIPLY);
+            itemBinding.dailyFavoriteCryptoChartImageView.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.lightRed
+                ), PorterDuff.Mode.MULTIPLY
+            )
         }
 
         holder.itemView.setOnClickListener {

@@ -142,7 +142,8 @@ class CryptoUpdater(
         sortAscending = !sortAscending
         sortCryptoList(sortType)
         binding.coinRecyclerView.scrollToPosition(0)
-        binding.coinRecyclerView.adapter?.notifyDataSetChanged()
+        val adapter = binding.coinRecyclerView.adapter
+        adapter?.notifyItemRangeChanged(0, adapter.itemCount)
     }
 
     fun filterCryptoList(filter: String) {
@@ -150,9 +151,9 @@ class CryptoUpdater(
         if (filter.isEmpty()) {
             filteredCoinList.addAll(coinList)
         } else {
-            val lowerCaseFilter = filter.toLowerCase(Locale.getDefault())
+            val lowerCaseFilter = filter.lowercase(Locale.getDefault())
             for (coin in coinList) {
-                if (coin.name.toLowerCase(Locale.getDefault()).contains(lowerCaseFilter)) {
+                if (coin.name.lowercase(Locale.getDefault()).contains(lowerCaseFilter)) {
                     filteredCoinList.add(coin)
                 }
             }

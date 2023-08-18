@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.sedatkavak.kriptak.R
@@ -38,28 +38,57 @@ class CryptoListFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.sortByNameButton.setOnClickListener {
-            cryptoUpdater.sortByCrypto("name")
-            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(
-                0, 0,
-                if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24,
-                0
+            sortAndUpdateUI(
+                "name",
+                binding.sortByNameButton,
+                binding.sortByPriceButton,
+                binding.sortByChangeButton
             )
-            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
         }
-        binding.sortByPriceButton.setOnClickListener{
-            cryptoUpdater.sortByCrypto("price")
-            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(
-                0, 0, if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24, 0)
-            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        binding.sortByPriceButton.setOnClickListener {
+            sortAndUpdateUI(
+                "price",
+                binding.sortByPriceButton,
+                binding.sortByNameButton,
+                binding.sortByChangeButton
+            )
         }
-        binding.sortByChangeButton.setOnClickListener{
-            cryptoUpdater.sortByCrypto("change")
-            binding.sortByChangeButton.setCompoundDrawablesWithIntrinsicBounds(
-                0, 0, if (cryptoUpdater.sortAscending) R.drawable.baseline_arrow_drop_down_24 else R.drawable.baseline_arrow_drop_up_24, 0)
-            binding.sortByNameButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
-            binding.sortByPriceButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.baseline_remove_24, 0)
+        binding.sortByChangeButton.setOnClickListener {
+            sortAndUpdateUI(
+                "change",
+                binding.sortByChangeButton,
+                binding.sortByNameButton,
+                binding.sortByPriceButton
+            )
         }
+    }
+
+    private fun sortAndUpdateUI(
+        sortBy: String,
+        activeButton: Button,
+        inactiveButton1: Button,
+        inactiveButton2: Button
+    ) {
+        cryptoUpdater.sortByCrypto(sortBy)
+        activeButton.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0,
+            if (cryptoUpdater.sortAscending)
+                R.drawable.baseline_arrow_drop_down_24
+            else
+                R.drawable.baseline_arrow_drop_up_24,
+            0
+        )
+        inactiveButton1.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            0,
+            R.drawable.baseline_remove_24,
+            0
+        )
+        inactiveButton2.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            0,
+            R.drawable.baseline_remove_24,
+            0
+        )
     }
 }
