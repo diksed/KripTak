@@ -1,25 +1,3 @@
 <resources>
     <string name="app_name">KripTak</string>
-    <string name="favorites_of_the_day">Günün Favorileri</string>
-    <string name="allCrypto">Tüm Kripto Paralar</string>
-    <string name="news">Haberler</string>
-    <string name="allNews">Tüm Haberler</string>
-    <string name="myFavorites">Favorilerim</string>
-    <string name="allMyFavorites">Tüm Favorilerim</string>
-    <string name="menu_home">Ana Sayfa</string>
-    <string name="menu_favorites">Favoriler</string>
-    <string name="menu_crypto_list">Kripto Listesi</string>
-    <string name="menu_news">Haberler</string>
-    <string name="turkishNews">Türkçe Haberler</string>
-    <string name="englishNews">İngilizce Haberler</string>
-    <string name="searchCoin">Kripto Para Ara…</string>
-    <string name="name">İsim</string>
-    <string name="price">Fiyat</string>
-    <string name="change">1G %</string>
-    <string name="noConnection">Bağlantı Yok!</string>
-    <string name="checkConnection">Lütfen internet bağlantınızı kontrol edip tekrar deneyiniz.</string>
-    <string name="tryAgain">Tekrar Dene</string>
-    <string name="kriptakLogo">KripTak Logo</string>
-    <string name="network_error">Ağ hatası. Lütfen tekrar deneyin.</string>
-    <string name="no_data">Veri alınırken hata oluştu. Lütfen tekrar deneyin.</string>
 </resources>
