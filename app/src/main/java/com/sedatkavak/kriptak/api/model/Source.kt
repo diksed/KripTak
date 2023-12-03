@@ -1,6 +1,0 @@
-package com.sedatkavak.kriptak.api.model
-
-data class Source(
-    val id: Any,
-    val name: String
-)
