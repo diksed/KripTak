@@ -65,6 +65,8 @@ dependencies {
     implementation("androidx.navigation:navigation-common-ktx:2.7.5")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.5")
     implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation("com.airbnb.android:lottie-compose:6.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
