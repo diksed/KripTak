@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KripTak</string>
+    <string name="not_network_connection">No network connection</string>
+    <string name="nav_home_title">Home</string>
 </resources>
