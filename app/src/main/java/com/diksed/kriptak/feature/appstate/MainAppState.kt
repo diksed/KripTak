@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.diksed.kriptak.core.util.NetworkMonitor
+import com.diksed.kriptak.feature.connection.navigation.navigateToConnection
 import com.diksed.kriptak.feature.home.navigation.HomeNavigationRoute
 import com.diksed.kriptak.feature.home.navigation.navigateToHome
 import com.diksed.kriptak.feature.navigation.TopLevelDestination
@@ -33,7 +34,7 @@ fun rememberMainAppState(
 @Stable
 class MainAppState(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope,
     networkMonitor: NetworkMonitor,
 ) {
     val currentDestination: NavDestination?
@@ -69,6 +70,13 @@ class MainAppState(
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
         }
+    }
+    fun navigateToConnectionScreen(){
+        navController.navigateToConnection()
+    }
+
+    fun navigateToHomeScreen(){
+        navController.navigateToHome()
     }
 
     fun onBackClick() {
