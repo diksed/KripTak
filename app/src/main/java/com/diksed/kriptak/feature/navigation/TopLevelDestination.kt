@@ -13,7 +13,7 @@ enum class TopLevelDestination(
 ) {
     HOME(
         route = HomeNavigationRoute,
-        selectedIcon = Icon.ImageVectorIcon(AppIcons.Home),
+        selectedIcon = Icon.DrawableResourceIcon(R.drawable.selected_home),
         unselectedIcon = Icon.ImageVectorIcon(AppIcons.HomeOutlined),
         titleTextId = R.string.nav_home_title,
     ),
