@@ -12,9 +12,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.diksed.kriptak.core.util.NetworkMonitor
 import com.diksed.kriptak.feature.connection.navigation.navigateToConnection
+import com.diksed.kriptak.feature.crypto_list.navigation.navigateToCryptoList
+import com.diksed.kriptak.feature.favorites.navigation.navigateToFavorites
 import com.diksed.kriptak.feature.home.navigation.HomeNavigationRoute
 import com.diksed.kriptak.feature.home.navigation.navigateToHome
 import com.diksed.kriptak.feature.navigation.TopLevelDestination
+import com.diksed.kriptak.feature.news.navigation.navigateToNews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -69,13 +72,17 @@ class MainAppState(
 
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
+            TopLevelDestination.FAVORITES -> navController.navigateToFavorites(topLevelNavOptions)
+            TopLevelDestination.CRYPTO_LIST -> navController.navigateToCryptoList(topLevelNavOptions)
+            TopLevelDestination.NEWS -> navController.navigateToNews(topLevelNavOptions)
         }
     }
-    fun navigateToConnectionScreen(){
+
+    fun navigateToConnectionScreen() {
         navController.navigateToConnection()
     }
 
-    fun navigateToHomeScreen(){
+    fun navigateToHomeScreen() {
         navController.navigateToHome()
     }
 

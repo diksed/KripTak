@@ -1,34 +1,34 @@
-package com.diksed.kriptak.feature.home
+package com.diksed.kriptak.feature.news
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diksed.kriptak.ui.components.MainAppScaffold
 
 @Composable
-internal fun HomeScreenRoute(
+internal fun NewsScreenRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: NewsViewModel = hiltViewModel(),
 ) {
-    val homeUiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val newsUiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    HomeScreen(
+    NewsScreen(
         modifier = modifier,
     )
 }
 
 @Composable
-fun HomeScreen(
+fun NewsScreen(
     modifier: Modifier = Modifier,
 ) {
     MainAppScaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "Home", style = MaterialTheme.typography.titleMedium)
+        Text(text = "NewsScreen", style = MaterialTheme.typography.titleMedium)
     }
 }

@@ -5,8 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.diksed.kriptak.feature.connection.navigation.connectionScreen
+import com.diksed.kriptak.feature.crypto_list.navigation.cryptoListScreen
+import com.diksed.kriptak.feature.favorites.navigation.favoritesScreen
 import com.diksed.kriptak.feature.home.navigation.HomeNavigationRoute
 import com.diksed.kriptak.feature.home.navigation.homeScreen
+import com.diksed.kriptak.feature.news.navigation.newsScreen
 
 @Composable
 fun MainNavHost(
@@ -20,6 +23,9 @@ fun MainNavHost(
         startDestination = startDestination,
     ) {
         homeScreen()
+        favoritesScreen()
+        cryptoListScreen()
+        newsScreen()
         connectionScreen()
     }
 }

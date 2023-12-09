@@ -44,7 +44,7 @@ fun MainApp(
 ) {
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
-    LaunchedEffect(isOffline, appState.currentDestination) {
+    LaunchedEffect(isOffline) {
         if (isOffline) {
             appState.navigateToConnectionScreen()
         } else {
@@ -83,6 +83,7 @@ internal fun AppIcon(
             imageVector = icon.imageVector,
             contentDescription = null,
         )
+
         is Icon.DrawableResourceIcon -> Icon(
             painter = painterResource(id = icon.id),
             contentDescription = null,
@@ -101,20 +102,24 @@ internal fun AppNavBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
 ) {
-    NavigationBar(
-        containerColor = bottomNavBarColor,
-    ) {
+    NavigationBar(containerColor = bottomNavBarColor) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             NavigationBarItem(
-                selected = selected,
-                interactionSource = remember { NoRippleInteractionSource() },
-                onClick = { onNavigateToDestination(destination) },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = bottomNavBarColor,
                     selectedIconColor = selectedIconColor,
                     unselectedIconColor = Color.White,
                 ),
+                interactionSource = remember { NoRippleInteractionSource() },
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                label = {
+                    Text(
+                        text = stringResource(id = destination.titleTextId),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                },
                 icon = {
                     val icon = if (selected) {
                         destination.selectedIcon
@@ -122,12 +127,6 @@ internal fun AppNavBar(
                         destination.unselectedIcon
                     }
                     AppIcon(icon = icon)
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = destination.titleTextId),
-                        style = MaterialTheme.typography.bodySmall,
-                    )
                 },
             )
         }
