@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "920661794968",
+    "project_id": "diksed-kriptak",
+    "storage_bucket": "diksed-kriptak.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920661794968:android:a7e6c3ebb06b04c971f0ed",
+        "android_client_info": {
+          "package_name": "com.diksed.kriptak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920661794968-310k8ivgfad893gqi80u9rerf7np5geb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5CP9pAqbpAC76SXUKbSUMoTGJjncHn1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920661794968-310k8ivgfad893gqi80u9rerf7np5geb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
