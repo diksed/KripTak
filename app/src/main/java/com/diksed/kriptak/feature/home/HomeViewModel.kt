@@ -3,7 +3,6 @@ package com.diksed.kriptak.feature.home
 import androidx.lifecycle.viewModelScope
 import com.diksed.kriptak.arch.BaseViewModel
 import com.diksed.kriptak.arch.IViewState
-import com.diksed.kriptak.core.data.model.Coin
 import com.diksed.kriptak.core.data.remote.source.CoinGeckoTrendingCoinsRemoteDataSource
 import com.diksed.kriptak.core.data.repository.CoinIdRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,33 +20,35 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             loadTrendingCoins()
+            loadCoins()
         }
     }
 
     private suspend fun loadTrendingCoins() {
+        setState { copy(isLoading = true) }
         try {
-            val trendingCoinsResponse = coinGeckoRemoteDataSource.getTrendingCoins()
-            val trendingCoins = trendingCoinsResponse.coins.map { coin ->
-                Coin(
-                    id = coin.item.id,
-                    name = coin.item.name ?: "",
-                    symbol = coin.item.symbol ?: "",
-                    image = coin.item.large ?: "",
-                    rank = coin.item.marketCapRank ?: 0
-                )
-            }
-
-            saveTrendingCoinIds(trendingCoins.map { it.id })
-
-            setState {
-                copy(isLoading = false, trendingCoins = trendingCoins)
-            }
+            val trendingCoins =
+                coinGeckoRemoteDataSource.getTrendingCoins().coins.map { it.item.name }
+            setState { copy(trendingCoins = trendingCoins) }
         } catch (e: Exception) {
-            setState {
-                copy(isLoading = false, error = "Error loading trending coins")
-            }
+            setState { copy(error = e.message) }
+        } finally {
+            setState { copy(isLoading = false) }
         }
     }
+
+    private suspend fun loadCoins() {
+        setState { copy(isLoading = true) }
+        try {
+            val coins = coinGeckoRemoteDataSource.getCoins().map { it.name }
+            setState { copy(coins = coins) }
+        } catch (e: Exception) {
+            setState { copy(error = e.message) }
+        } finally {
+            setState { copy(isLoading = false) }
+        }
+    }
+
 
     private suspend fun saveTrendingCoinIds(coinIds: List<String>) {
         coinIdRepository.saveCoinIds(coinIds)
@@ -57,6 +58,7 @@ class HomeViewModel @Inject constructor(
 data class HomeUiState(
     val isLoading: Boolean = false,
     val title: String = "Home",
-    val trendingCoins: List<Coin> = emptyList(),
+    val trendingCoins: List<String> = emptyList(),
+    val coins: List<String> = emptyList(),
     val error: String? = null
 ) : IViewState

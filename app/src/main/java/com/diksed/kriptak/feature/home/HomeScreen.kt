@@ -19,16 +19,18 @@ internal fun HomeScreenRoute(
 
     HomeScreen(
         modifier = modifier,
+        uiState = homeUiState,
     )
 }
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    uiState: HomeUiState,
 ) {
     MainAppScaffold(
         modifier = modifier.fillMaxSize(),
     ) {
-        Text(text = "Home", style = MaterialTheme.typography.titleMedium)
+        Text(text = "deneme " + uiState.coins, style = MaterialTheme.typography.titleMedium)
     }
 }
