@@ -3,6 +3,7 @@ package com.diksed.kriptak.feature.home
 import androidx.lifecycle.viewModelScope
 import com.diksed.kriptak.arch.BaseViewModel
 import com.diksed.kriptak.arch.IViewState
+import com.diksed.kriptak.core.data.model.CoinGeckoTrendCoinResponse
 import com.diksed.kriptak.core.data.remote.source.CoinGeckoTrendingCoinsRemoteDataSource
 import com.diksed.kriptak.core.data.repository.CoinIdRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +29,7 @@ class HomeViewModel @Inject constructor(
         setState { copy(isLoading = true) }
         try {
             val trendingCoins =
-                coinGeckoRemoteDataSource.getTrendingCoins().coins.map { it.item.name }
+                coinGeckoRemoteDataSource.getTrendingCoins().coins.map { it.item }
             setState { copy(trendingCoins = trendingCoins) }
         } catch (e: Exception) {
             setState { copy(error = e.message) }
@@ -58,7 +59,7 @@ class HomeViewModel @Inject constructor(
 data class HomeUiState(
     val isLoading: Boolean = false,
     val title: String = "Home",
-    val trendingCoins: List<String> = emptyList(),
+    val trendingCoins: List<CoinGeckoTrendCoinResponse.CoinItemDetails> = emptyList(),
     val coins: List<String> = emptyList(),
     val error: String? = null
 ) : IViewState

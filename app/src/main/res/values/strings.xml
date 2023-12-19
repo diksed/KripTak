@@ -6,4 +6,5 @@
     <string name="nav_news_title">Haberler</string>
     <string name="no_connection">Bağlantı Yok!</string>
     <string name="check_connection">Lütfen internet bağlantınızı kontrol ediniz.</string>
+    <string name="daily_favorites">GÜNÜN FAVORİLERİ</string>
 </resources>
