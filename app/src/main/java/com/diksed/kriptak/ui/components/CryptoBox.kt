@@ -58,7 +58,6 @@ fun CryptoBox(
                 contentDescription = null,
                 modifier = Modifier
                     .size(45.dp)
-                    .padding(start = 10.dp)
                     .weight(1f)
             )
 

@@ -6,11 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -36,22 +35,17 @@ class SplashActivity : ComponentActivity() {
     @Composable
     private fun SplashScreen() {
         LaunchedEffect(key1 = true) {
-            delay(2500)
+            delay(2000)
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         }
-        Box(
-            modifier = Modifier
-                .background(bgColor),
-            contentAlignment = Alignment.Center
-        ) {
-            val composition by rememberLottieComposition(
-                spec = LottieCompositionSpec.RawRes(R.raw.kriptak_splash)
-            )
 
-            LottieAnimation(
-                composition = composition,
-            )
-        }
+        val composition by rememberLottieComposition(
+            spec = LottieCompositionSpec.RawRes(R.raw.kriptak_splash)
+        )
+
+        LottieAnimation(
+            modifier = Modifier.fillMaxSize().background(bgColor),
+            composition = composition,
+        )
     }
-
 }
