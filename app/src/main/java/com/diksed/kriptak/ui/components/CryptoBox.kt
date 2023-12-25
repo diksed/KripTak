@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.diksed.kriptak.R
 import com.diksed.kriptak.core.data.model.CoinGeckoTrendCoinResponse
@@ -34,6 +34,7 @@ fun CryptoBox(
     coin: CoinGeckoTrendCoinResponse.CoinItemDetails
 ) {
     val formattedPrice = coinPriceFormat(coin.data.price.substring(1).toDouble())
+    val formattedPercentage = String.format("%.2f", coin.data.price_change_percentage_24h.usd)
     val priceChangePercentage = coin.data.price_change_percentage_24h.usd
     val icon = if (priceChangePercentage >= 0) {
         painterResource(id = R.drawable.baseline_arrow_drop_up_24)
@@ -85,7 +86,7 @@ fun CryptoBox(
 
             Text(
                 text = "${formattedPrice}$",
-                style = TextStyle(color = Color.White, fontSize = 16.sp),
+                style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 10.dp)
@@ -100,9 +101,8 @@ fun CryptoBox(
                     .scale(1.5f)
                     .weight(0.3f)
             )
-
             Text(
-                text = "%${priceChangePercentage.toString().substring(0, 4)}",
+                text = "%$formattedPercentage",
                 style = TextStyle(
                     color = if (priceChangePercentage >= 0) Color.Green else Color.Red,
                 ),
