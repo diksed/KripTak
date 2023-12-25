@@ -7,4 +7,5 @@
     <string name="no_connection">Bağlantı Yok!</string>
     <string name="check_connection">Lütfen internet bağlantınızı kontrol ediniz.</string>
     <string name="daily_favorites">GÜNÜN FAVORİLERİ</string>
+    <string name="no_data">Data Yok</string>
 </resources>

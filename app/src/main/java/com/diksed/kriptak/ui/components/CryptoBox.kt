@@ -78,9 +78,8 @@ fun CryptoBox(
             }
 
             SvgImage(
-                image = coin.data.sparkline,
+                image = "${"https://"}graphsv2.coinpaprika.com/currency/chart/${coin.symbol}-${coin.id}/24h/chart.svg",
                 modifier = Modifier
-                    .size(60.dp)
                     .weight(1f)
             )
 
