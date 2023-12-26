@@ -17,7 +17,7 @@ import com.diksed.kriptak.ui.components.CryptoBox
 fun DailyTrendCoins(homeUiState: HomeUiState) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = stringResource(id = R.string.daily_favorites),
+            text = stringResource(id = R.string.daily_trends),
             style = MaterialTheme.typography.titleSmall,
         )
         LazyColumn(content = {

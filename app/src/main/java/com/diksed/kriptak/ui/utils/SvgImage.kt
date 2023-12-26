@@ -2,14 +2,17 @@ package com.diksed.kriptak.ui.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
@@ -26,19 +29,30 @@ fun SvgImage(image: String, modifier: Modifier = Modifier) {
             .build()
     )
 
-    if (painter.state is AsyncImagePainter.State.Success || painter.state is AsyncImagePainter.State.Empty || painter.state is AsyncImagePainter.State.Loading) {
-        Image(
-            painter = painter,
-            contentDescription = null,
-            modifier = modifier,
-        )
-    } else {
-        Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    when (painter.state) {
+        is AsyncImagePainter.State.Success, is AsyncImagePainter.State.Empty -> {
             Image(
-                painter = painterResource(id = R.drawable.no_data_chart),
+                painter = painter,
                 contentDescription = null,
+                modifier = modifier.scale(1.1f),
             )
-            Text(text = stringResource(id = R.string.no_data), style = MaterialTheme.typography.labelSmall)
+        }
+
+        is AsyncImagePainter.State.Loading -> {
+            CircularProgressIndicator()
+        }
+
+        else -> {
+            Box(modifier = modifier, contentAlignment = Alignment.Center) {
+                Image(
+                    painter = painterResource(id = R.drawable.no_data_chart),
+                    contentDescription = null,
+                )
+                Text(
+                    text = stringResource(id = R.string.no_graph),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp)
+                )
+            }
         }
     }
 }
