@@ -42,7 +42,7 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             KripTakLogo(modifier.padding(top = 10.dp))
-            DailyTrendCoins(homeUiState = uiState)
+            DailyTrendCoins(homeUiState = uiState, modifier = Modifier.padding(top = 10.dp))
         }
     }
 }
