@@ -9,13 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.diksed.kriptak.R
 import com.diksed.kriptak.feature.main.MainActivity
+import com.diksed.kriptak.ui.components.CustomLottieAnimation
 import com.diksed.kriptak.ui.theme.KripTakTheme
 import com.diksed.kriptak.ui.theme.bgColor
 import kotlinx.coroutines.delay
@@ -39,13 +36,11 @@ class SplashActivity : ComponentActivity() {
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         }
 
-        val composition by rememberLottieComposition(
-            spec = LottieCompositionSpec.RawRes(R.raw.kriptak_splash)
-        )
-
-        LottieAnimation(
-            modifier = Modifier.fillMaxSize().background(bgColor),
-            composition = composition,
+        CustomLottieAnimation(
+            animation = R.raw.kriptak_splash,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(bgColor)
         )
     }
 }
