@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KripTak</string>
+    <string name="homePage">Ana Sayfa</string>
+    <string name="favorites">Favoriler</string>
+    <string name="cryptoList">Kripto Listesi</string>
+    <string name="news">Haberler</string>
+    <string name="settings">Ayarlar</string>
 </resources>
