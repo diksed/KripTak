@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.diksed.kriptak.features.theme.scaffoldBackgroundColor
 
 @Composable
 fun KripTakScaffold(
@@ -20,7 +21,7 @@ fun KripTakScaffold(
     topBar: @Composable (() -> Unit) = {},
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable (() -> Unit) = {},
-    backgroundColor: Color = MaterialTheme.colors.background,
+    backgroundColor: Color = scaffoldBackgroundColor,
     contentColor: Color = contentColorFor(backgroundColor),
     content: @Composable (PaddingValues) -> Unit
 ) {

@@ -3,7 +3,6 @@ package com.diksed.kriptak.features.component
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.*
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -40,16 +40,15 @@ fun KripTakBottomAppBar(
             .clip(
                 RoundedCornerShape(
                     topStart = 20.dp,
-                    topEnd = 20.dp
+                    topEnd = 20.dp,
                 )
             ),
-
-        tonalElevation = 10.dp,
-        windowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 10.dp),
+        tonalElevation = 30.dp,
         contentPadding = PaddingValues(0.dp),
         contentColor = bottomAppBarItemColor,
-        containerColor = bottomAppBarColor
-    ) {
+        containerColor = bottomAppBarColor,
+
+        ) {
         BottomNav.entries.forEach { screen ->
             val selected = currentDestination.isBottomNavDestinationInHierarchy(screen)
             val primaryColor = MaterialTheme.colorScheme.primary
@@ -60,15 +59,14 @@ fun KripTakBottomAppBar(
                     Icon(
                         imageVector = ImageVector.vectorResource(id = screen.iconId),
                         contentDescription = null,
-                        modifier = Modifier.size(28.dp),
+                        modifier = Modifier.size(35.dp),
                         tint = if (selected) primaryColor else bottomAppBarItemColor
                     )
                 },
-
                 label = {
                     KripTakText(
                         text = stringResource(id = screen.titleTextId),
-                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 8.sp,
                         textAlign = TextAlign.Center,
                         color = if (selected) primaryColor else bottomAppBarItemColor,
                     )

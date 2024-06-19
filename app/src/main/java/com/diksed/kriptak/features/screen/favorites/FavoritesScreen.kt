@@ -31,7 +31,7 @@ fun FavoritesScreen(
             Content(
             )
         },
-        backgroundColor = MaterialTheme.colorScheme.background
+
     )
 
 }

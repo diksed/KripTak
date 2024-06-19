@@ -1,5 +1,7 @@
 package com.diksed.kriptak.features.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -37,11 +39,14 @@ fun NavGraph() {
             }
         },
         backgroundColor = MaterialTheme.colorScheme.background,
-    ) { innerPadding ->
+    ) {
         NavHost(
             navController = navController,
             startDestination = homeNavigationRoute,
-            Modifier.padding(innerPadding),
+            popExitTransition = { ExitTransition.None},
+            popEnterTransition = { EnterTransition.None},
+            enterTransition = { EnterTransition.None},
+            exitTransition = { ExitTransition.None},
         ) {
             homeScreen()
             favoritesScreen()

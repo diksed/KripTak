@@ -29,7 +29,6 @@ fun HomeScreen(
             Content(
             )
         },
-        backgroundColor = MaterialTheme.colors.background
     )
 
 }

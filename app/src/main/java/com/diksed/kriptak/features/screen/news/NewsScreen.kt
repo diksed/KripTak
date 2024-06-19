@@ -32,7 +32,6 @@ fun NewsScreen(
             Content(
             )
         },
-        backgroundColor = MaterialTheme.colorScheme.background
     )
 
 }

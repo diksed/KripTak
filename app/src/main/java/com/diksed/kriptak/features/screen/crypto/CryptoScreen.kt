@@ -31,7 +31,6 @@ fun CryptoScreen(
             Content(
             )
         },
-        backgroundColor = MaterialTheme.colorScheme.background
     )
 
 }
