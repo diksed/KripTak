@@ -26,8 +26,8 @@ import com.diksed.kriptak.features.screen.crypto.navigation.navigateToCrypto
 import com.diksed.kriptak.features.screen.favorites.navigation.navigateToFavorites
 import com.diksed.kriptak.features.screen.home.navigation.navigateToHome
 import com.diksed.kriptak.features.screen.news.navigation.navigateToNews
-import com.diksed.kriptak.features.theme.bottomAppBarColor
-import com.diksed.kriptak.features.theme.bottomAppBarItemColor
+import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
+import com.diksed.kriptak.features.ui.theme.bottomAppBarItemColor
 
 
 @Composable

@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.diksed.kriptak.features.navigation.NavGraph
-import com.diksed.kriptak.features.theme.KripTakTheme
+import com.diksed.kriptak.features.ui.theme.KripTakTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

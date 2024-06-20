@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.theme
+package com.diksed.kriptak.features.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -20,4 +20,3 @@ val VeryDarkGrayishViolet40 = Color(0xFF332D41)
 val VerySoftRed = Color(0xFFF2B8B5)
 val VeryDarkRed = Color(0xFF601410)
 val LightGrayishMagenta = Color(0xFFE6E1E5)
-val Gray500 = Color(0xFF6E6E6E)

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.diksed.kriptak.features.theme.scaffoldBackgroundColor
+import com.diksed.kriptak.features.ui.theme.scaffoldBackgroundColor
 
 @Composable
 fun KripTakScaffold(

@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakScaffold
+import com.diksed.kriptak.features.component.KripTakTopBar
 
 
 @Composable
@@ -26,11 +27,9 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         content = {
-            Content(
-            )
+            Content()
         },
     )
-
 }
 
 @Composable
@@ -41,6 +40,12 @@ private fun Content(
             .fillMaxSize()
             .padding(horizontal = 15.dp),
     ) {
-        Text(text = stringResource(id = R.string.homePage))
+        Column {
+            KripTakTopBar()
+            Text(
+                text = stringResource(id = R.string.homePage),
+                color = MaterialTheme.colors.onPrimary,
+            )
+        }
     }
 }
