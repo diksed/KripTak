@@ -18,6 +18,11 @@ androidxTracing = "1.2.0"
 appcompat = "1.7.0"
 retrofit = "2.9.0"
 androidxCoreSplashscreen = "1.0.1"
+firebaseBom = "33.1.1"
+firebaseFirestore = "25.0.0"
+firebaseAnalytics = "22.0.2"
+firebaseCommonKtx = "21.0.0"
+google-services = "4.4.2"
 
 [libraries]
 accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist" }
@@ -54,9 +59,15 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore"}
+firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "google-services"}
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.services)
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
@@ -68,6 +69,13 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.appcompat)
+
+    //Firebase
+    implementation(libs.google.services)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.analytics)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
 
     //ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
