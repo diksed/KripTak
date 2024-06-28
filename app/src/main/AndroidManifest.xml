@@ -14,15 +14,17 @@
         android:theme="@style/Theme.KripTak"
         tools:targetApi="31">
         <activity
-            android:name=".features.screen.main.MainActivity"
+            android:name=".features.screen.splash.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.KripTak">
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".features.screen.main.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

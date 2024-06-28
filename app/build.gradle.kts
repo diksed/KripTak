@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.appcompat)
 
     //ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -80,6 +81,10 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Retrofit
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.gson)
+
     //Accompanist
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.pager)
@@ -87,6 +92,9 @@ dependencies {
     implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.navigation.animation)
+
+    //Splash
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.tracing.tracing)
     implementation(libs.androidx.tracing.ktx)
