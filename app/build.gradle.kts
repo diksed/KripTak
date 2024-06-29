@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.appcompat)
+    implementation(libs.coil.compose)
 
     //Firebase
     implementation(libs.google.services)

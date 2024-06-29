@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val bottomAppBarColor = Color (0xFF263459)
 val bottomAppBarItemColor = Color (0xFFE6E5E8)
 val scaffoldBackgroundColor = Color (0xFF1A233B)
+val boxColor = Color (0xFF263459)
 
 val DarkModerateViolet = Color(0xFF6750A4)
 val White = Color(0xFFFFFFFF)

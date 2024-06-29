@@ -22,7 +22,8 @@ firebaseBom = "33.1.1"
 firebaseFirestore = "25.0.0"
 firebaseAnalytics = "22.0.2"
 firebaseCommonKtx = "21.0.0"
-google-services = "4.4.2"
+googleServices = "4.4.2"
+coilCompose = "2.6.0"
 
 [libraries]
 accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist" }
@@ -63,11 +64,12 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore"}
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
-google-services = { group = "com.google.gms", name = "google-services", version.ref = "google-services"}
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices"}
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
