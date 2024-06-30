@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.appcompat)
     implementation(libs.coil.compose)
+    implementation(libs.shimmer.compose)
 
     //Firebase
     implementation(libs.google.services)

@@ -1,5 +1,6 @@
 package com.diksed.kriptak.features.screen.home.components.daily_news
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -7,9 +8,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -24,33 +27,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.BoxShape
+import com.diksed.kriptak.features.component.DateFormatter
 import com.diksed.kriptak.features.ui.theme.boxColor
-import com.diksed.kriptak.utils.formatDateTime
+import com.diksed.kriptak.utils.formatDate
+import com.diksed.kriptak.utils.formatTime
 import com.diksed.kriptak.utils.isImageUrlValid
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("NewApi")
 @Composable
-fun DailyNewsItem(
-    dailyNews: Article,
+fun CurrentNewsItem(
+    currentNews: Article,
     boxShape: BoxShape,
     placeholderImageResId: Int = R.drawable.logo
 ) {
     val context = LocalContext.current
-    val imageUrl by remember { mutableStateOf(dailyNews.urlToImage) }
+    val imageUrl by remember { mutableStateOf(currentNews.urlToImage) }
     var isValidUrl by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(dailyNews.urlToImage) {
+    LaunchedEffect(currentNews.urlToImage) {
         scope.launch {
-            isValidUrl = isImageUrlValid(dailyNews.urlToImage)
+            isValidUrl = isImageUrlValid(currentNews.urlToImage)
         }
     }
 
@@ -67,12 +72,12 @@ fun DailyNewsItem(
             .fillMaxWidth()
             .wrapContentHeight()
             .clickable {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(dailyNews.url))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(currentNews.url))
                 context.startActivity(intent)
             }
     ) {
         Row(Modifier.fillMaxSize()) {
-            DailyNewsImage(
+            CurrentNewsImage(
                 imageUrl = imageUrl,
                 isValidUrl = isValidUrl,
                 placeholderImageResId = placeholderImageResId
@@ -85,24 +90,26 @@ fun DailyNewsItem(
                     .weight(1f)
             ) {
                 Text(
-                    text = dailyNews.title,
+                    text = currentNews.title,
                     color = Color.White,
-                    maxLines = 3,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 11.sp,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = 2.dp)
                 )
-            }
 
-            Text(
-                text = formatDateTime(dailyNews.publishedAt),
-                fontSize = 12.sp,
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                modifier = Modifier
-                    .align(Alignment.Bottom)
-                    .padding(end = 8.dp, bottom = 8.dp)
-            )
+                Row {
+                    DateFormatter(
+                        painterId = R.drawable.ic_calendar,
+                        dateTime = formatDate(currentNews.publishedAt)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    DateFormatter(
+                        painterId = R.drawable.ic_clock,
+                        dateTime = formatTime(currentNews.publishedAt)
+                    )
+                }
+            }
         }
     }
 }

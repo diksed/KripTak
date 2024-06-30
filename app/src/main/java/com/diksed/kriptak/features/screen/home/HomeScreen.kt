@@ -12,7 +12,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
-import com.diksed.kriptak.features.screen.home.components.daily_news.DailyNewsBox
+import com.diksed.kriptak.features.component.shimmer.CurrentNewsShimmerEffect
+import com.diksed.kriptak.features.screen.home.components.daily_news.CurrentNewsBox
 
 
 @Composable
@@ -26,14 +27,15 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         content = {
-            Content(viewState.dailyNews)
+            Content(viewState.dailyNews, viewState.isLoading)
         },
     )
 }
 
 @Composable
 private fun Content(
-    dailyNews: List<Article>
+    currentNews: List<Article>,
+    isLoading: Boolean
 ) {
     Box(
         modifier = Modifier
@@ -42,7 +44,11 @@ private fun Content(
     ) {
         Column {
             KripTakTopBar()
-            DailyNewsBox(dailyNews = dailyNews)
+            if (isLoading) {
+                CurrentNewsShimmerEffect()
+            } else {
+                CurrentNewsBox(currentNews = currentNews)
+            }
         }
     }
 }

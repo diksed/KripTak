@@ -13,7 +13,7 @@ import coil.compose.rememberAsyncImagePainter
 
 
 @Composable
-fun DailyNewsImage(imageUrl: String?, isValidUrl: Boolean, placeholderImageResId: Int) {
+fun CurrentNewsImage(imageUrl: String?, isValidUrl: Boolean, placeholderImageResId: Int) {
     if (isValidUrl) {
         Image(
             painter = rememberAsyncImagePainter(imageUrl),

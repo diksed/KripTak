@@ -27,8 +27,10 @@ class HomeViewModel @Inject constructor(
     private fun fetchApiParamsAndNews() {
         viewModelScope.launch {
             try {
+                setState { currentState.copy(isLoading = true)}
                 val params = firestoreRepository.getDailyNewsApiParams()
                 getDailyNews(params)
+                setState { currentState.copy(isLoading = false)}
             } catch (e: Exception) {
                 // TODO: Handle error
             }
