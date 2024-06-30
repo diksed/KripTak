@@ -1,6 +1,5 @@
 package com.diksed.kriptak.features.screen.home
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.domain.repository.ApiParams
@@ -29,10 +28,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val params = firestoreRepository.getDailyNewsApiParams()
-                println("Params: $params")
                 getDailyNews(params)
             } catch (e: Exception) {
-                println("Error 1: ${e.message}")
+                // TODO: Handle error
             }
         }
     }
@@ -40,10 +38,9 @@ class HomeViewModel @Inject constructor(
     private suspend fun getDailyNews(params: ApiParams) {
         try {
             val response = getDailyNewsUseCase(params)
-            Log.d("NewsViewModel", "Fetched Articles: ${response.articles}")
             setState { currentState.copy(dailyNews = response.articles) }
         } catch (e: Exception) {
-            Log.e("NewsViewModel", "Error fetching news: ${e.message}")
+            // TODO: Handle error
         }
     }
 

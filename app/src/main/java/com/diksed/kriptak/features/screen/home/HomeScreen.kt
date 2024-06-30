@@ -3,22 +3,16 @@ package com.diksed.kriptak.features.screen.home
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
-import com.diksed.kriptak.features.screen.home.components.DailyNewsBox
+import com.diksed.kriptak.features.screen.home.components.daily_news.DailyNewsBox
 
 
 @Composable
@@ -48,17 +42,7 @@ private fun Content(
     ) {
         Column {
             KripTakTopBar()
-            Text(
-                text = stringResource(id = R.string.homePage),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.onPrimary,
-            )
-            LazyColumn {
-                items(dailyNews) { article ->
-                    DailyNewsBox(dailyNews = article)
-                    Spacer(modifier = Modifier.height(5.dp))
-                }
-            }
+            DailyNewsBox(dailyNews = dailyNews)
         }
     }
 }

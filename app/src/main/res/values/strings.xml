@@ -5,4 +5,5 @@
     <string name="cryptoList">Kripto Listesi</string>
     <string name="news">Haberler</string>
     <string name="settings">Ayarlar</string>
+    <string name="currentNews">Güncel Haberler</string>
 </resources>
