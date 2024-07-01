@@ -4,11 +4,14 @@ import android.content.Context
 import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.data.remote.api.CoinService
 import com.diksed.kriptak.data.remote.api.NewsApiService
+import com.diksed.kriptak.data.remote.api.TrendingCoinService
 import com.diksed.kriptak.domain.repository.CoinRepository
 import com.diksed.kriptak.domain.repository.CoinRepositoryImpl
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.repository.NewsRepository
 import com.diksed.kriptak.domain.repository.NewsRepositoryImpl
+import com.diksed.kriptak.domain.repository.TrendingCoinRepository
+import com.diksed.kriptak.domain.repository.TrendingCoinRepositoryImpl
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -34,8 +37,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsApiService(retrofit: Retrofit): NewsApiService {
-        return retrofit.create(NewsApiService::class.java)
+    fun provideTrendingCoinService(): TrendingCoinService {
+        return Retrofit.Builder()
+            .baseUrl("https://api.coingecko.com/api/v3/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(TrendingCoinService::class.java)
     }
 
     @Provides
@@ -50,6 +57,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideNewsApiService(retrofit: Retrofit): NewsApiService {
+        return retrofit.create(NewsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideNewsRepository(apiService: NewsApiService): NewsRepository {
         return NewsRepositoryImpl(apiService)
     }
@@ -58,6 +71,12 @@ object AppModule {
     @Singleton
     fun provideCoinRepository(apiService: CoinService): CoinRepository {
         return CoinRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrendingCoinRepository(apiService: TrendingCoinService): TrendingCoinRepository {
+        return TrendingCoinRepositoryImpl(apiService)
     }
 
     @Provides

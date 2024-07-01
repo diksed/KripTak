@@ -30,7 +30,7 @@ class CryptoViewModel @Inject constructor(
                 getCoins(apiKey)
                 setState { currentState.copy(isLoading = false) }
             } catch (e: Exception) {
-                println("error: $e")
+                // TODO: Handle error
             }
         }
 
@@ -41,7 +41,6 @@ class CryptoViewModel @Inject constructor(
             val response = getCoinsUseCase(apiKey = apiKey)
             setState { currentState.copy(dailyCoins = response.data) }
         } catch (e: Exception) {
-            println("error: $e")
             // TODO: Handle error
         }
     }

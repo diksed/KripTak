@@ -4,17 +4,24 @@ import androidx.lifecycle.viewModelScope
 import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.domain.repository.ApiParams
 import com.diksed.kriptak.domain.repository.FirestoreRepository
+import com.diksed.kriptak.domain.usecase.coin.CoinFromSymbolUseCase
+import com.diksed.kriptak.domain.usecase.coin.TrendingCoinUseCase
 import com.diksed.kriptak.domain.usecase.news.NewsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.home.HomeViewState
 import com.diksed.kriptak.features.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getDailyNewsUseCase: NewsUseCase,
+    private val getTrendingCoinsUseCase: TrendingCoinUseCase,
+    private val getCoinsFromSymbolUseCase: CoinFromSymbolUseCase,
     private val firestoreRepository: FirestoreRepository,
     private val application: KripTakApp
 ) : BaseViewModel<HomeViewState, HomeViewEvent>() {
@@ -30,10 +37,35 @@ class HomeViewModel @Inject constructor(
                 setState { currentState.copy(isLoading = true) }
                 val params = firestoreRepository.getDailyNewsApiParams()
                 getDailyNews(params)
+                getTrendingCoins()
                 setState { currentState.copy(isLoading = false) }
             } catch (e: Exception) {
                 // TODO: Handle error
             }
+        }
+    }
+
+    private suspend fun getTrendingCoins() {
+        try {
+            val response = getTrendingCoinsUseCase()
+            val apiKey = firestoreRepository.getCoinMarketApiKey()
+            val trendingCoins = response.coins
+            coroutineScope {
+                val topThreeCoinDetails = trendingCoins.take(3).mapNotNull { coinItem ->
+                    coinItem.item.symbol?.let { symbol ->
+                        async {
+                            getCoinsFromSymbolUseCase(
+                                apiKey = apiKey.coinMarketCapKey,
+                                symbol = symbol
+                            )
+                        }
+                    }
+                }
+                val coinDetails = topThreeCoinDetails.awaitAll()
+                setState { currentState.copy(dailyTrendingCoins = coinDetails) }
+            }
+        } catch (e: Exception) {
+            // TODO: Handle error
         }
     }
 

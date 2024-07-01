@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Article
+import com.diksed.kriptak.data.model.CoinListResponse
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.CurrentNewsShimmerEffect
@@ -28,7 +29,12 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         content = {
-            Content(navigateToNews, viewState.dailyNews, viewState.isLoading)
+            Content(
+                navigateToNews,
+                viewState.dailyTrendingCoins,
+                viewState.dailyNews,
+                viewState.isLoading
+            )
         },
     )
 }
@@ -36,6 +42,7 @@ fun HomeScreen(
 @Composable
 private fun Content(
     navigateToNews: () -> Unit,
+    trendingCoins: List<CoinListResponse?>,
     currentNews: List<Article>,
     isLoading: Boolean
 ) {
