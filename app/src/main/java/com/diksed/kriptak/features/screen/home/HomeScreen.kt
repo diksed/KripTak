@@ -35,7 +35,7 @@ fun HomeScreen(
 
 @Composable
 private fun Content(
-    navigateToNews:() -> Unit,
+    navigateToNews: () -> Unit,
     currentNews: List<Article>,
     isLoading: Boolean
 ) {

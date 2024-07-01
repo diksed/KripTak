@@ -26,7 +26,30 @@ class FirestoreRepository @Inject constructor(
                 }
         }
     }
+
+    suspend fun getCoinMarketApiKey(): CoinApiKeyParams {
+        return suspendCoroutine { continuation ->
+            firestore.collection("CoinApi").document("apiKey")
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val params = document.toObject(CoinApiKeyParams::class.java)
+                        continuation.resume(params ?: CoinApiKeyParams())
+                    } else {
+                        continuation.resume(CoinApiKeyParams())
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWithException(exception)
+                }
+
+        }
+    }
 }
+
+data class CoinApiKeyParams(
+    val coinMarketCapKey: String = ""
+)
 
 data class ApiParams(
     val apiKey: String = "",

@@ -8,5 +8,5 @@ import com.diksed.kriptak.domain.viewstate.IViewState
 data class HomeViewState(
     val isDark: Boolean = false,
     val dailyNews: List<Article> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
 ) : IViewState
