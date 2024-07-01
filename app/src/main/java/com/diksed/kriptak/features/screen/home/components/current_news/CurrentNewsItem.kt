@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.screen.home.components.daily_news
+package com.diksed.kriptak.features.screen.home.components.current_news
 
 import android.annotation.SuppressLint
 import android.content.Intent

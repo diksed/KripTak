@@ -17,12 +17,13 @@ fun NavController.navigateToHome(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(navigateToNews: () -> Unit) {
     composable(
         homeNavigationRoute,
         content = {
             HomeScreen(
                 viewModel = hiltViewModel(),
+                navigateToNews = navigateToNews,
             )
         },
     )

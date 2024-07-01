@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.BoxShape
+import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 import com.valentinilk.shimmer.shimmer
 
@@ -32,5 +33,9 @@ fun CurrentNewsShimmerEffect() {
                 Spacer(modifier = Modifier.height(5.dp))
             }
         }
+        KripTakCurrentBoxTextButton(
+            text = stringResource(id = R.string.allNews),
+            modifier = Modifier.shimmer()
+        )
     }
 }

@@ -13,12 +13,13 @@ import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.CurrentNewsShimmerEffect
-import com.diksed.kriptak.features.screen.home.components.daily_news.CurrentNewsBox
+import com.diksed.kriptak.features.screen.home.components.current_news.CurrentNewsBox
 
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    navigateToNews: () -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -27,13 +28,14 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         content = {
-            Content(viewState.dailyNews, viewState.isLoading)
+            Content(navigateToNews, viewState.dailyNews, viewState.isLoading)
         },
     )
 }
 
 @Composable
 private fun Content(
+    navigateToNews:() -> Unit,
     currentNews: List<Article>,
     isLoading: Boolean
 ) {
@@ -47,7 +49,7 @@ private fun Content(
             if (isLoading) {
                 CurrentNewsShimmerEffect()
             } else {
-                CurrentNewsBox(currentNews = currentNews)
+                CurrentNewsBox(currentNews = currentNews, navigateToNews = navigateToNews)
             }
         }
     }

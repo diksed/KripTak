@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.screen.home.components.daily_news
+package com.diksed.kriptak.features.screen.home.components.current_news
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -15,10 +15,11 @@ import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
+import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 
 @SuppressLint("NewApi")
 @Composable
-fun CurrentNewsBox(currentNews: List<Article>) {
+fun CurrentNewsBox(currentNews: List<Article>, navigateToNews: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         KripTakCurrentBoxTitle(title = stringResource(id = R.string.currentNews))
         LazyColumn {
@@ -32,5 +33,9 @@ fun CurrentNewsBox(currentNews: List<Article>) {
                 Spacer(modifier = Modifier.height(5.dp))
             }
         }
+        KripTakCurrentBoxTextButton(
+            text = stringResource(id = R.string.allNews),
+            navigateToNews = navigateToNews
+        )
     }
 }
