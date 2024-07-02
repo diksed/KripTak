@@ -19,15 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.ui.theme.boxColor
+import com.diksed.kriptak.utils.components.getCornerRadius
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun CurrentNewsShimmerItem(boxShape: BoxShape) {
-    val cornerRadius = when (boxShape) {
-        BoxShape.TOP -> RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
-        BoxShape.MIDDLE -> RoundedCornerShape(0.dp)
-        BoxShape.BOTTOM -> RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
-    }
+    val cornerRadius = getCornerRadius(boxShape)
 
     Box(
         modifier = Modifier

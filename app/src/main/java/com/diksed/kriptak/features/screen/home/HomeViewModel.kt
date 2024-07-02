@@ -10,6 +10,7 @@ import com.diksed.kriptak.domain.usecase.news.NewsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.home.HomeViewState
 import com.diksed.kriptak.features.base.BaseViewModel
+import com.diksed.kriptak.utils.convertToCoinResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -50,24 +51,31 @@ class HomeViewModel @Inject constructor(
             val response = getTrendingCoinsUseCase()
             val apiKey = firestoreRepository.getCoinMarketApiKey()
             val trendingCoins = response.coins
+
             coroutineScope {
                 val topThreeCoinDetails = trendingCoins.take(3).mapNotNull { coinItem ->
                     coinItem.item.symbol?.let { symbol ->
                         async {
-                            getCoinsFromSymbolUseCase(
-                                apiKey = apiKey.coinMarketCapKey,
-                                symbol = symbol
-                            )
+                            try {
+                                val coinListResponse = getCoinsFromSymbolUseCase(
+                                    apiKey = apiKey.coinMarketCapKey,
+                                    symbol = symbol
+                                )
+                                convertToCoinResponse(coinListResponse)
+                            } catch (e: Exception) {
+                                null
+                            }
                         }
                     }
                 }
-                val coinDetails = topThreeCoinDetails.awaitAll()
+                val coinDetails = topThreeCoinDetails.awaitAll().filterNotNull()
                 setState { currentState.copy(dailyTrendingCoins = coinDetails) }
             }
         } catch (e: Exception) {
             // TODO: Handle error
         }
     }
+
 
     private suspend fun getDailyNews(params: ApiParams) {
         try {

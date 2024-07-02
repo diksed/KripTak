@@ -21,11 +21,11 @@ import com.diksed.kriptak.R
 fun KripTakCurrentBoxTextButton(
     text: String,
     modifier: Modifier = Modifier,
-    navigateToNews: () -> Unit = {}
+    navigateTo: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier.clickable {
-            navigateToNews()
+            navigateTo()
         },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically

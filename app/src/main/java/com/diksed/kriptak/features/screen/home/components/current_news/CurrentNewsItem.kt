@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +34,7 @@ import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.DateFormatter
 import com.diksed.kriptak.features.ui.theme.boxColor
+import com.diksed.kriptak.utils.components.getCornerRadius
 import com.diksed.kriptak.utils.formatDate
 import com.diksed.kriptak.utils.formatTime
 import com.diksed.kriptak.utils.isImageUrlValid
@@ -59,11 +59,7 @@ fun CurrentNewsItem(
         }
     }
 
-    val cornerRadius = when (boxShape) {
-        BoxShape.TOP -> RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
-        BoxShape.MIDDLE -> RoundedCornerShape(0.dp)
-        BoxShape.BOTTOM -> RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
-    }
+    val cornerRadius = getCornerRadius(boxShape)
 
     Box(
         modifier = Modifier

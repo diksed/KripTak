@@ -8,11 +8,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.Locale
 
 @Composable
 fun KripTakCurrentBoxTitle(title: String, modifier: Modifier = Modifier) {
     Text(
-        text = title.uppercase(),
+        text = title.uppercase(Locale.getDefault()),
         color = Color.White,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
