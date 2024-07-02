@@ -51,12 +51,12 @@ fun TrendingCoinsItem(trendCoin: CoinResponse, boxShape: BoxShape) {
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CoinImage(imageUrl = imageUrl, modifier = Modifier.weight(1f).background(Color.Red))
+            CoinImage(imageUrl = imageUrl, modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.width(8.dp))
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .align(Alignment.CenterVertically).background(Color.Green).weight(1f)
+                    .align(Alignment.CenterVertically).weight(1f)
             ) {
                 Text(
                     text = coinData.name,

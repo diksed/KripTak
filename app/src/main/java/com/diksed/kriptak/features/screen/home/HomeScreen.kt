@@ -14,7 +14,8 @@ import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.CoinResponse
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
-import com.diksed.kriptak.features.component.shimmer.CurrentNewsShimmerEffect
+import com.diksed.kriptak.features.component.shimmer.current_news.CurrentNewsShimmerEffect
+import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.current_news.CurrentNewsBox
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsBox
 
@@ -51,7 +52,7 @@ private fun Content(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 60.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
     ) {
         LazyColumn {
             item {
@@ -59,11 +60,13 @@ private fun Content(
             }
             item {
                 if (isLoading) {
+                    TrendingCoinsShimmerEffect()
+                    Spacer(modifier = Modifier.height(20.dp))
                     CurrentNewsShimmerEffect()
                 } else {
-                    CurrentNewsBox(currentNews = currentNews, navigateToNews = navigateToNews)
-                    Spacer(modifier = Modifier.height(20.dp))
                     TrendingCoinsBox(trendingCoins = trendingCoins, navigateToCrypto = {})
+                    Spacer(modifier = Modifier.height(20.dp))
+                    CurrentNewsBox(currentNews = currentNews, navigateToNews = navigateToNews)
                 }
             }
         }

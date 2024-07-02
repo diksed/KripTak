@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.component.shimmer
+package com.diksed.kriptak.features.component.shimmer.current_news
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

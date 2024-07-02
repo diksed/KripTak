@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.component.shimmer
+package com.diksed.kriptak.features.component.shimmer.trending_coins
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +24,7 @@ import com.diksed.kriptak.utils.components.getCornerRadius
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun CurrentNewsShimmerItem(boxShape: BoxShape) {
+fun TrendingCoinsShimmerItem(boxShape: BoxShape) {
     val cornerRadius = getCornerRadius(boxShape)
 
     Box(
@@ -37,8 +38,8 @@ fun CurrentNewsShimmerItem(boxShape: BoxShape) {
         Row(Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
-                    .size(70.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(65.dp)
+                    .clip(CircleShape)
             ) {
                 Box(
                     modifier = Modifier
@@ -51,24 +52,53 @@ fun CurrentNewsShimmerItem(boxShape: BoxShape) {
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .align(Alignment.CenterVertically)
-                    .weight(1f)
+                    .weight(1.1f)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(30.dp)
+                        .height(10.dp)
                         .background(Color.Gray)
                         .shimmer()
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .height(30.dp)
+                        .fillMaxWidth()
+                        .height(10.dp)
                         .background(Color.Gray)
                         .shimmer()
                 )
             }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(0.2f)
+                    .height(40.dp)
+                    .background(Color.Gray)
+                    .weight(1.4f)
+                    .shimmer()
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 8.dp)
+                    .fillMaxWidth(0.2f)
+                    .height(15.dp)
+                    .background(Color.Gray)
+                    .weight(0.8f)
+                    .shimmer()
+            )
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 8.dp)
+                    .fillMaxWidth(0.2f)
+                    .height(15.dp)
+                    .background(Color.Gray)
+                    .weight(1.1f)
+                    .shimmer()
+            )
         }
     }
 }
