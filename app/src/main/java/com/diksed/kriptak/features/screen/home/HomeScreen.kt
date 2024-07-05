@@ -24,6 +24,7 @@ import com.diksed.kriptak.features.screen.home.components.trending_coins.Trendin
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToNews: () -> Unit,
+    navigateToCrypto: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -34,6 +35,7 @@ fun HomeScreen(
         content = {
             Content(
                 navigateToNews,
+                navigateToCrypto,
                 viewState.dailyTrendingCoins,
                 viewState.dailyNews,
                 viewState.isLoading
@@ -45,6 +47,7 @@ fun HomeScreen(
 @Composable
 private fun Content(
     navigateToNews: () -> Unit,
+    navigateToCrypto: () -> Unit,
     trendingCoins: List<CoinResponse?>,
     currentNews: List<Article>,
     isLoading: Boolean
@@ -64,7 +67,10 @@ private fun Content(
                     Spacer(modifier = Modifier.height(20.dp))
                     CurrentNewsShimmerEffect()
                 } else {
-                    TrendingCoinsBox(trendingCoins = trendingCoins, navigateToCrypto = {})
+                    TrendingCoinsBox(
+                        trendingCoins = trendingCoins,
+                        navigateToCrypto = navigateToCrypto
+                    )
                     Spacer(modifier = Modifier.height(20.dp))
                     CurrentNewsBox(currentNews = currentNews, navigateToNews = navigateToNews)
                 }

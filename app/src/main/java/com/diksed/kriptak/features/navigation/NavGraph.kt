@@ -52,6 +52,11 @@ fun NavGraph() {
                     BottomNav.NEWS,
                     navController,
                 )
+            }, navigateToCrypto = {
+                navigateToBottomNavDestination(
+                    BottomNav.CRYPTO,
+                    navController,
+                )
             })
             favoritesScreen()
             cryptoScreen()
