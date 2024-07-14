@@ -15,7 +15,7 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun CurrentNewsShimmerEffect(isDailyNews: Boolean = true, newsCount: Int = 3) {
+fun CurrentNewsShimmerEffect(isDailyNews: Boolean = false, newsCount: Int = 15) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         if (isDailyNews) {
             KripTakCurrentBoxTitle(

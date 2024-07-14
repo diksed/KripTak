@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.data.model.CoinResponse
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.ui.theme.boxColor
@@ -30,15 +31,19 @@ import com.diksed.kriptak.utils.components.getCornerRadius
 import com.diksed.kriptak.utils.formatPrice
 
 @Composable
-fun TrendingCoinsItem(trendCoin: CoinResponse, boxShape: BoxShape) {
-    val coinData = trendCoin.data[0]
+fun <T> TrendingCoinsItem(trendCoin: T, boxShape: BoxShape) {
+    val coinData = when (trendCoin) {
+        is CoinResponse -> trendCoin.data[0]
+        is Coin -> trendCoin
+        else -> throw IllegalArgumentException("Unsupported coin type")
+    }
+
     val cornerRadius = getCornerRadius(boxShape)
     val percentChange24h = coinData.quote.usd.percentChange24h
     val price = coinData.quote.usd.price
     val formattedPrice = "$${formatPrice(price)}"
     val imageUrl = COIN_IMAGE_URL + coinData.id + ".png"
     val sparkLine = SPARKLINE_URL + coinData.id + ".png"
-
 
     Box(
         modifier = Modifier
@@ -56,7 +61,8 @@ fun TrendingCoinsItem(trendCoin: CoinResponse, boxShape: BoxShape) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .align(Alignment.CenterVertically).weight(1f)
+                    .align(Alignment.CenterVertically)
+                    .weight(1f)
             ) {
                 Text(
                     text = coinData.name,
@@ -84,8 +90,7 @@ fun TrendingCoinsItem(trendCoin: CoinResponse, boxShape: BoxShape) {
                 text = formattedPrice,
                 color = Color.White,
                 fontSize = 13.sp,
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f)
             )
             PercentChangeRow(percentChange24h = percentChange24h, modifier = Modifier.weight(1.2f))
         }

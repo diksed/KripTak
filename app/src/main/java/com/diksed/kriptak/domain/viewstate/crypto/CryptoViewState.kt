@@ -8,5 +8,5 @@ import com.diksed.kriptak.domain.viewstate.IViewState
 data class CryptoViewState(
     val isDark: Boolean = false,
     val isLoading: Boolean = false,
-    val dailyCoins: List<Coin> = emptyList(),
+    val coins: List<Coin> = emptyList(),
 ) : IViewState

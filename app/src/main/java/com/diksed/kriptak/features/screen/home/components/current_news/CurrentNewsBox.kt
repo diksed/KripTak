@@ -17,7 +17,7 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 @Composable
 fun CurrentNewsBox(
     currentNews: List<Article>,
-    isDailyNews: Boolean = true,
+    isDailyNews: Boolean = false,
     navigateToNews: () -> Unit = {},
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {

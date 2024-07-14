@@ -93,11 +93,10 @@ private fun Content(
             }
             item {
                 if (isLoading) {
-                    CurrentNewsShimmerEffect(isDailyNews = false, newsCount = 15)
+                    CurrentNewsShimmerEffect()
                 } else {
                     CurrentNewsBox(
-                        currentNews = if (selectedLanguage == "TR") turkishNews else englishNews,
-                        isDailyNews = false
+                        currentNews = if (selectedLanguage == "TR") turkishNews else englishNews
                     )
                 }
             }

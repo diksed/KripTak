@@ -63,16 +63,21 @@ private fun Content(
             }
             item {
                 if (isLoading) {
-                    TrendingCoinsShimmerEffect()
+                    TrendingCoinsShimmerEffect(isDailyCoins = true, coinsCount = 3)
                     Spacer(modifier = Modifier.height(20.dp))
-                    CurrentNewsShimmerEffect()
+                    CurrentNewsShimmerEffect(isDailyNews = true, newsCount = 3)
                 } else {
                     TrendingCoinsBox(
+                        isDailyCoins = true,
                         trendingCoins = trendingCoins,
                         navigateToCrypto = navigateToCrypto
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CurrentNewsBox(currentNews = currentNews, navigateToNews = navigateToNews)
+                    CurrentNewsBox(
+                        isDailyNews = true,
+                        currentNews = currentNews,
+                        navigateToNews = navigateToNews
+                    )
                 }
             }
         }

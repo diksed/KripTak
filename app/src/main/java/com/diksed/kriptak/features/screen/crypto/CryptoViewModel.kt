@@ -20,9 +20,10 @@ class CryptoViewModel @Inject constructor(
 
     init {
         setState { currentState.copy(isDark = application.isDark.value) }
+        fetchApiParamsAndCoins()
     }
 
-    private fun fetchApiKeyAndCoins() {
+    private fun fetchApiParamsAndCoins() {
         viewModelScope.launch {
             try {
                 setState { currentState.copy(isLoading = true) }
@@ -39,7 +40,7 @@ class CryptoViewModel @Inject constructor(
     private suspend fun getCoins(apiKey: String) {
         try {
             val response = getCoinsUseCase(apiKey = apiKey)
-            setState { currentState.copy(dailyCoins = response.data) }
+            setState { currentState.copy(coins = response.data) }
         } catch (e: Exception) {
             // TODO: Handle error
         }

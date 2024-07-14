@@ -15,13 +15,15 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun TrendingCoinsShimmerEffect() {
+fun TrendingCoinsShimmerEffect(isDailyCoins: Boolean = false, coinsCount : Int = 10) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        KripTakCurrentBoxTitle(
-            title = stringResource(id = R.string.favoritesOfDay),
-            modifier = Modifier.shimmer()
-        )
-        repeat(3) { index ->
+        if (isDailyCoins) {
+            KripTakCurrentBoxTitle(
+                title = stringResource(id = R.string.favoritesOfDay),
+                modifier = Modifier.shimmer()
+            )
+        }
+        repeat(coinsCount) { index ->
             val boxShape = when (index) {
                 0 -> BoxShape.TOP
                 2 -> BoxShape.BOTTOM
@@ -30,9 +32,11 @@ fun TrendingCoinsShimmerEffect() {
             TrendingCoinsShimmerItem(boxShape = boxShape)
             Spacer(modifier = Modifier.height(5.dp))
         }
-        KripTakCurrentBoxTextButton(
-            text = stringResource(id = R.string.allCrypto),
-            modifier = Modifier.shimmer()
-        )
+        if (isDailyCoins) {
+            KripTakCurrentBoxTextButton(
+                text = stringResource(id = R.string.allCrypto),
+                modifier = Modifier.shimmer()
+            )
+        }
     }
 }
