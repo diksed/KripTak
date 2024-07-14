@@ -15,13 +15,16 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun CurrentNewsShimmerEffect() {
+fun CurrentNewsShimmerEffect(isDailyNews: Boolean = true, newsCount: Int = 3) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        KripTakCurrentBoxTitle(
-            title = stringResource(id = R.string.currentNews),
-            modifier = Modifier.shimmer()
-        )
-        repeat(3) { index ->
+        if (isDailyNews) {
+            KripTakCurrentBoxTitle(
+                title = stringResource(id = R.string.currentNews),
+                modifier = Modifier.shimmer()
+            )
+        }
+
+        repeat(newsCount) { index ->
             val boxShape = when (index) {
                 0 -> BoxShape.TOP
                 2 -> BoxShape.BOTTOM
@@ -30,9 +33,12 @@ fun CurrentNewsShimmerEffect() {
             CurrentNewsShimmerItem(boxShape = boxShape)
             Spacer(modifier = Modifier.height(5.dp))
         }
-        KripTakCurrentBoxTextButton(
-            text = stringResource(id = R.string.allNews),
-            modifier = Modifier.shimmer()
-        )
+
+        if (isDailyNews) {
+            KripTakCurrentBoxTextButton(
+                text = stringResource(id = R.string.allNews),
+                modifier = Modifier.shimmer()
+            )
+        }
     }
 }

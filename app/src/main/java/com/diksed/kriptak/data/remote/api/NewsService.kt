@@ -10,6 +10,7 @@ interface NewsApiService {
         @Query("apiKey") apiKey: String,
         @Query("q") searchQuery: String,
         @Query("pageSize") pageSize: Int,
+        @Query("language") language: String,
         @Query("excludeDomains") excludeDomains: String,
     ): NewsResponse
 }

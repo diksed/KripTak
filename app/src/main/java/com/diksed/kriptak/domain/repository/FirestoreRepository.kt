@@ -9,9 +9,9 @@ import kotlin.coroutines.suspendCoroutine
 class FirestoreRepository @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
-    suspend fun getDailyNewsApiParams(): ApiParams {
+    suspend fun getDailyNewsApiParams(documentPath: String): ApiParams {
         return suspendCoroutine { continuation ->
-            firestore.collection("NewsApi").document("apiDailyKey")
+            firestore.collection("NewsApi").document(documentPath)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null) {

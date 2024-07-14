@@ -8,6 +8,10 @@ interface NewsRepository {
     suspend fun getDailyNews(
         params: ApiParams
     ): NewsResponse
+
+    suspend fun getDailyTurkishEnglishNews(
+        params: ApiParams
+    ): NewsResponse
 }
 
 class NewsRepositoryImpl @Inject constructor(
@@ -20,6 +24,21 @@ class NewsRepositoryImpl @Inject constructor(
             apiKey = params.apiKey,
             pageSize = params.newsSize,
             searchQuery = params.searchQuery,
+            language = params.language,
+            excludeDomains = params.unwantedSources.joinToString(
+                separator = ","
+            )
+        )
+    }
+
+    override suspend fun getDailyTurkishEnglishNews(
+        params: ApiParams
+    ): NewsResponse {
+        return apiService.getDailyNews(
+            apiKey = params.apiKey,
+            pageSize = params.newsSize,
+            searchQuery = params.searchQuery,
+            language = params.language,
             excludeDomains = params.unwantedSources.joinToString(
                 separator = ","
             )

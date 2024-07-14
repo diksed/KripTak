@@ -15,9 +15,13 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 
 @Composable
-fun CurrentNewsBox(currentNews: List<Article>, navigateToNews: () -> Unit) {
+fun CurrentNewsBox(
+    currentNews: List<Article>,
+    isDailyNews: Boolean = true,
+    navigateToNews: () -> Unit = {},
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        KripTakCurrentBoxTitle(title = stringResource(id = R.string.currentNews))
+        if (isDailyNews) KripTakCurrentBoxTitle(title = stringResource(id = R.string.currentNews))
         currentNews.forEachIndexed { index, article ->
             val boxShape = when (index) {
                 0 -> BoxShape.TOP
@@ -27,9 +31,11 @@ fun CurrentNewsBox(currentNews: List<Article>, navigateToNews: () -> Unit) {
             CurrentNewsItem(currentNews = article, boxShape = boxShape)
             Spacer(modifier = Modifier.height(5.dp))
         }
-        KripTakCurrentBoxTextButton(
-            text = stringResource(id = R.string.allNews),
-            navigateTo = navigateToNews
-        )
+        if (isDailyNews) {
+            KripTakCurrentBoxTextButton(
+                text = stringResource(id = R.string.allNews),
+                navigateTo = navigateToNews
+            )
+        }
     }
 }
