@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.BoxShape
+import com.diksed.kriptak.features.component.KripTakCircularProgressIndicator
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
@@ -63,13 +64,17 @@ private fun Content(
                     coins.size - 1 -> BoxShape.BOTTOM
                     else -> BoxShape.MIDDLE
                 }
-                if (index >= coins.size - 1 && !isLoading) {
-                    onLoadMore()
-                }
                 if (coin != null) {
                     TrendingCoinsItem(trendCoin = coin, boxShape = boxShape)
                 }
                 Spacer(modifier = Modifier.height(5.dp))
+
+                if (index == coins.size - 1) {
+                    if (!isLoading) {
+                        onLoadMore()
+                    }
+                    KripTakCircularProgressIndicator()
+                }
             }
             item {
                 if (isLoading) {
