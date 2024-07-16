@@ -9,7 +9,9 @@ import retrofit2.http.Query
 interface CoinService {
     @GET("v1/cryptocurrency/listings/latest")
     suspend fun getCoins(
-        @Header("X-CMC_PRO_API_KEY") apiKey: String
+        @Header("X-CMC_PRO_API_KEY") apiKey: String,
+        @Query("start") start: Int,
+        @Query("limit") limit: Int
     ): CoinResponse
 
     @GET("v1/cryptocurrency/quotes/latest")

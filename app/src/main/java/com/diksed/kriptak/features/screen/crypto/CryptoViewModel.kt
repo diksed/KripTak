@@ -18,6 +18,9 @@ class CryptoViewModel @Inject constructor(
     private val application: KripTakApp
 ) : BaseViewModel<CryptoViewState, CryptoViewEvent>() {
 
+    private var currentStart = 1
+    private val limit = 50
+
     init {
         setState { currentState.copy(isDark = application.isDark.value) }
         fetchApiParamsAndCoins()
@@ -28,21 +31,32 @@ class CryptoViewModel @Inject constructor(
             try {
                 setState { currentState.copy(isLoading = true) }
                 val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
-                getCoins(apiKey)
-                setState { currentState.copy(isLoading = false) }
+                loadMoreCoins(apiKey)
             } catch (e: Exception) {
                 // TODO: Handle error
             }
         }
-
     }
 
-    private suspend fun getCoins(apiKey: String) {
+    private suspend fun loadMoreCoins(apiKey: String) {
         try {
-            val response = getCoinsUseCase(apiKey = apiKey)
-            setState { currentState.copy(coins = response.data) }
+            val response = getCoinsUseCase(apiKey = apiKey, start = currentStart, limit = limit)
+            val newCoins = response.data
+            setState { currentState.copy(coins = currentState.coins + newCoins, isLoading = false) }
+            currentStart += limit
         } catch (e: Exception) {
             // TODO: Handle error
+        }
+    }
+
+    fun fetchNextPage() {
+        viewModelScope.launch {
+            try {
+                val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
+                loadMoreCoins(apiKey)
+            } catch (e: Exception) {
+                // TODO: Handle error
+            }
         }
     }
 
