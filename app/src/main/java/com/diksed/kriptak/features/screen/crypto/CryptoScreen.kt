@@ -19,6 +19,7 @@ import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCircularProgressIndicator
 import com.diksed.kriptak.features.component.KripTakScaffold
+import com.diksed.kriptak.features.component.KripTakSearchField
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsItem
@@ -29,6 +30,7 @@ fun CryptoScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     KripTakScaffold(
         modifier = Modifier.fillMaxSize(),
@@ -37,7 +39,9 @@ fun CryptoScreen(
             Content(
                 isLoading = viewState.isLoading,
                 coins = viewState.coins,
-                onLoadMore = { viewModel.fetchNextPage() }
+                onLoadMore = { viewModel.fetchNextPage() },
+                query = searchQuery,
+                onQueryChange = { viewModel.updateSearchQuery(it) }
             )
         },
     )
@@ -47,7 +51,9 @@ fun CryptoScreen(
 private fun Content(
     coins: List<Coin?>,
     isLoading: Boolean,
-    onLoadMore: () -> Unit
+    onLoadMore: () -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -56,9 +62,17 @@ private fun Content(
     ) {
         LazyColumn {
             item {
-                KripTakTopBar()
+                KripTakTopBar(spacerHeight = 0)
             }
-            itemsIndexed(coins) { index, coin ->
+            item {
+                KripTakSearchField(query = query, onQueryChange = onQueryChange)
+            }
+            itemsIndexed(coins.filter {
+                it?.name?.contains(
+                    query,
+                    ignoreCase = true
+                ) == true
+            }) { index, coin ->
                 val boxShape = when (index) {
                     0 -> BoxShape.TOP
                     coins.size - 1 -> BoxShape.BOTTOM
@@ -69,10 +83,8 @@ private fun Content(
                 }
                 Spacer(modifier = Modifier.height(5.dp))
 
-                if (index == coins.size - 1) {
-                    if (!isLoading) {
-                        onLoadMore()
-                    }
+                if (index == coins.size - 1 && !isLoading) {
+                    onLoadMore()
                     KripTakCircularProgressIndicator()
                 }
             }

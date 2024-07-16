@@ -8,6 +8,8 @@ import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.crypto.CryptoViewState
 import com.diksed.kriptak.features.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +21,10 @@ class CryptoViewModel @Inject constructor(
 ) : BaseViewModel<CryptoViewState, CryptoViewEvent>() {
 
     private var currentStart = 1
-    private val limit = 50
+    private val limit = 2499
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> get() = _searchQuery
 
     init {
         setState { currentState.copy(isDark = application.isDark.value) }
@@ -58,6 +63,10 @@ class CryptoViewModel @Inject constructor(
                 // TODO: Handle error
             }
         }
+    }
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     private fun onChangeTheme() {

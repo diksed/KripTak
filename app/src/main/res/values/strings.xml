@@ -11,4 +11,5 @@
     <string name="allCrypto">Tüm Kripto Paralar</string>
     <string name="turkishNews">Türkçe Haberler</string>
     <string name="englishNews">İngilizce Haberler</string>
+    <string name="searchCrypto">Kripto Para Ara</string>
 </resources>
