@@ -16,7 +16,7 @@ data class CoinData(
     @SerializedName("num_market_pairs") val numMarketPairs: Int,
     @SerializedName("date_added") val dateAdded: Date,
     @SerializedName("tags") val tags: List<String>,
-    @SerializedName("max_supply") val maxSupply: Long?,
+    @SerializedName("max_supply") val maxSupply: Double?,
     @SerializedName("circulating_supply") val circulatingSupply: Double,
     @SerializedName("total_supply") val totalSupply: Double,
     @SerializedName("platform") val platform: Platform?,
