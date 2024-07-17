@@ -21,6 +21,9 @@ import com.diksed.kriptak.features.component.KripTakCircularProgressIndicator
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakSearchField
 import com.diksed.kriptak.features.component.KripTakTopBar
+import com.diksed.kriptak.features.component.SortDirection
+import com.diksed.kriptak.features.component.SortType
+import com.diksed.kriptak.features.component.coin_filter.KripTakSortRow
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsItem
 
@@ -31,6 +34,8 @@ fun CryptoScreen(
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val sortType by viewModel.sortType.collectAsState()
+    val sortDirection by viewModel.sortDirection.collectAsState()
 
     KripTakScaffold(
         modifier = Modifier.fillMaxSize(),
@@ -41,7 +46,10 @@ fun CryptoScreen(
                 coins = viewState.coins,
                 onLoadMore = { viewModel.fetchNextPage() },
                 query = searchQuery,
-                onQueryChange = { viewModel.updateSearchQuery(it) }
+                sortType = sortType,
+                sortDirection = sortDirection,
+                onQueryChange = { viewModel.updateSearchQuery(it) },
+                onSortChange = { viewModel.updateSortType(it) }
             )
         },
     )
@@ -53,7 +61,10 @@ private fun Content(
     isLoading: Boolean,
     onLoadMore: () -> Unit,
     query: String,
-    onQueryChange: (String) -> Unit
+    sortType: SortType,
+    sortDirection: SortDirection,
+    onQueryChange: (String) -> Unit,
+    onSortChange: (SortType) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -66,6 +77,15 @@ private fun Content(
             }
             item {
                 KripTakSearchField(query = query, onQueryChange = onQueryChange)
+            }
+            item {
+                KripTakSortRow(
+                    onSortChange = onSortChange,
+                    sortTypeByName = sortType,
+                    sortTypeByPrice = sortType,
+                    sortTypeByPercentage = sortType,
+                    sortDirection = sortDirection,
+                )
             }
             itemsIndexed(coins.filter {
                 it?.name?.contains(
