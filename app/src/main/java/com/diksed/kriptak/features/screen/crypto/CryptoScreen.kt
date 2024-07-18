@@ -30,6 +30,7 @@ import com.diksed.kriptak.features.screen.home.components.trending_coins.Trendin
 @Composable
 fun CryptoScreen(
     viewModel: CryptoViewModel = hiltViewModel(),
+    navigateToCryptoDetails: (Coin) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -42,6 +43,7 @@ fun CryptoScreen(
         scaffoldState = scaffoldState,
         content = {
             Content(
+                navigateToCryptoDetails = { navigateToCryptoDetails(it) },
                 isLoading = viewState.isLoading,
                 coins = viewState.coins,
                 onLoadMore = { viewModel.fetchNextPage() },
@@ -57,6 +59,7 @@ fun CryptoScreen(
 
 @Composable
 private fun Content(
+    navigateToCryptoDetails: (Coin) -> Unit,
     coins: List<Coin?>,
     isLoading: Boolean,
     onLoadMore: () -> Unit,
@@ -97,7 +100,11 @@ private fun Content(
                     else -> BoxShape.MIDDLE
                 }
                 if (coin != null) {
-                    TrendingCoinsItem(trendCoin = coin, boxShape = boxShape)
+                    TrendingCoinsItem(
+                        navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
+                        trendCoin = coin,
+                        boxShape = boxShape
+                    )
                 }
                 Spacer(modifier = Modifier.height(5.dp))
 

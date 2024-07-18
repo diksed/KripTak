@@ -12,10 +12,13 @@ import com.diksed.kriptak.features.component.KripTakBottomAppBar
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.navigateToBottomNavDestination
 import com.diksed.kriptak.features.screen.crypto.navigation.cryptoScreen
+import com.diksed.kriptak.features.screen.crypto_details.navigation.cryptoDetailsScreen
+import com.diksed.kriptak.features.screen.crypto_details.navigation.navigateToCryptoDetails
 import com.diksed.kriptak.features.screen.favorites.navigation.favoritesScreen
 import com.diksed.kriptak.features.screen.home.navigation.homeNavigationRoute
 import com.diksed.kriptak.features.screen.home.navigation.homeScreen
 import com.diksed.kriptak.features.screen.news.navigation.newsScreen
+import com.diksed.kriptak.utils.Utility.toJson
 
 
 @Composable
@@ -59,7 +62,8 @@ fun NavGraph() {
                 )
             })
             favoritesScreen()
-            cryptoScreen()
+            cryptoScreen { navController.navigateToCryptoDetails(it.toJson()) }
+            cryptoDetailsScreen()
             newsScreen()
         }
     }

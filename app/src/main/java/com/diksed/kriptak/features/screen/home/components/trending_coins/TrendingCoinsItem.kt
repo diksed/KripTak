@@ -1,6 +1,7 @@
 package com.diksed.kriptak.features.screen.home.components.trending_coins
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,11 @@ import com.diksed.kriptak.utils.components.getCornerRadius
 import com.diksed.kriptak.utils.formatPrice
 
 @Composable
-fun <T> TrendingCoinsItem(trendCoin: T, boxShape: BoxShape) {
+fun <T> TrendingCoinsItem(
+    navigateToCryptoDetails: (Coin) -> Unit = {},
+    trendCoin: T,
+    boxShape: BoxShape
+) {
     val coinData = when (trendCoin) {
         is CoinResponse -> trendCoin.data[0]
         is Coin -> trendCoin
@@ -51,6 +56,10 @@ fun <T> TrendingCoinsItem(trendCoin: T, boxShape: BoxShape) {
             .padding(horizontal = 4.dp, vertical = 8.dp)
             .fillMaxWidth()
             .wrapContentHeight()
+            .clickable {
+
+                navigateToCryptoDetails.invoke(coinData)
+            }
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
