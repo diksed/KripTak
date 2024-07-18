@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
 
 @Composable
-fun KripTakTopBar(modifier: Modifier = Modifier, spacerHeight : Int = 10) {
+fun KripTakTopBar(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -25,7 +25,7 @@ fun KripTakTopBar(modifier: Modifier = Modifier, spacerHeight : Int = 10) {
                 contentDescription = "Logo",
                 modifier = Modifier.scale(0.7f)
             )
-            Spacer(modifier =  Modifier.height(spacerHeight.dp))
+            Spacer(modifier =  Modifier.height(10.dp))
         }
     }
 }

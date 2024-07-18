@@ -6,51 +6,56 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.SortDirection
 import com.diksed.kriptak.features.component.SortType
 
 @Composable
 fun KripTakSortRow(
     onSortChange: (SortType) -> Unit,
-    sortTypeByName: SortType,
-    sortTypeByPrice: SortType,
-    sortTypeByPercentage: SortType,
+    sortType: SortType,
     sortDirection: SortDirection
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         SortBox(
-            sortName = "İsim",
+            sortName = stringResource(id = R.string.name),
             onSortChange = { onSortChange(SortType.NAME) },
-            sortType = sortTypeByName,
-            modifier = Modifier.weight(1f),
+            sortType = SortType.NAME,
+            currentSortType = sortType,
+            modifier = Modifier.weight(1.2f),
             firstSort = true,
             sortDirection = sortDirection
         )
         SortBox(
-            sortName = "1g Grafik",
-            sortType = SortType.NONE,
+            sortName = stringResource(id = R.string.oneDayGraphics),
             onSortChange = {},
+            sortType = SortType.NONE,
+            currentSortType = sortType,
+            showIcon = false,
             modifier = Modifier.weight(1f),
             sortDirection = SortDirection.DEFAULT
         )
         SortBox(
-            sortName = "Fiyat",
+            sortName = stringResource(id = R.string.price),
             onSortChange = { onSortChange(SortType.PRICE) },
-            sortType = sortTypeByPrice,
-            modifier = Modifier.weight(1f),
+            sortType = SortType.PRICE,
+            currentSortType = sortType,
+            modifier = Modifier.weight(0.75f),
             sortDirection = sortDirection
         )
         SortBox(
-            sortName = "1g %",
+            sortName = stringResource(id = R.string.oneDayChange),
             onSortChange = { onSortChange(SortType.PERCENTAGE) },
-            sortType = sortTypeByPercentage,
-            modifier = Modifier.weight(1f),
+            sortType = SortType.PERCENTAGE,
+            currentSortType = sortType,
+            modifier = Modifier.weight(0.8f),
             lastSort = true,
             sortDirection = sortDirection,
         )

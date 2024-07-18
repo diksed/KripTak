@@ -11,5 +11,9 @@
     <string name="allCrypto">Tüm Kripto Paralar</string>
     <string name="turkishNews">Türkçe Haberler</string>
     <string name="englishNews">İngilizce Haberler</string>
-    <string name="searchCrypto">Kripto Para Ara</string>
+    <string name="searchCrypto">Kripto Para Ara…</string>
+    <string name="name">İsim</string>
+    <string name="price">Fiyat</string>
+    <string name="oneDayGraphics">1g Grafik</string>
+    <string name="oneDayChange">1g %</string>
 </resources>

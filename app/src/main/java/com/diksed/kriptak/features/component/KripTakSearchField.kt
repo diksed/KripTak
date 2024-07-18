@@ -28,7 +28,7 @@ fun KripTakSearchField(query: String, onQueryChange: (String) -> Unit) {
             .fillMaxWidth()
             .padding(bottom = 8.dp, start = 24.dp, end = 24.dp)
             .background(boxColor, shape = RoundedCornerShape(12.dp)),
-        placeholder = { Text(stringResource(id = R.string.searchCrypto), color = Color.White) },
+        placeholder = { Text(stringResource(id = R.string.searchCrypto), color = Color.LightGray) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

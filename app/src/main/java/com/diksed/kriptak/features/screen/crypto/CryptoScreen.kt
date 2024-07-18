@@ -63,8 +63,8 @@ private fun Content(
     query: String,
     sortType: SortType,
     sortDirection: SortDirection,
-    onQueryChange: (String) -> Unit,
     onSortChange: (SortType) -> Unit,
+    onQueryChange: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -73,7 +73,7 @@ private fun Content(
     ) {
         LazyColumn {
             item {
-                KripTakTopBar(spacerHeight = 0)
+                KripTakTopBar()
             }
             item {
                 KripTakSearchField(query = query, onQueryChange = onQueryChange)
@@ -81,9 +81,7 @@ private fun Content(
             item {
                 KripTakSortRow(
                     onSortChange = onSortChange,
-                    sortTypeByName = sortType,
-                    sortTypeByPrice = sortType,
-                    sortTypeByPercentage = sortType,
+                    sortType = sortType,
                     sortDirection = sortDirection,
                 )
             }
