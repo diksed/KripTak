@@ -29,10 +29,10 @@ fun DetailRow(
     icon: Painter,
     label: String,
     value: String,
+    valueColor: Color = Color.White,
     labelFontSize: TextUnit = 18.sp,
     valueFontSize: TextUnit = 24.sp,
-    labelColor: Color = Color.Gray,
-    valueColor: Color = Color.White
+    labelColor: Color = Color.Gray
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,

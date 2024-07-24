@@ -21,5 +21,10 @@
     <string name="circulatingSupply">Dolaşımdaki Arz</string>
     <string name="totalSupply">Toplam Arz</string>
     <string name="maxSupply">Maksimum Arz</string>
-    <string name="volume24hChange">24s Hacim Değişimi</string>
+    <string name="volume24hChange">24 Saatlik Hacim Değişimi</string>
+    <string name="marketCapDominance">Piyasa Değeri Hakimiyeti</string>
+    <string name="percentChange1h">1 Saatlik Değişim</string>
+    <string name="percentChange24h">24 Saatlik Değişim</string>
+    <string name="percentChange7d">7 Günlük Değişim</string>
+    <string name="lastUpdated">Son Güncelleme</string>
 </resources>

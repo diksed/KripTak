@@ -181,7 +181,7 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
             item {
                 when (selectedTab) {
                     "details" -> CoinDetailsContent(selectedCoin = selectedCoin!!)
-                    "market" -> CoinDetailsMarketContent()
+                    "market" -> CoinDetailsMarketContent(selectedCoin = selectedCoin!!)
                     "news" -> CoinDetailsNewsContent()
                 }
             }

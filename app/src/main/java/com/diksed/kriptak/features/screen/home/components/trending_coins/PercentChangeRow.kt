@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
-import java.text.DecimalFormat
+import com.diksed.kriptak.utils.formatters.decimalFormat
 
 @Composable
 fun PercentChangeRow(
@@ -19,7 +19,6 @@ fun PercentChangeRow(
     modifier: Modifier,
     isDetailsScreen: Boolean = false
 ) {
-    val decimalFormat = DecimalFormat("#0.00")
     val formattedPercentChange = decimalFormat.format(percentChange24h)
 
     Row(

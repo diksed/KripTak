@@ -2,8 +2,10 @@ package com.diksed.kriptak.utils.formatters
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Date
 import java.util.Locale
 
 
@@ -19,4 +21,9 @@ fun formatTime(dateTime: String): String {
     val formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
     val time = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME)
     return time.format(formatter)
+}
+
+fun formatLastUpdated(date: Date): String {
+    val dateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault())
+    return dateFormat.format(date)
 }
