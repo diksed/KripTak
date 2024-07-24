@@ -57,7 +57,7 @@ fun CurrentNewsShimmerItem(boxShape: BoxShape) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(30.dp)
-                        .background(Color.Gray)
+                        .background(Color.Gray, shape = RoundedCornerShape(8.dp))
                         .shimmer()
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -65,7 +65,7 @@ fun CurrentNewsShimmerItem(boxShape: BoxShape) {
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(30.dp)
-                        .background(Color.Gray)
+                        .background(Color.Gray, shape = RoundedCornerShape(8.dp))
                         .shimmer()
                 )
             }

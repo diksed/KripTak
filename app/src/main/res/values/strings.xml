@@ -17,7 +17,7 @@
     <string name="oneDayGraphics">1g Grafik</string>
     <string name="oneDayChange">1g %</string>
     <string name="marketCap">Piyasa Değeri</string>
-    <string name="volume24h">24s Hacim</string>
+    <string name="volume24h">24 Saatlik Hacim</string>
     <string name="circulatingSupply">Dolaşımdaki Arz</string>
     <string name="totalSupply">Toplam Arz</string>
     <string name="maxSupply">Maksimum Arz</string>

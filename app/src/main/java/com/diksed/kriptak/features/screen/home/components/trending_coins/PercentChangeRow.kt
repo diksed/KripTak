@@ -14,11 +14,19 @@ import com.diksed.kriptak.R
 import java.text.DecimalFormat
 
 @Composable
-fun PercentChangeRow(percentChange24h: Double, modifier: Modifier) {
+fun PercentChangeRow(
+    percentChange24h: Double,
+    modifier: Modifier,
+    isDetailsScreen: Boolean = false
+) {
     val decimalFormat = DecimalFormat("#0.00")
     val formattedPercentChange = decimalFormat.format(percentChange24h)
 
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End, modifier = modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
+        modifier = modifier
+    ) {
         val iconResId = when {
             percentChange24h > 0 -> R.drawable.ic_up_arrow
             percentChange24h < 0 -> R.drawable.ic_down_arrow
@@ -30,7 +38,7 @@ fun PercentChangeRow(percentChange24h: Double, modifier: Modifier) {
             tint = if (percentChange24h > 0) Color.Green else if (percentChange24h < 0) Color.Red else Color.White
         )
         Text(
-            text = "% $formattedPercentChange",
+            text = "% $formattedPercentChange" + if (isDetailsScreen) " (24h)" else "",
             color = if (percentChange24h > 0) Color.Green else if (percentChange24h < 0) Color.Red else Color.White,
             fontSize = 13.sp
         )

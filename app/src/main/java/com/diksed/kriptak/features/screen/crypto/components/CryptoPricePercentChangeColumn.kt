@@ -24,7 +24,8 @@ fun CryptoPricePercentChangeColumn(formattedPrice: String, percentChange24h: Dou
         if (percentChange24h != null) {
             PercentChangeRow(
                 percentChange24h = percentChange24h,
-                modifier = Modifier
+                modifier = Modifier,
+                isDetailsScreen = true
             )
         }
     }
