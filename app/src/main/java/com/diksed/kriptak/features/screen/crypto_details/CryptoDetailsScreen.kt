@@ -1,24 +1,54 @@
 package com.diksed.kriptak.features.screen.crypto_details
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.sp
+import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.KripTakScaffold
-import com.diksed.kriptak.features.component.KripTakTopBar
-
+import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
+import com.diksed.kriptak.features.screen.crypto.components.CryptoPricePercentChangeColumn
+import com.diksed.kriptak.features.screen.crypto_details.components.CoinDetailsContent
+import com.diksed.kriptak.features.screen.crypto_details.components.CoinDetailsMarketContent
+import com.diksed.kriptak.features.screen.crypto_details.components.CoinDetailsNewsContent
+import com.diksed.kriptak.features.screen.crypto_details.components.TabButton
+import com.diksed.kriptak.features.screen.home.components.trending_coins.CoinImage
+import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
+import com.diksed.kriptak.utils.COIN_IMAGE_URL
+import com.diksed.kriptak.utils.formatters.formatPrice
 
 @Composable
-fun CryptoDetailsScreen(viewModel: CryptoDetailsViewModel = hiltViewModel()) {
+fun CryptoDetailsScreen(
+    viewModel: CryptoDetailsViewModel = hiltViewModel(),
+    navigateToBack: () -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
 
@@ -26,36 +56,134 @@ fun CryptoDetailsScreen(viewModel: CryptoDetailsViewModel = hiltViewModel()) {
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         content = {
-            Content(viewState.selectedCoin)
+            Content(
+                viewState.selectedCoin,
+                navigateToBack = navigateToBack
+            )
         },
     )
 }
 
 @Composable
-fun Content(selectedCoin: Coin?) {
+fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
+    val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
+    val percentChange24h = selectedCoin?.quote?.usd?.percentChange24h
+    val price = selectedCoin?.quote?.usd?.price
+    val formattedPrice = "$${price?.let { formatPrice(it) }}"
+
+    var selectedTab by remember { mutableStateOf("details") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
+            .padding(start = 10.dp, end = 10.dp, top = 10.dp),
     ) {
         LazyColumn {
             item {
-                KripTakTopBar()
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(onClick = { navigateToBack() }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_back_arrow),
+                            contentDescription = null,
+                            tint = Color.White, modifier = Modifier.size(30.dp)
+                        )
+                    }
+                    Text(
+                        text = "${selectedCoin?.name}",
+                        color = Color.White,
+                        fontSize = 25.sp,
+                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_unfavorited),
+                            contentDescription = null,
+                            tint = Color.White, modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
             }
             item {
-                Text(text = "Crypto Details")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp, end = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CoinImage(
+                            imageUrl = imageUrl, modifier = Modifier.scale(0.7f)
+                        )
+                        CryptoNameSymbolColumn(
+                            cryptoName = "${selectedCoin?.name}",
+                            cryptoNameFontSize = 20.sp,
+                            cryptoSymbol = "${selectedCoin?.symbol}",
+                            cryptoSymbolFontSize = 15.sp,
+                        )
+                    }
+                    CryptoPricePercentChangeColumn(
+                        formattedPrice = formattedPrice,
+                        percentChange24h = percentChange24h
+                    )
+                }
             }
-            selectedCoin?.let { coin ->
-                item {
-                    Text(text = "Name: ${coin.name}")
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .background(Color.Gray)
+                ) {
+                    Text(
+                        text = "Chart Placeholder",
+                        modifier = Modifier.align(Alignment.Center),
+                        color = Color.White
+                    )
                 }
-                item {
-                    Text(text = "Symbol: ${coin.symbol}")
+            }
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                        .background(bottomAppBarColor, shape = RoundedCornerShape(10.dp))
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(6.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        TabButton(
+                            modifier = Modifier.weight(1f),
+                            "Details",
+                            selectedTab == "details"
+                        ) { selectedTab = "details" }
+                        TabButton(
+                            modifier = Modifier.weight(1f),
+                            "Market",
+                            selectedTab == "market"
+                        ) { selectedTab = "market" }
+                        TabButton(
+                            modifier = Modifier.weight(1f),
+                            "News",
+                            selectedTab == "news"
+                        ) { selectedTab = "news" }
+                    }
                 }
-                item {
-                    Text(text = "Price: ${coin.quote.usd.price}")
+            }
+            item {
+                when (selectedTab) {
+                    "details" -> CoinDetailsContent(selectedCoin = selectedCoin!!)
+                    "market" -> CoinDetailsMarketContent()
+                    "news" -> CoinDetailsNewsContent()
                 }
-                // Add more details as needed
             }
         }
     }

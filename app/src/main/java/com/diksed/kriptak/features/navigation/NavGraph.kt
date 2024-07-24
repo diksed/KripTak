@@ -63,7 +63,7 @@ fun NavGraph() {
             })
             favoritesScreen()
             cryptoScreen { navController.navigateToCryptoDetails(it.toJson()) }
-            cryptoDetailsScreen()
+            cryptoDetailsScreen { navController.navigateUp() }
             newsScreen()
         }
     }

@@ -23,7 +23,7 @@ fun KripTakTopBar(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.kriptak_logo),
                 contentDescription = "Logo",
-                modifier = Modifier.scale(0.7f)
+                modifier = modifier.scale(0.7f)
             )
             Spacer(modifier =  Modifier.height(10.dp))
         }

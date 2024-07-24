@@ -13,12 +13,13 @@ fun NavController.navigateToCryptoDetails(cryptoDetail: String, navOptions: NavO
     this.navigate(cryptoDetailsNavigationRoute.plus("?cryptoDetail=$cryptoDetail"), navOptions)
 }
 
-fun NavGraphBuilder.cryptoDetailsScreen() {
+fun NavGraphBuilder.cryptoDetailsScreen(navigateToBack: () -> Unit) {
     composable(
         cryptoDetailsNavigationRoute.plus("?cryptoDetail={cryptoDetail}"),
         content = {
             CryptoDetailsScreen(
-                viewModel = hiltViewModel()
+                viewModel = hiltViewModel(),
+                navigateToBack = navigateToBack
             )
         }
     )

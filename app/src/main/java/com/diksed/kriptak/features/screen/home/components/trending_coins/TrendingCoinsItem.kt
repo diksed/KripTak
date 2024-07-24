@@ -2,9 +2,7 @@ package com.diksed.kriptak.features.screen.home.components.trending_coins
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,19 +15,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.data.model.CoinResponse
 import com.diksed.kriptak.features.component.BoxShape
+import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
 import com.diksed.kriptak.features.ui.theme.boxColor
 import com.diksed.kriptak.utils.COIN_IMAGE_URL
 import com.diksed.kriptak.utils.SPARKLINE_URL
 import com.diksed.kriptak.utils.components.getCornerRadius
-import com.diksed.kriptak.utils.formatPrice
+import com.diksed.kriptak.utils.formatters.formatPrice
 
 @Composable
 fun <T> TrendingCoinsItem(
@@ -67,26 +64,13 @@ fun <T> TrendingCoinsItem(
         ) {
             CoinImage(imageUrl = imageUrl, modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.width(8.dp))
-            Column(
-                verticalArrangement = Arrangement.Center,
+            CryptoNameSymbolColumn(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .weight(1f)
-            ) {
-                Text(
-                    text = coinData.name,
-                    color = Color.White,
-                    fontSize = 15.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    text = coinData.symbol,
-                    color = Color.Gray,
-                    fontSize = 12.sp
-                )
-            }
+                    .weight(1f),
+                cryptoName = coinData.name,
+                cryptoSymbol = coinData.symbol
+            )
             Spacer(modifier = Modifier.width(5.dp))
             CoinSparklineImage(
                 sparkLine = sparkLine,

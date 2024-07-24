@@ -1,4 +1,4 @@
-package com.diksed.kriptak.utils
+package com.diksed.kriptak.utils.formatters
 
 import java.math.BigDecimal
 

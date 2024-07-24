@@ -35,8 +35,8 @@ import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.DateFormatter
 import com.diksed.kriptak.features.ui.theme.boxColor
 import com.diksed.kriptak.utils.components.getCornerRadius
-import com.diksed.kriptak.utils.formatDate
-import com.diksed.kriptak.utils.formatTime
+import com.diksed.kriptak.utils.formatters.formatDate
+import com.diksed.kriptak.utils.formatters.formatTime
 import com.diksed.kriptak.utils.isImageUrlValid
 import kotlinx.coroutines.launch
 
