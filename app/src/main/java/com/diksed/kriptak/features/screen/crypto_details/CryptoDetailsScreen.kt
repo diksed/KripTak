@@ -29,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
+import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
@@ -58,14 +60,23 @@ fun CryptoDetailsScreen(
         content = {
             Content(
                 viewState.selectedCoin,
-                navigateToBack = navigateToBack
+                viewState.cryptoNews,
+                viewState.isCryptoLoading,
+                navigateToBack = navigateToBack,
+                fetchNews = { coinId -> viewModel.fetchNews(coinId) }
             )
         },
     )
 }
 
 @Composable
-fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
+fun Content(
+    selectedCoin: Coin?,
+    cryptoNews: List<Article>,
+    isCryptoLoading: Boolean,
+    navigateToBack: () -> Unit,
+    fetchNews: (String) -> Unit
+) {
     val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
     val percentChange24h = selectedCoin?.quote?.usd?.percentChange24h
     val price = selectedCoin?.quote?.usd?.price
@@ -94,8 +105,11 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                     }
                     Text(
                         text = "${selectedCoin?.name}",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         color = Color.White,
                         fontSize = 25.sp,
+                        modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
@@ -106,6 +120,7 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                     }
                 }
             }
+
             item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -115,7 +130,8 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
                     ) {
                         CoinImage(
                             imageUrl = imageUrl, modifier = Modifier.scale(0.7f)
@@ -125,11 +141,13 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                             cryptoNameFontSize = 20.sp,
                             cryptoSymbol = "${selectedCoin?.symbol}",
                             cryptoSymbolFontSize = 15.sp,
+                            modifier = Modifier.weight(1f)
                         )
                     }
                     CryptoPricePercentChangeColumn(
                         formattedPrice = formattedPrice,
-                        percentChange24h = percentChange24h
+                        percentChange24h = percentChange24h,
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
@@ -174,7 +192,12 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                             modifier = Modifier.weight(1f),
                             "News",
                             selectedTab == "news"
-                        ) { selectedTab = "news" }
+                        ) {
+                            selectedTab = "news"
+                            selectedCoin?.name?.let {
+                                fetchNews(it)
+                            }
+                        }
                     }
                 }
             }
@@ -182,7 +205,10 @@ fun Content(selectedCoin: Coin?, navigateToBack: () -> Unit) {
                 when (selectedTab) {
                     "details" -> CoinDetailsContent(selectedCoin = selectedCoin!!)
                     "market" -> CoinDetailsMarketContent(selectedCoin = selectedCoin!!)
-                    "news" -> CoinDetailsNewsContent()
+                    "news" -> CoinDetailsNewsContent(
+                        cryptoNews = cryptoNews,
+                        isCryptoLoading = isCryptoLoading
+                    )
                 }
             }
         }

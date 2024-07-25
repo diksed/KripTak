@@ -11,10 +11,15 @@ import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.features.screen.home.components.trending_coins.PercentChangeRow
 
 @Composable
-fun CryptoPricePercentChangeColumn(formattedPrice: String, percentChange24h: Double?) {
+fun CryptoPricePercentChangeColumn(
+    formattedPrice: String,
+    percentChange24h: Double?,
+    modifier: Modifier = Modifier
+) {
     Column(
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.End
+        horizontalAlignment = Alignment.End,
+        modifier = modifier
     ) {
         Text(
             text = formattedPrice,
