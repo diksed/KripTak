@@ -54,7 +54,6 @@ fun <T> TrendingCoinsItem(
             .fillMaxWidth()
             .wrapContentHeight()
             .clickable {
-
                 navigateToCryptoDetails.invoke(coinData)
             }
     ) {

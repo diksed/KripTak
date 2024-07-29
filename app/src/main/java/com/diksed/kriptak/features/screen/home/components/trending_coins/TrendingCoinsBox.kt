@@ -9,12 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
+import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 
 @Composable
 fun <T> TrendingCoinsBox(
+    navigateToCryptoDetails: (Coin) -> Unit = {},
     trendingCoins: List<T?>,
     navigateToCrypto: () -> Unit = {},
     isDailyCoins: Boolean = false,
@@ -29,7 +31,11 @@ fun <T> TrendingCoinsBox(
                 else -> BoxShape.MIDDLE
             }
             if (coin != null) {
-                TrendingCoinsItem(trendCoin = coin, boxShape = boxShape)
+                TrendingCoinsItem(
+                    trendCoin = coin,
+                    boxShape = boxShape,
+                    navigateToCryptoDetails = navigateToCryptoDetails
+                )
             }
             Spacer(modifier = Modifier.height(5.dp))
         }

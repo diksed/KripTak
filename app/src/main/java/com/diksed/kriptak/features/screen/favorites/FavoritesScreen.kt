@@ -22,6 +22,7 @@ import com.diksed.kriptak.features.screen.home.components.trending_coins.Trendin
 @Composable
 fun FavoritesScreen(
     viewModel: FavoritesViewModel = hiltViewModel(),
+    navigateToCryptoDetails: (Coin) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -31,6 +32,7 @@ fun FavoritesScreen(
         scaffoldState = scaffoldState,
         content = {
             Content(
+                navigateToCryptoDetails = { navigateToCryptoDetails(it) },
                 isLoading = viewState.isLoading,
                 favorites = viewState.favorites,
                 favoriteCount = viewState.favoriteCount
@@ -41,6 +43,7 @@ fun FavoritesScreen(
 
 @Composable
 private fun Content(
+    navigateToCryptoDetails: (Coin) -> Unit,
     isLoading: Boolean,
     favorites: List<Coin?>,
     favoriteCount: Int
@@ -64,6 +67,7 @@ private fun Content(
                     )
                 } else {
                     TrendingCoinsBox(
+                        navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
                         trendingCoins = favorites,
                         isDailyCoins = true,
                         titleId = R.string.favoritesCrypto
