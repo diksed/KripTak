@@ -28,4 +28,6 @@
     <string name="percentChange7d">7 Günlük Değişim</string>
     <string name="lastUpdated">Son Güncelleme</string>
     <string name="favoritesCrypto">Favori Kripto Paralarınız</string>
+    <string name="removedFromFavorites">%1$s favorilerden çıkarıldı!</string>
+    <string name="addedToFavorites">%1$s favorilere eklendi!</string>
 </resources>

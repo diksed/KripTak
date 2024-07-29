@@ -2,6 +2,8 @@ package com.diksed.kriptak.features.screen.crypto_details
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,7 @@ import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
 import com.diksed.kriptak.utils.COIN_IMAGE_URL
 import com.diksed.kriptak.utils.formatters.formatPrice
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CryptoDetailsScreen(
     viewModel: CryptoDetailsViewModel = hiltViewModel(),
@@ -80,6 +83,7 @@ fun CryptoDetailsScreen(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Content(
     selectedCoin: Coin?,
@@ -130,7 +134,10 @@ fun Content(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    KripTakFavoriteButton(isFavorite = isFavorite) {
+                    KripTakFavoriteButton(
+                        isFavorite = isFavorite,
+                        coinName = selectedCoin?.name ?: "",
+                    ) {
                         selectedCoin?.symbol?.let { toggleFavorite(it) }
                     }
                 }
