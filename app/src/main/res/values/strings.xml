@@ -7,7 +7,7 @@
     <string name="settings">Ayarlar</string>
     <string name="currentNews">Güncel Haberler</string>
     <string name="allNews">Tüm Haberler</string>
-    <string name="favoritesOfDay">Günün Favorileri</string>
+    <string name="trendsOfDay">Günün Trendleri</string>
     <string name="allCrypto">Tüm Kripto Paralar</string>
     <string name="turkishNews">Türkçe Haberler</string>
     <string name="englishNews">İngilizce Haberler</string>
@@ -27,4 +27,5 @@
     <string name="percentChange24h">24 Saatlik Değişim</string>
     <string name="percentChange7d">7 Günlük Değişim</string>
     <string name="lastUpdated">Son Güncelleme</string>
+    <string name="favoritesCrypto">Favori Kripto Paralarınız</string>
 </resources>

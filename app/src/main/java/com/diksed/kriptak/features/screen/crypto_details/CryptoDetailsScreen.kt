@@ -58,7 +58,7 @@ fun CryptoDetailsScreen(
     val viewState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(viewState.selectedCoin) {
-        viewState.selectedCoin?.id?.let { viewModel.checkFavoriteStatus(it.toString()) }
+        viewState.selectedCoin?.symbol?.let { viewModel.checkFavoriteStatus(it) }
     }
 
     KripTakScaffold(
@@ -131,7 +131,7 @@ fun Content(
                     Spacer(modifier = Modifier.weight(1f))
 
                     KripTakFavoriteButton(isFavorite = isFavorite) {
-                        selectedCoin?.id?.let { toggleFavorite(it.toString()) }
+                        selectedCoin?.symbol?.let { toggleFavorite(it) }
                     }
                 }
             }

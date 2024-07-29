@@ -1,28 +1,46 @@
 package com.diksed.kriptak.utils
 
 import android.content.Context
+import android.content.SharedPreferences
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class PreferencesManager(context: Context) {
-    private val sharedPreferences =
-        context.getSharedPreferences("crypto_prefs", Context.MODE_PRIVATE)
+class PreferencesManager @Inject constructor(context: Context) {
+    private val preferences: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
-    fun addFavorite(coinId: String) {
-        val favorites = getFavorites().toMutableSet()
-        favorites.add(coinId)
-        sharedPreferences.edit().putStringSet("favorites", favorites).apply()
+    private val _favoritesFlow = MutableStateFlow<List<String>>(emptyList())
+    val favoritesFlow: StateFlow<List<String>> = _favoritesFlow.asStateFlow()
+
+    init {
+        loadFavorites()
     }
 
-    fun removeFavorite(coinId: String) {
-        val favorites = getFavorites().toMutableSet()
-        favorites.remove(coinId)
-        sharedPreferences.edit().putStringSet("favorites", favorites).apply()
+    private fun loadFavorites() {
+        val favorites = preferences.getStringSet("favorites", emptySet())?.toList() ?: emptyList()
+        _favoritesFlow.value = favorites
     }
 
-    fun getFavorites(): Set<String> {
-        return sharedPreferences.getStringSet("favorites", emptySet()) ?: emptySet()
+    fun getFavorites(): List<String> {
+        return _favoritesFlow.value
     }
 
-    fun isFavorite(coinId: String): Boolean {
-        return getFavorites().contains(coinId)
+    fun isFavorite(symbol: String): Boolean {
+        return _favoritesFlow.value.contains(symbol)
+    }
+
+    fun addFavorite(symbol: String) {
+        val favorites = preferences.getStringSet("favorites", emptySet())?.toMutableSet() ?: mutableSetOf()
+        favorites.add(symbol)
+        preferences.edit().putStringSet("favorites", favorites).apply()
+        _favoritesFlow.value = favorites.toList()
+    }
+
+    fun removeFavorite(symbol: String) {
+        val favorites = preferences.getStringSet("favorites", emptySet())?.toMutableSet() ?: mutableSetOf()
+        favorites.remove(symbol)
+        preferences.edit().putStringSet("favorites", favorites).apply()
+        _favoritesFlow.value = favorites.toList()
     }
 }

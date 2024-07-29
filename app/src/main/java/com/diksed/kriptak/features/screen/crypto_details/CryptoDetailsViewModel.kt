@@ -28,35 +28,30 @@ class CryptoDetailsViewModel @Inject constructor(
         savedStateHandle.get<String>("cryptoDetail")?.let { coinId ->
             val selectedCoin = Coin.create(coinId)
             setState { currentState.copy(isLoading = false, selectedCoin = selectedCoin) }
-            checkFavoriteStatus(coinId)
-        } ?: kotlin.run {
+            if (selectedCoin != null) {
+                checkFavoriteStatus(selectedCoin.symbol)
+            }
+        } ?: run {
             setState { currentState.copy(isLoading = true) }
         }
     }
 
-    fun checkFavoriteStatus(coinId: String) {
+    fun checkFavoriteStatus(coinSymbol: String) {
         viewModelScope.launch {
-            val isFavorite = preferencesManager.isFavorite(coinId)
+            val isFavorite = preferencesManager.isFavorite(coinSymbol)
             setState { currentState.copy(isFavorite = isFavorite) }
         }
     }
 
-    fun toggleFavorite(coinId: String) {
+    fun toggleFavorite(coinSymbol: String) {
         viewModelScope.launch {
-            val isFavorite = preferencesManager.isFavorite(coinId)
+            val isFavorite = preferencesManager.isFavorite(coinSymbol)
             if (isFavorite) {
-                preferencesManager.removeFavorite(coinId)
+                preferencesManager.removeFavorite(coinSymbol)
             } else {
-                preferencesManager.addFavorite(coinId)
+                preferencesManager.addFavorite(coinSymbol)
             }
             setState { currentState.copy(isFavorite = !isFavorite) }
-        }
-    }
-
-    private fun onChangeTheme() {
-        viewModelScope.launch {
-            application.toggleTheme()
-            setState { currentState.copy(isDark = application.isDark.value) }
         }
     }
 
@@ -88,12 +83,18 @@ class CryptoDetailsViewModel @Inject constructor(
         }
     }
 
+    private fun onChangeTheme() {
+        viewModelScope.launch {
+            application.toggleTheme()
+            setState { currentState.copy(isDark = application.isDark.value) }
+        }
+    }
 
     override fun onTriggerEvent(event: CryptoDetailsViewEvent) {
         viewModelScope.launch {
             when (event) {
                 is CryptoDetailsViewEvent.OnChangeTheme -> onChangeTheme()
-                is CryptoDetailsViewEvent.ToggleFavorite -> toggleFavorite(event.coinId)
+                is CryptoDetailsViewEvent.ToggleFavorite -> toggleFavorite(event.coinSymbol)
             }
         }
     }
@@ -103,5 +104,5 @@ class CryptoDetailsViewModel @Inject constructor(
 
 sealed class CryptoDetailsViewEvent : IViewEvent {
     object OnChangeTheme : CryptoDetailsViewEvent()
-    data class ToggleFavorite(val coinId: String) : CryptoDetailsViewEvent()
+    data class ToggleFavorite(val coinSymbol: String) : CryptoDetailsViewEvent()
 }

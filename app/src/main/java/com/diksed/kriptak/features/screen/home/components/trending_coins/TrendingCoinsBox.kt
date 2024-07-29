@@ -17,10 +17,11 @@ import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
 fun <T> TrendingCoinsBox(
     trendingCoins: List<T?>,
     navigateToCrypto: () -> Unit = {},
-    isDailyCoins: Boolean = false
+    isDailyCoins: Boolean = false,
+    titleId: Int = R.string.trendsOfDay
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        if (isDailyCoins) KripTakCurrentBoxTitle(title = stringResource(id = R.string.favoritesOfDay))
+        if (isDailyCoins) KripTakCurrentBoxTitle(title = stringResource(id = titleId))
         trendingCoins.forEachIndexed { index, coin ->
             val boxShape = when (index) {
                 0 -> BoxShape.TOP
@@ -32,7 +33,7 @@ fun <T> TrendingCoinsBox(
             }
             Spacer(modifier = Modifier.height(5.dp))
         }
-        if (isDailyCoins) {
+        if (isDailyCoins && titleId == R.string.trendsOfDay) {
             KripTakCurrentBoxTextButton(
                 text = stringResource(id = R.string.allCrypto),
                 navigateTo = navigateToCrypto
