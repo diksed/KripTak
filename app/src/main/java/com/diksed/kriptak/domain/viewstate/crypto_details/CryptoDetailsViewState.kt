@@ -12,4 +12,5 @@ data class CryptoDetailsViewState(
     val isCryptoLoading: Boolean = false,
     val cryptoNews: List<Article> = emptyList(),
     val selectedCoin: Coin? = null,
+    val isFavorite: Boolean = false
 ) : IViewState

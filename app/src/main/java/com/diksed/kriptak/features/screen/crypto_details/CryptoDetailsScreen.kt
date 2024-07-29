@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.features.component.KripTakFavoriteButton
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
 import com.diksed.kriptak.features.screen.crypto.components.CryptoPricePercentChangeColumn
@@ -54,6 +57,10 @@ fun CryptoDetailsScreen(
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(viewState.selectedCoin) {
+        viewState.selectedCoin?.id?.let { viewModel.checkFavoriteStatus(it.toString()) }
+    }
+
     KripTakScaffold(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
@@ -62,8 +69,12 @@ fun CryptoDetailsScreen(
                 viewState.selectedCoin,
                 viewState.cryptoNews,
                 viewState.isCryptoLoading,
+                viewState.isFavorite,
                 navigateToBack = navigateToBack,
-                fetchNews = { coinId -> viewModel.fetchNews(coinId) }
+                fetchNews = { coinId -> viewModel.fetchNews(coinId) },
+                toggleFavorite = { coinId ->
+                    viewModel.toggleFavorite(coinId)
+                }
             )
         },
     )
@@ -74,8 +85,10 @@ fun Content(
     selectedCoin: Coin?,
     cryptoNews: List<Article>,
     isCryptoLoading: Boolean,
+    isFavorite: Boolean,
     navigateToBack: () -> Unit,
-    fetchNews: (String) -> Unit
+    fetchNews: (String) -> Unit,
+    toggleFavorite: (String) -> Unit
 ) {
     val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
     val percentChange24h = selectedCoin?.quote?.usd?.percentChange24h
@@ -100,27 +113,28 @@ fun Content(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_back_arrow),
                             contentDescription = null,
-                            tint = Color.White, modifier = Modifier.size(30.dp)
+                            tint = Color.White,
+                            modifier = Modifier.size(30.dp)
                         )
                     }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
                     Text(
                         text = "${selectedCoin?.name}",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         color = Color.White,
-                        fontSize = 25.sp,
-                        modifier = Modifier.weight(1f)
+                        fontSize = 25.sp
                     )
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_unfavorited),
-                            contentDescription = null,
-                            tint = Color.White, modifier = Modifier.size(30.dp)
-                        )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    KripTakFavoriteButton(isFavorite = isFavorite) {
+                        selectedCoin?.id?.let { toggleFavorite(it.toString()) }
                     }
                 }
             }
-
             item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

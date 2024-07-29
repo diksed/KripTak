@@ -10,6 +10,7 @@ import com.diksed.kriptak.domain.usecase.news.NewsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.crypto_details.CryptoDetailsViewState
 import com.diksed.kriptak.features.base.BaseViewModel
+import com.diksed.kriptak.utils.PreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,14 +20,36 @@ class CryptoDetailsViewModel @Inject constructor(
     private val application: KripTakApp,
     private val getNewsUseCase: NewsUseCase,
     private val firestoreRepository: FirestoreRepository,
+    private val preferencesManager: PreferencesManager,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<CryptoDetailsViewState, CryptoDetailsViewEvent>() {
 
     init {
-        savedStateHandle.get<String>("cryptoDetail")?.let {
-            setState { currentState.copy(isLoading = false, selectedCoin = Coin.create(it)) }
+        savedStateHandle.get<String>("cryptoDetail")?.let { coinId ->
+            val selectedCoin = Coin.create(coinId)
+            setState { currentState.copy(isLoading = false, selectedCoin = selectedCoin) }
+            checkFavoriteStatus(coinId)
         } ?: kotlin.run {
             setState { currentState.copy(isLoading = true) }
+        }
+    }
+
+    fun checkFavoriteStatus(coinId: String) {
+        viewModelScope.launch {
+            val isFavorite = preferencesManager.isFavorite(coinId)
+            setState { currentState.copy(isFavorite = isFavorite) }
+        }
+    }
+
+    fun toggleFavorite(coinId: String) {
+        viewModelScope.launch {
+            val isFavorite = preferencesManager.isFavorite(coinId)
+            if (isFavorite) {
+                preferencesManager.removeFavorite(coinId)
+            } else {
+                preferencesManager.addFavorite(coinId)
+            }
+            setState { currentState.copy(isFavorite = !isFavorite) }
         }
     }
 
@@ -70,6 +93,7 @@ class CryptoDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             when (event) {
                 is CryptoDetailsViewEvent.OnChangeTheme -> onChangeTheme()
+                is CryptoDetailsViewEvent.ToggleFavorite -> toggleFavorite(event.coinId)
             }
         }
     }
@@ -79,4 +103,5 @@ class CryptoDetailsViewModel @Inject constructor(
 
 sealed class CryptoDetailsViewEvent : IViewEvent {
     object OnChangeTheme : CryptoDetailsViewEvent()
+    data class ToggleFavorite(val coinId: String) : CryptoDetailsViewEvent()
 }

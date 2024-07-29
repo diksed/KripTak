@@ -11,6 +11,7 @@ import com.diksed.kriptak.domain.usecase.news.NewsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.home.HomeViewState
 import com.diksed.kriptak.features.base.BaseViewModel
+import com.diksed.kriptak.utils.PreferencesManager
 import com.diksed.kriptak.utils.convertToCoinResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,12 +23,19 @@ class HomeViewModel @Inject constructor(
     private val getTrendingCoinsUseCase: TrendingCoinUseCase,
     private val getCoinsFromSymbolUseCase: CoinFromSymbolUseCase,
     private val firestoreRepository: FirestoreRepository,
+    private val preferencesManager: PreferencesManager,
     private val application: KripTakApp
 ) : BaseViewModel<HomeViewState, HomeViewEvent>() {
 
     init {
         setState { currentState.copy(isDark = application.isDark.value) }
         fetchApiParamsAndNews()
+        val coin = getFavoriteCoins()
+        println("coin $coin")
+    }
+
+    fun getFavoriteCoins(): List<String> {
+        return preferencesManager.getFavorites().toList()
     }
 
     private fun fetchApiParamsAndNews() {

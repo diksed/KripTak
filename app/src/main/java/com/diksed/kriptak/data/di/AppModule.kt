@@ -12,6 +12,7 @@ import com.diksed.kriptak.domain.repository.NewsRepository
 import com.diksed.kriptak.domain.repository.NewsRepositoryImpl
 import com.diksed.kriptak.domain.repository.TrendingCoinRepository
 import com.diksed.kriptak.domain.repository.TrendingCoinRepositoryImpl
+import com.diksed.kriptak.utils.PreferencesManager
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -53,6 +54,12 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CoinService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferencesManager(@ApplicationContext context: Context): PreferencesManager {
+        return PreferencesManager(context)
     }
 
     @Provides
