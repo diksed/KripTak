@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KripTak</string>
+    <string name="homePage">Ana Sayfa</string>
+    <string name="favorites">Favoriler</string>
+    <string name="cryptoList">Kripto Listesi</string>
+    <string name="news">Haberler</string>
+    <string name="settings">Ayarlar</string>
+    <string name="currentNews">Güncel Haberler</string>
+    <string name="allNews">Tüm Haberler</string>
+    <string name="trendsOfDay">Günün Trendleri</string>
+    <string name="allCrypto">Tüm Kripto Paralar</string>
+    <string name="turkishNews">Türkçe Haberler</string>
+    <string name="englishNews">İngilizce Haberler</string>
+    <string name="searchCrypto">Kripto Para Ara…</string>
+    <string name="name">İsim</string>
+    <string name="price">Fiyat</string>
+    <string name="oneDayGraphics">1g Grafik</string>
+    <string name="oneDayChange">1g %</string>
+    <string name="marketCap">Piyasa Değeri</string>
+    <string name="volume24h">24 Saatlik Hacim</string>
+    <string name="circulatingSupply">Dolaşımdaki Arz</string>
+    <string name="totalSupply">Toplam Arz</string>
+    <string name="maxSupply">Maksimum Arz</string>
+    <string name="volume24hChange">24 Saatlik Hacim Değişimi</string>
+    <string name="marketCapDominance">Piyasa Değeri Hakimiyeti</string>
+    <string name="percentChange1h">1 Saatlik Değişim</string>
+    <string name="percentChange24h">24 Saatlik Değişim</string>
+    <string name="percentChange7d">7 Günlük Değişim</string>
+    <string name="lastUpdated">Son Güncelleme</string>
+    <string name="favoritesCrypto">Favori Kripto Paralarınız</string>
+    <string name="removedFromFavorites">%1$s favorilerden çıkarıldı!</string>
+    <string name="addedToFavorites">%1$s favorilere eklendi!</string>
+</resources>
