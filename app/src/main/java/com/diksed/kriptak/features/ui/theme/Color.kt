@@ -2,11 +2,12 @@ package com.diksed.kriptak.features.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val bottomAppBarColor = Color (0xFF263459)
-val bottomAppBarItemColor = Color (0xFFE6E5E8)
-val scaffoldBackgroundColor = Color (0xFF1A233B)
+val bottomAppBarColor = Color(0xFF263459)
+val bottomAppBarItemColor = Color(0xFFE6E5E8)
+val scaffoldBackgroundColor = Color(0xFF1A233B)
 val selectedButtonColor = Color(0xFF121829)
-val boxColor = Color (0xFF263459)
+val boxColor = Color(0xFF263459)
+val noInternetBoxColor = Color(0xFF2C4079)
 
 val DarkModerateViolet = Color(0xFF6750A4)
 val White = Color(0xFFFFFFFF)

@@ -31,4 +31,6 @@
     <string name="favoritesCrypto">Favori Kripto Paralarınız</string>
     <string name="removedFromFavorites">%1$s favorilerden çıkarıldı!</string>
     <string name="addedToFavorites">%1$s favorilere eklendi!</string>
+    <string name="noConnection">Bağlantı Yok!</string>
+    <string name="noConnectionMessage">Lütfen internet bağlantınızı kontrol ediniz.</string>
 </resources>

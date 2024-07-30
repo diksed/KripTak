@@ -12,6 +12,7 @@ import com.diksed.kriptak.domain.repository.NewsRepository
 import com.diksed.kriptak.domain.repository.NewsRepositoryImpl
 import com.diksed.kriptak.domain.repository.TrendingCoinRepository
 import com.diksed.kriptak.domain.repository.TrendingCoinRepositoryImpl
+import com.diksed.kriptak.utils.NetworkConnectivityObserver
 import com.diksed.kriptak.utils.PreferencesManager
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -26,6 +27,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideNetworkConnectivityObserver(@ApplicationContext context: Context): NetworkConnectivityObserver {
+        return NetworkConnectivityObserver(context)
+    }
 
     @Provides
     @Singleton

@@ -30,4 +30,6 @@
     <string name="favoritesCrypto">Your Favorite Cryptocurrencies</string>
     <string name="removedFromFavorites">%1$s removed from favorites!</string>
     <string name="addedToFavorites">%1$s added to favorites!</string>
+    <string name="noConnection">No Connection!</string>
+    <string name="noConnectionMessage">Please check your internet connection.</string>
 </resources>

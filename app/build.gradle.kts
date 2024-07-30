@@ -60,7 +60,7 @@ android {
 
 dependencies {
 
-    implementation (libs.androidx.runtime.v168)
+    implementation(libs.androidx.runtime.v168)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.coil.compose)
     implementation(libs.shimmer.compose)
+    implementation(libs.lottie.animation)
 
     //Firebase
     implementation(libs.google.services)
