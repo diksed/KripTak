@@ -31,9 +31,9 @@ class NewsViewModel @Inject constructor(
                 val turkishParams = firestoreRepository.getDailyNewsApiParams("apiTrKey")
                 val englishParams = firestoreRepository.getDailyNewsApiParams("apiEnKey")
                 getDailyNews(turkishParams, englishParams)
-                setState { currentState.copy(isLoading = false) }
+                setState { currentState.copy(isLoading = false, isError = true) }
             } catch (e: Exception) {
-                // TODO: Handle error
+                setState { currentState.copy(isLoading = false, isError = true) }
             }
         }
     }
@@ -42,16 +42,27 @@ class NewsViewModel @Inject constructor(
         try {
             val turkishResponse = getNewsUseCase(turkishParams)
             val englishResponse = getNewsUseCase(englishParams)
+
+            val filteredTurkishNews = turkishResponse.articles.filter { article ->
+                !turkishParams.excludedKeywords.any { keyword ->
+                    article.title.contains(
+                        keyword,
+                        ignoreCase = true
+                    )
+                }
+            }
+
             setState {
                 currentState.copy(
-                    turkishNews = turkishResponse.articles,
+                    turkishNews = filteredTurkishNews,
                     englishNews = englishResponse.articles
                 )
             }
         } catch (e: Exception) {
-            // TODO: Handle error
+            setState { currentState.copy(isError = true) }
         }
     }
+
 
     private fun onChangeTheme() {
         viewModelScope.launch {

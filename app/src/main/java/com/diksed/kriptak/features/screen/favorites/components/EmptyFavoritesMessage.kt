@@ -57,8 +57,6 @@ fun EmptyFavoritesMessage(navigateToCrypto: () -> Unit) {
             modifier = Modifier.padding(horizontal = 24.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
-        AddToFavoritesButton {
-            navigateToCrypto()
-        }
+        KripTakButton(buttonText = R.string.addFavorite, onClick = navigateToCrypto)
     }
 }

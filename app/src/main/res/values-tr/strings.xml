@@ -38,4 +38,6 @@
     <string name="noFavorites">Henüz favori kripto paranız yok!</string>
     <string name="noFavoritesMessage">Detay sayfasındaki yıldız simgesine tıklayarak favori kripto paralarınızı belirleyebilirsiniz.</string>
     <string name="addFavorite">Favori Ekle</string>
+    <string name="somethingWentWrong">Bir şeyler yanlış gitti!\nLütfen tekrar deneyiniz.</string>
+    <string name="tryAgain">Tekrar Dene</string>
 </resources>

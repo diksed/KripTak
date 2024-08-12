@@ -37,4 +37,6 @@
     <string name="noFavorites">You have no favorite cryptocurrencies yet!</string>
     <string name="noFavoritesMessage">You can set your favorite cryptocurrencies by clicking on the star icon on the detail page.</string>
     <string name="addFavorite">Add Favorite</string>
+    <string name="somethingWentWrong">Something went wrong!\nPlease try again.</string>
+    <string name="tryAgain">Try Again</string>
 </resources>

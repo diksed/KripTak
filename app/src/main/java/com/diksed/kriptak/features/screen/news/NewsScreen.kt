@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
+import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.current_news.CurrentNewsShimmerEffect
@@ -44,7 +45,8 @@ fun NewsScreen(
             Content(
                 turkishNews = viewState.turkishNews,
                 englishNews = viewState.englishNews,
-                isLoading = viewState.isLoading
+                isLoading = viewState.isLoading,
+                isError = viewState.isError
             )
         },
     )
@@ -54,52 +56,58 @@ fun NewsScreen(
 private fun Content(
     turkishNews: List<Article>,
     englishNews: List<Article>,
-    isLoading: Boolean
+    isLoading: Boolean,
+    isError: Boolean
 ) {
     var selectedLanguage by remember { mutableStateOf("TR") }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
-    ) {
+    if (isError) {
+        KripTakErrorScreen()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
+        ) {
 
-        LazyColumn {
-            item {
-                KripTakTopBar()
-            }
-            item {
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 10.dp, horizontal = 20.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    ChangeDailyNewsButton(
-                        text = stringResource(id = R.string.turkishNews),
-                        isSelected = selectedLanguage == "TR",
-                        onClick = { selectedLanguage = "TR" },
-                        selectedColor = selectedButtonColor,
-                        unselectedColor = boxColor
-                    )
-                    ChangeDailyNewsButton(
-                        text = stringResource(id = R.string.englishNews),
-                        isSelected = selectedLanguage == "EN",
-                        onClick = { selectedLanguage = "EN" },
-                        selectedColor = selectedButtonColor,
-                        unselectedColor = boxColor
-                    )
+            LazyColumn {
+                item {
+                    KripTakTopBar()
                 }
-            }
-            item {
-                if (isLoading) {
-                    CurrentNewsShimmerEffect()
-                } else {
-                    CurrentNewsBox(
-                        currentNews = if (selectedLanguage == "TR") turkishNews else englishNews
-                    )
+                item {
+                    Row(
+                        modifier = Modifier
+                            .padding(vertical = 10.dp, horizontal = 20.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        ChangeDailyNewsButton(
+                            text = stringResource(id = R.string.turkishNews),
+                            isSelected = selectedLanguage == "TR",
+                            onClick = { selectedLanguage = "TR" },
+                            selectedColor = selectedButtonColor,
+                            unselectedColor = boxColor
+                        )
+                        ChangeDailyNewsButton(
+                            text = stringResource(id = R.string.englishNews),
+                            isSelected = selectedLanguage == "EN",
+                            onClick = { selectedLanguage = "EN" },
+                            selectedColor = selectedButtonColor,
+                            unselectedColor = boxColor
+                        )
+                    }
+                }
+                item {
+                    if (isLoading) {
+                        CurrentNewsShimmerEffect()
+                    } else {
+                        CurrentNewsBox(
+                            currentNews = if (selectedLanguage == "TR") turkishNews else englishNews
+                        )
+                    }
                 }
             }
         }
     }
+
 }

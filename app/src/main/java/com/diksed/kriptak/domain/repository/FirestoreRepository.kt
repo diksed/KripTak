@@ -56,5 +56,6 @@ data class ApiParams(
     val language: String = "en",
     val newsSize: Int = 10,
     val searchQuery: String = "",
-    val unwantedSources: List<String> = emptyList()
+    val unwantedSources: List<String> = emptyList(),
+    val excludedKeywords : List<String> = emptyList()
 )
