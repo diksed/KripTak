@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.screen.favorites.components
+package com.diksed.kriptak.features.component
 
 import android.content.ComponentName
 import android.content.Intent

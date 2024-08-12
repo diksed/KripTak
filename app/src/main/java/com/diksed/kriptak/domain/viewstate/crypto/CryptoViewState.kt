@@ -9,4 +9,5 @@ data class CryptoViewState(
     val isDark: Boolean = false,
     val isLoading: Boolean = false,
     val coins: List<Coin> = emptyList(),
+    val isError: Boolean = false
 ) : IViewState

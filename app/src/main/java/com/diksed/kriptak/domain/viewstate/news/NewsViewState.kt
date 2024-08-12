@@ -10,5 +10,5 @@ data class NewsViewState(
     val turkishNews: List<Article> = emptyList(),
     val englishNews: List<Article> = emptyList(),
     val isLoading: Boolean = false,
-    val isError: Boolean = true
+    val isError: Boolean = false
 ) : IViewState

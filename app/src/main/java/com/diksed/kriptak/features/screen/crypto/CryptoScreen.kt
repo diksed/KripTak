@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCircularProgressIndicator
+import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakSearchField
 import com.diksed.kriptak.features.component.KripTakTopBar
@@ -51,7 +52,8 @@ fun CryptoScreen(
                 sortType = sortType,
                 sortDirection = sortDirection,
                 onQueryChange = { viewModel.updateSearchQuery(it) },
-                onSortChange = { viewModel.updateSortType(it) }
+                onSortChange = { viewModel.updateSortType(it) },
+                isError = viewState.isError
             )
         },
     )
@@ -68,54 +70,59 @@ private fun Content(
     sortDirection: SortDirection,
     onSortChange: (SortType) -> Unit,
     onQueryChange: (String) -> Unit,
+    isError: Boolean
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
-    ) {
-        LazyColumn {
-            item {
-                KripTakTopBar()
-            }
-            item {
-                KripTakSearchField(query = query, onQueryChange = onQueryChange)
-            }
-            item {
-                KripTakSortRow(
-                    onSortChange = onSortChange,
-                    sortType = sortType,
-                    sortDirection = sortDirection,
-                )
-            }
-            itemsIndexed(coins.filter {
-                it?.name?.contains(
-                    query,
-                    ignoreCase = true
-                ) == true
-            }) { index, coin ->
-                val boxShape = when (index) {
-                    0 -> BoxShape.TOP
-                    coins.size - 1 -> BoxShape.BOTTOM
-                    else -> BoxShape.MIDDLE
+    if (isError) {
+        KripTakErrorScreen()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
+        ) {
+            LazyColumn {
+                item {
+                    KripTakTopBar()
                 }
-                if (coin != null) {
-                    TrendingCoinsItem(
-                        navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
-                        trendCoin = coin,
-                        boxShape = boxShape
+                item {
+                    KripTakSearchField(query = query, onQueryChange = onQueryChange)
+                }
+                item {
+                    KripTakSortRow(
+                        onSortChange = onSortChange,
+                        sortType = sortType,
+                        sortDirection = sortDirection,
                     )
                 }
-                Spacer(modifier = Modifier.height(5.dp))
+                itemsIndexed(coins.filter {
+                    it?.name?.contains(
+                        query,
+                        ignoreCase = true
+                    ) == true
+                }) { index, coin ->
+                    val boxShape = when (index) {
+                        0 -> BoxShape.TOP
+                        coins.size - 1 -> BoxShape.BOTTOM
+                        else -> BoxShape.MIDDLE
+                    }
+                    if (coin != null) {
+                        TrendingCoinsItem(
+                            navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
+                            trendCoin = coin,
+                            boxShape = boxShape
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
 
-                if (index == coins.size - 1 && !isLoading) {
-                    onLoadMore()
-                    KripTakCircularProgressIndicator()
+                    if (index == coins.size - 1 && !isLoading) {
+                        onLoadMore()
+                        KripTakCircularProgressIndicator()
+                    }
                 }
-            }
-            item {
-                if (isLoading) {
-                    TrendingCoinsShimmerEffect()
+                item {
+                    if (isLoading) {
+                        TrendingCoinsShimmerEffect()
+                    }
                 }
             }
         }

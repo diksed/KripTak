@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakFavoriteButton
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
@@ -74,7 +75,8 @@ fun CryptoDetailsScreen(
                 fetchNews = { coinId -> viewModel.fetchNews(coinId) },
                 toggleFavorite = { coinId ->
                     viewModel.toggleFavorite(coinId)
-                }
+                },
+                isError = viewState.isError
             )
         },
     )
@@ -88,7 +90,8 @@ fun Content(
     isFavorite: Boolean,
     navigateToBack: () -> Unit,
     fetchNews: (String) -> Unit,
-    toggleFavorite: (String) -> Unit
+    toggleFavorite: (String) -> Unit,
+    isError: Boolean = false
 ) {
     val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
     val percentChange24h = selectedCoin?.quote?.usd?.percentChange24h
@@ -97,121 +100,125 @@ fun Content(
 
     var selectedTab by remember { mutableStateOf("details") }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, top = 10.dp),
-    ) {
-        LazyColumn {
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    IconButton(onClick = { navigateToBack() }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_back_arrow),
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Text(
-                        text = "${selectedCoin?.name}",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = Color.White,
-                        fontSize = 25.sp
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    KripTakFavoriteButton(
-                        isFavorite = isFavorite,
-                        coinName = selectedCoin?.name ?: "",
+    if (isError) {
+        KripTakErrorScreen()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 10.dp, end = 10.dp, top = 10.dp),
+        ) {
+            LazyColumn {
+                item {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        selectedCoin?.symbol?.let { toggleFavorite(it) }
+                        IconButton(onClick = { navigateToBack() }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_back_arrow),
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Text(
+                            text = "${selectedCoin?.name}",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Color.White,
+                            fontSize = 25.sp
+                        )
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        KripTakFavoriteButton(
+                            isFavorite = isFavorite,
+                            coinName = selectedCoin?.name ?: "",
+                        ) {
+                            selectedCoin?.symbol?.let { toggleFavorite(it) }
+                        }
                     }
                 }
-            }
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp, end = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+                item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp, end = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        CoinImage(
-                            imageUrl = imageUrl, modifier = Modifier.scale(0.7f)
-                        )
-                        CryptoNameSymbolColumn(
-                            cryptoName = "${selectedCoin?.name}",
-                            cryptoNameFontSize = 20.sp,
-                            cryptoSymbol = "${selectedCoin?.symbol}",
-                            cryptoSymbolFontSize = 15.sp,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            CoinImage(
+                                imageUrl = imageUrl, modifier = Modifier.scale(0.7f)
+                            )
+                            CryptoNameSymbolColumn(
+                                cryptoName = "${selectedCoin?.name}",
+                                cryptoNameFontSize = 20.sp,
+                                cryptoSymbol = "${selectedCoin?.symbol}",
+                                cryptoSymbolFontSize = 15.sp,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        CryptoPricePercentChangeColumn(
+                            formattedPrice = formattedPrice,
+                            percentChange24h = percentChange24h,
                             modifier = Modifier.weight(1f)
                         )
                     }
-                    CryptoPricePercentChangeColumn(
-                        formattedPrice = formattedPrice,
-                        percentChange24h = percentChange24h,
-                        modifier = Modifier.weight(1f)
-                    )
                 }
-            }
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp)
-                        .background(bottomAppBarColor, shape = RoundedCornerShape(10.dp))
-                ) {
-                    Row(
+                item {
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(6.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                            .padding(top = 10.dp)
+                            .background(bottomAppBarColor, shape = RoundedCornerShape(10.dp))
                     ) {
-                        TabButton(
-                            modifier = Modifier.weight(1f),
-                            stringResource(id = R.string.details),
-                            selectedTab == "details"
-                        ) { selectedTab = "details" }
-                        TabButton(
-                            modifier = Modifier.weight(1f),
-                            stringResource(id = R.string.market),
-                            selectedTab == "market"
-                        ) { selectedTab = "market" }
-                        TabButton(
-                            modifier = Modifier.weight(1f),
-                            stringResource(id = R.string.news),
-                            selectedTab == "news"
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            selectedTab = "news"
-                            selectedCoin?.name?.let {
-                                fetchNews(it)
+                            TabButton(
+                                modifier = Modifier.weight(1f),
+                                stringResource(id = R.string.details),
+                                selectedTab == "details"
+                            ) { selectedTab = "details" }
+                            TabButton(
+                                modifier = Modifier.weight(1f),
+                                stringResource(id = R.string.market),
+                                selectedTab == "market"
+                            ) { selectedTab = "market" }
+                            TabButton(
+                                modifier = Modifier.weight(1f),
+                                stringResource(id = R.string.news),
+                                selectedTab == "news"
+                            ) {
+                                selectedTab = "news"
+                                selectedCoin?.name?.let {
+                                    fetchNews(it)
+                                }
                             }
                         }
                     }
                 }
-            }
-            item {
-                when (selectedTab) {
-                    "details" -> CoinDetailsContent(selectedCoin = selectedCoin!!)
-                    "market" -> CoinDetailsMarketContent(selectedCoin = selectedCoin!!)
-                    "news" -> CoinDetailsNewsContent(
-                        cryptoNews = cryptoNews,
-                        isCryptoLoading = isCryptoLoading
-                    )
+                item {
+                    when (selectedTab) {
+                        "details" -> CoinDetailsContent(selectedCoin = selectedCoin!!)
+                        "market" -> CoinDetailsMarketContent(selectedCoin = selectedCoin!!)
+                        "news" -> CoinDetailsNewsContent(
+                            cryptoNews = cryptoNews,
+                            isCryptoLoading = isCryptoLoading
+                        )
+                    }
                 }
             }
         }

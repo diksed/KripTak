@@ -31,7 +31,7 @@ class NewsViewModel @Inject constructor(
                 val turkishParams = firestoreRepository.getDailyNewsApiParams("apiTrKey")
                 val englishParams = firestoreRepository.getDailyNewsApiParams("apiEnKey")
                 getDailyNews(turkishParams, englishParams)
-                setState { currentState.copy(isLoading = false, isError = true) }
+                setState { currentState.copy(isLoading = false) }
             } catch (e: Exception) {
                 setState { currentState.copy(isLoading = false, isError = true) }
             }

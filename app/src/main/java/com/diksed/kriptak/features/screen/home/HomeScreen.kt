@@ -12,13 +12,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.CoinResponse
+import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.current_news.CurrentNewsShimmerEffect
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.current_news.CurrentNewsBox
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsBox
-
 
 @Composable
 fun HomeScreen(
@@ -38,7 +38,8 @@ fun HomeScreen(
                 navigateToCrypto,
                 viewState.dailyTrendingCoins,
                 viewState.dailyNews,
-                viewState.isLoading
+                viewState.isLoading,
+                viewState.isError
             )
         },
     )
@@ -50,34 +51,39 @@ private fun Content(
     navigateToCrypto: () -> Unit,
     trendingCoins: List<CoinResponse?>,
     currentNews: List<Article>,
-    isLoading: Boolean
+    isLoading: Boolean,
+    isError: Boolean
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
-    ) {
-        LazyColumn {
-            item {
-                KripTakTopBar()
-            }
-            item {
-                if (isLoading) {
-                    TrendingCoinsShimmerEffect(isDailyCoins = true, coinsCount = 3)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    CurrentNewsShimmerEffect(isDailyNews = true, newsCount = 3)
-                } else {
-                    TrendingCoinsBox(
-                        isDailyCoins = true,
-                        trendingCoins = trendingCoins,
-                        navigateToCrypto = navigateToCrypto
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    CurrentNewsBox(
-                        isDailyNews = true,
-                        currentNews = currentNews,
-                        navigateToNews = navigateToNews
-                    )
+    if (isError) {
+        KripTakErrorScreen()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
+        ) {
+            LazyColumn {
+                item {
+                    KripTakTopBar()
+                }
+                item {
+                    if (isLoading) {
+                        TrendingCoinsShimmerEffect(isDailyCoins = true, coinsCount = 3)
+                        Spacer(modifier = Modifier.height(20.dp))
+                        CurrentNewsShimmerEffect(isDailyNews = true, newsCount = 3)
+                    } else {
+                        TrendingCoinsBox(
+                            isDailyCoins = true,
+                            trendingCoins = trendingCoins,
+                            navigateToCrypto = navigateToCrypto
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        CurrentNewsBox(
+                            isDailyNews = true,
+                            currentNews = currentNews,
+                            navigateToNews = navigateToNews
+                        )
+                    }
                 }
             }
         }

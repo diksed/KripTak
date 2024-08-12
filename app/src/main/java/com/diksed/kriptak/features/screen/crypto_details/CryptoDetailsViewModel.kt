@@ -76,7 +76,7 @@ class CryptoDetailsViewModel @Inject constructor(
 
                 setState { currentState.copy(cryptoNews = filteredArticles) }
             } catch (e: Exception) {
-                // TODO: Handle error
+                setState { currentState.copy(isCryptoLoading = false, isError = true) }
             } finally {
                 setState { currentState.copy(isCryptoLoading = false) }
             }

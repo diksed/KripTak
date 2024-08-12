@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
@@ -38,7 +39,8 @@ fun FavoritesScreen(
                 navigateToCrypto = navigateToCrypto,
                 isLoading = viewState.isLoading,
                 favorites = viewState.favorites,
-                favoriteCount = viewState.favoriteCount
+                favoriteCount = viewState.favoriteCount,
+                isError = viewState.isError
             )
         },
     )
@@ -50,34 +52,39 @@ private fun Content(
     navigateToCrypto: () -> Unit,
     isLoading: Boolean,
     favorites: List<Coin?>,
-    favoriteCount: Int
+    favoriteCount: Int,
+    isError: Boolean = false
 ) {
     val shimmerCount = if (isLoading) favoriteCount else favorites.size
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
-    ) {
-        LazyColumn {
-            item {
-                KripTakTopBar()
-            }
-            item {
-                if (isLoading) {
-                    TrendingCoinsShimmerEffect(
-                        coinsCount = shimmerCount,
-                        isDailyCoins = true,
-                        titleId = R.string.favoritesCrypto
-                    )
-                } else if (favorites.isEmpty()) {
-                    EmptyFavoritesMessage(navigateToCrypto = navigateToCrypto)
-                } else {
-                    TrendingCoinsBox(
-                        navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
-                        trendingCoins = favorites,
-                        isDailyCoins = true,
-                        titleId = R.string.favoritesCrypto
-                    )
+    if (isError) {
+        KripTakErrorScreen()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),
+        ) {
+            LazyColumn {
+                item {
+                    KripTakTopBar()
+                }
+                item {
+                    if (isLoading) {
+                        TrendingCoinsShimmerEffect(
+                            coinsCount = shimmerCount,
+                            isDailyCoins = true,
+                            titleId = R.string.favoritesCrypto
+                        )
+                    } else if (favorites.isEmpty()) {
+                        EmptyFavoritesMessage(navigateToCrypto = navigateToCrypto)
+                    } else {
+                        TrendingCoinsBox(
+                            navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
+                            trendingCoins = favorites,
+                            isDailyCoins = true,
+                            titleId = R.string.favoritesCrypto
+                        )
+                    }
                 }
             }
         }

@@ -47,7 +47,7 @@ class CryptoViewModel @Inject constructor(
                 val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
                 loadMoreCoins(apiKey)
             } catch (e: Exception) {
-                // TODO: Handle error
+                setState { currentState.copy(isLoading = false, isError = true) }
             }
         }
     }
@@ -63,7 +63,7 @@ class CryptoViewModel @Inject constructor(
             }
             currentStart += limit
         } catch (e: Exception) {
-            // TODO: Handle error
+            setState { currentState.copy(isLoading = false, isError = true) }
         }
     }
 
@@ -73,7 +73,7 @@ class CryptoViewModel @Inject constructor(
                 val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
                 loadMoreCoins(apiKey)
             } catch (e: Exception) {
-                // TODO: Handle error
+                setState { currentState.copy(isError = true) }
             }
         }
     }

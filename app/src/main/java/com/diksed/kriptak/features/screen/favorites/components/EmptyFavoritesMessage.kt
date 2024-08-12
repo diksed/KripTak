@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
+import com.diksed.kriptak.features.component.KripTakButton
 import com.diksed.kriptak.features.ui.theme.bottomAppBarItemColor
 import com.diksed.kriptak.features.ui.theme.selectedButtonColor
 

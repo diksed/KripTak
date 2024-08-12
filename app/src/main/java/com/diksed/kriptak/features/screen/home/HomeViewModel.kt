@@ -32,14 +32,27 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchApiParamsAndNews() {
         viewModelScope.launch {
+            var errorOccurred = false
+            setState { currentState.copy(isLoading = true) }
+
             try {
-                setState { currentState.copy(isLoading = true) }
                 val params = firestoreRepository.getDailyNewsApiParams("apiDailyKey")
-                getDailyNews(params)
-                getTrendingCoins()
-                setState { currentState.copy(isLoading = false) }
+                try {
+                    getDailyNews(params)
+                } catch (e: Exception) {
+                    errorOccurred = true
+                }
+
+                try {
+                    getTrendingCoins()
+                } catch (e: Exception) {
+                    errorOccurred = true
+                }
+
             } catch (e: Exception) {
-                // TODO: Handle error
+                errorOccurred = true
+            } finally {
+                setState { currentState.copy(isLoading = false, isError = errorOccurred) }
             }
         }
     }
@@ -64,13 +77,13 @@ class HomeViewModel @Inject constructor(
                     if (coinListResponse.data.isEmpty()) continue
                     convertToCoinResponse(coinListResponse)
                 } catch (e: Exception) {
-                    null
+                    throw e
                 }
-                coinResponse?.let { coinDetails.add(it) }
+                coinResponse.let { coinDetails.add(it) }
             }
             setState { currentState.copy(dailyTrendingCoins = coinDetails) }
         } catch (e: Exception) {
-            // TODO: Handle error
+            throw e
         }
     }
 
@@ -79,7 +92,7 @@ class HomeViewModel @Inject constructor(
             val response = getDailyNewsUseCase(params)
             setState { currentState.copy(dailyNews = response.articles) }
         } catch (e: Exception) {
-            // TODO: Handle error
+            throw e
         }
     }
 

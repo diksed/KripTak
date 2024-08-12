@@ -47,13 +47,17 @@ class FavoritesViewModel @Inject constructor(
 
                     favoriteCoinsCache.clear()
                     favoriteCoinsCache.addAll(favoriteCoins)
-                    setState { currentState.copy(favorites = favoriteCoinsCache, isLoading = false) }
+                    setState {
+                        currentState.copy(
+                            favorites = favoriteCoinsCache,
+                            isLoading = false
+                        )
+                    }
                 } else {
                     setState { currentState.copy(favorites = favoriteCoinsCache) }
                 }
             } catch (e: Exception) {
-                // TODO: Handle error
-                setState { currentState.copy(isLoading = false) }
+                setState { currentState.copy(isLoading = false, isError = true) }
             }
         }
     }
@@ -86,7 +90,6 @@ class FavoritesViewModel @Inject constructor(
 
     override fun createInitialState() = FavoritesViewState()
 }
-
 
 sealed class FavoritesViewEvent : IViewEvent {
     object OnChangeTheme : FavoritesViewEvent()

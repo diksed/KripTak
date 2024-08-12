@@ -9,5 +9,6 @@ data class FavoritesViewState(
     val isDark: Boolean = false,
     val isLoading: Boolean = false,
     val favorites: List<Coin?> = emptyList(),
-    val favoriteCount: Int = 0
+    val favoriteCount: Int = 0,
+    val isError: Boolean = false
 ) : IViewState
