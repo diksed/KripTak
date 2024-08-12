@@ -35,4 +35,7 @@
     <string name="noConnectionMessage">Lütfen internet bağlantınızı kontrol ediniz.</string>
     <string name="details">Detaylar</string>
     <string name="market">Piyasa</string>
+    <string name="noFavorites">Henüz favori kripto paranız yok!</string>
+    <string name="noFavoritesMessage">Detay sayfasındaki yıldız simgesine tıklayarak favori kripto paralarınızı belirleyebilirsiniz.</string>
+    <string name="addFavorite">Favori Ekle</string>
 </resources>

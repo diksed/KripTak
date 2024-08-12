@@ -17,12 +17,14 @@ import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
+import com.diksed.kriptak.features.screen.favorites.components.EmptyFavoritesMessage
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsBox
 
 @Composable
 fun FavoritesScreen(
     viewModel: FavoritesViewModel = hiltViewModel(),
-    navigateToCryptoDetails: (Coin) -> Unit
+    navigateToCryptoDetails: (Coin) -> Unit,
+    navigateToCrypto: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -33,6 +35,7 @@ fun FavoritesScreen(
         content = {
             Content(
                 navigateToCryptoDetails = { navigateToCryptoDetails(it) },
+                navigateToCrypto = navigateToCrypto,
                 isLoading = viewState.isLoading,
                 favorites = viewState.favorites,
                 favoriteCount = viewState.favoriteCount
@@ -44,6 +47,7 @@ fun FavoritesScreen(
 @Composable
 private fun Content(
     navigateToCryptoDetails: (Coin) -> Unit,
+    navigateToCrypto: () -> Unit,
     isLoading: Boolean,
     favorites: List<Coin?>,
     favoriteCount: Int
@@ -65,6 +69,8 @@ private fun Content(
                         isDailyCoins = true,
                         titleId = R.string.favoritesCrypto
                     )
+                } else if (favorites.isEmpty()) {
+                    EmptyFavoritesMessage(navigateToCrypto = navigateToCrypto)
                 } else {
                     TrendingCoinsBox(
                         navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },

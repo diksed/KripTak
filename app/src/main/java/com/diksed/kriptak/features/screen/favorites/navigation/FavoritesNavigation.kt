@@ -18,13 +18,17 @@ fun NavController.navigateToFavorites(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.favoritesScreen(navigateToDetail: (Coin) -> Unit) {
+fun NavGraphBuilder.favoritesScreen(
+    navigateToDetail: (Coin) -> Unit,
+    navigateToCrypto: () -> Unit
+) {
     composable(
         favoritesNavigationRoute,
         content = {
             FavoritesScreen(
                 viewModel = hiltViewModel(),
-                navigateToCryptoDetails = { navigateToDetail.invoke(it) }
+                navigateToCryptoDetails = { navigateToDetail.invoke(it) },
+                navigateToCrypto = navigateToCrypto
             )
         },
     )
