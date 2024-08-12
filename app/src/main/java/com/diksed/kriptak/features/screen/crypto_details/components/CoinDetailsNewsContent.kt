@@ -31,7 +31,7 @@ fun CoinDetailsNewsContent(cryptoNews: List<Article>, isCryptoLoading: Boolean) 
                 Spacer(modifier = Modifier.height(5.dp))
             }
         } else {
-            CurrentNewsShimmerEffect(newsCount = 3)
+            CurrentNewsShimmerEffect(newsCount = 5)
         }
     }
 }

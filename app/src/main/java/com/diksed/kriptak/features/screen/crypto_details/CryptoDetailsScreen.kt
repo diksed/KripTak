@@ -2,8 +2,6 @@ package com.diksed.kriptak.features.screen.crypto_details
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.unit.dp
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
@@ -51,7 +49,6 @@ import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
 import com.diksed.kriptak.utils.COIN_IMAGE_URL
 import com.diksed.kriptak.utils.formatters.formatPrice
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CryptoDetailsScreen(
     viewModel: CryptoDetailsViewModel = hiltViewModel(),
@@ -83,7 +80,6 @@ fun CryptoDetailsScreen(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Content(
     selectedCoin: Coin?,
@@ -176,20 +172,6 @@ fun Content(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
-                        .background(Color.Gray)
-                ) {
-                    Text(
-                        text = "Chart Placeholder",
-                        modifier = Modifier.align(Alignment.Center),
-                        color = Color.White
-                    )
-                }
-            }
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
                         .padding(top = 10.dp)
                         .background(bottomAppBarColor, shape = RoundedCornerShape(10.dp))
                 ) {
@@ -201,17 +183,17 @@ fun Content(
                     ) {
                         TabButton(
                             modifier = Modifier.weight(1f),
-                            "Details",
+                            stringResource(id = R.string.details),
                             selectedTab == "details"
                         ) { selectedTab = "details" }
                         TabButton(
                             modifier = Modifier.weight(1f),
-                            "Market",
+                            stringResource(id = R.string.market),
                             selectedTab == "market"
                         ) { selectedTab = "market" }
                         TabButton(
                             modifier = Modifier.weight(1f),
-                            "News",
+                            stringResource(id = R.string.news),
                             selectedTab == "news"
                         ) {
                             selectedTab = "news"

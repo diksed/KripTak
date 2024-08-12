@@ -33,4 +33,6 @@
     <string name="addedToFavorites">%1$s favorilere eklendi!</string>
     <string name="noConnection">Bağlantı Yok!</string>
     <string name="noConnectionMessage">Lütfen internet bağlantınızı kontrol ediniz.</string>
+    <string name="details">Detaylar</string>
+    <string name="market">Piyasa</string>
 </resources>

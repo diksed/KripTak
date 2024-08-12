@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -61,8 +62,8 @@ fun <T> TrendingCoinsItem(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CoinImage(imageUrl = imageUrl, modifier = Modifier.weight(1f))
-            Spacer(modifier = Modifier.width(8.dp))
+            CoinImage(imageUrl = imageUrl, modifier = Modifier.scale(0.9f))
+            Spacer(modifier = Modifier.width(4.dp))
             CryptoNameSymbolColumn(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
@@ -76,15 +77,15 @@ fun <T> TrendingCoinsItem(
                 percentChange24h = percentChange24h,
                 modifier = Modifier.weight(1.1f)
             )
-            Spacer(modifier = Modifier.width(5.dp))
+            Spacer(modifier = Modifier.width(2.dp))
             Text(
                 textAlign = TextAlign.Center,
                 text = formattedPrice,
                 color = Color.White,
                 fontSize = 13.sp,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(0.9f)
             )
-            PercentChangeRow(percentChange24h = percentChange24h, modifier = Modifier.weight(1.2f))
+            PercentChangeRow(percentChange24h = percentChange24h, modifier = Modifier.weight(1.3f))
         }
     }
 }

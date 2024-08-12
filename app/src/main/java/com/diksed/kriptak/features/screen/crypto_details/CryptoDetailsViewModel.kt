@@ -64,7 +64,7 @@ class CryptoDetailsViewModel @Inject constructor(
                     ApiParams(
                         apiKey = apiKey.apiKey,
                         language = "en",
-                        newsSize = 3,
+                        newsSize = 5,
                         searchQuery = "+$coinId",
                         unwantedSources = emptyList()
                     )
