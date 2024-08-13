@@ -40,4 +40,5 @@
     <string name="addFavorite">Favori Ekle</string>
     <string name="somethingWentWrong">Bir şeyler yanlış gitti!\nLütfen tekrar deneyiniz.</string>
     <string name="tryAgain">Tekrar Dene</string>
+    <string name="noNewsAboutCrypto">Bu kripto para hakkında haber bulunamadı!</string>
 </resources>

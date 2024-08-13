@@ -24,7 +24,7 @@ class CryptoViewModel @Inject constructor(
 ) : BaseViewModel<CryptoViewState, CryptoViewEvent>() {
 
     private var currentStart = 1
-    private val limit = 20
+    private val limit = 2499
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> get() = _searchQuery

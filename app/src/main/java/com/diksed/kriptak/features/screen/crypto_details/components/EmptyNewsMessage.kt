@@ -1,4 +1,4 @@
-package com.diksed.kriptak.features.screen.favorites.components
+package com.diksed.kriptak.features.screen.crypto_details.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -16,23 +16,20 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
-import com.diksed.kriptak.features.component.KripTakButton
 import com.diksed.kriptak.features.ui.theme.bottomAppBarItemColor
 import com.diksed.kriptak.features.ui.theme.selectedButtonColor
 
 @Composable
-fun EmptyFavoritesMessage(navigateToCrypto: () -> Unit) {
-
+fun EmptyNewsMessage() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_unfavorited),
+            painter = painterResource(id = R.drawable.ic_news),
             contentDescription = null,
             tint = bottomAppBarItemColor,
             modifier = Modifier
@@ -41,24 +38,13 @@ fun EmptyFavoritesMessage(navigateToCrypto: () -> Unit) {
                 .background(selectedButtonColor, shape = CircleShape)
                 .padding(16.dp)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = stringResource(id = R.string.noFavorites),
-            color = Color.White,
-            fontSize = 20.sp,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = stringResource(id = R.string.noFavoritesMessage),
+            text = stringResource(id = R.string.noNewsAboutCrypto),
             color = Color(0xFFB0B0B0),
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 24.dp)
         )
-        Spacer(modifier = Modifier.height(24.dp))
-        KripTakButton(buttonText = R.string.addFavorite, onClick = navigateToCrypto)
     }
 }

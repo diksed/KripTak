@@ -20,18 +20,26 @@ fun CoinDetailsNewsContent(cryptoNews: List<Article>, isCryptoLoading: Boolean) 
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 12.dp)
     ) {
-        if (!isCryptoLoading) {
-            cryptoNews.forEachIndexed { index, article ->
-                val boxShape = when (index) {
-                    0 -> BoxShape.TOP
-                    cryptoNews.size - 1 -> BoxShape.BOTTOM
-                    else -> BoxShape.MIDDLE
-                }
-                CurrentNewsItem(currentNews = article, boxShape = boxShape)
-                Spacer(modifier = Modifier.height(5.dp))
+        when {
+            isCryptoLoading -> {
+                CurrentNewsShimmerEffect(newsCount = 5)
             }
-        } else {
-            CurrentNewsShimmerEffect(newsCount = 5)
+
+            cryptoNews.isEmpty() -> {
+                EmptyNewsMessage()
+            }
+
+            else -> {
+                cryptoNews.forEachIndexed { index, article ->
+                    val boxShape = when (index) {
+                        0 -> BoxShape.TOP
+                        cryptoNews.size - 1 -> BoxShape.BOTTOM
+                        else -> BoxShape.MIDDLE
+                    }
+                    CurrentNewsItem(currentNews = article, boxShape = boxShape)
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
+            }
         }
     }
 }

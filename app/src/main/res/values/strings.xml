@@ -39,4 +39,5 @@
     <string name="addFavorite">Add Favorite</string>
     <string name="somethingWentWrong">Something went wrong!\nPlease try again.</string>
     <string name="tryAgain">Try Again</string>
+    <string name="noNewsAboutCrypto">No news found about this cryptocurrency!</string>
 </resources>
