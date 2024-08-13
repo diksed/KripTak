@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor(
     private val networkConnectivityObserver: NetworkConnectivityObserver
 ) : ViewModel() {
 
-    private val _isConnected = MutableStateFlow(true)
+    private val _isConnected = MutableStateFlow(false)
     val isConnected: StateFlow<Boolean> = _isConnected
 
     init {
