@@ -12,6 +12,7 @@ KripTak is a mobile application developed for tracking cryptocurrency trends, ne
 ## Technologies Used
 
 - **Jetpack Compose**
+- **MVVM Architecture**
 - **Accompanist Libraries**
 - **Hilt for Dependency Injection**
 - **Retrofit**
