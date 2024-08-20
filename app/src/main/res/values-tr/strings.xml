@@ -41,4 +41,9 @@
     <string name="somethingWentWrong">Bir şeyler yanlış gitti!\nLütfen tekrar deneyiniz.</string>
     <string name="tryAgain">Tekrar Dene</string>
     <string name="noNewsAboutCrypto">Bu kripto para hakkında haber bulunamadı!</string>
+    <string name="channelName">KripTak Bildirimleri</string>
+    <string name="channelDescription">KripTak güncelleme ve haber bildirimleri</string>
+    <string name="defaultNotificationChannelId">KripTak_Notifications_Channel</string>
+    <string name="notificationPermissionGranted">Bildirim izni verildi!</string>
+    <string name="notificationPermissionDenied">Bildirim izni reddedildi!</string>
 </resources>

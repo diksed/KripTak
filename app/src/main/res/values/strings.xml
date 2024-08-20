@@ -40,4 +40,10 @@
     <string name="somethingWentWrong">Something went wrong!\nPlease try again.</string>
     <string name="tryAgain">Try Again</string>
     <string name="noNewsAboutCrypto">No news found about this cryptocurrency!</string>
+    <string name="channelName">KripTak Notifications</string>
+    <string name="channelDescription">Notifications for KripTak updates and news</string>
+    <string name="defaultNotificationChannelId">KripTak_Notifications_Channel</string>
+    <string name="notificationPermissionGranted">Notification permission granted!</string>
+    <string name="notificationPermissionDenied">Notification permission denied!</string>
+
 </resources>

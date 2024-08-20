@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
 
     //ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -105,6 +106,7 @@ dependencies {
     implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.permissions)
 
     //Splash
     implementation(libs.androidx.core.splashscreen)

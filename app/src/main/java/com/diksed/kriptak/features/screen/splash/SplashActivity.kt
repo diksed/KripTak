@@ -47,18 +47,14 @@ class  SplashActivity : ComponentActivity() {
             }
         }
 
-        // If the splash screen is still visible, set the content view
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S_V2) {
             splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
-                // Get logo and start a fade out animation
                 splashScreenViewProvider.iconView
                     .animate()
                     .rotation(360f)
                     .setDuration(SPLASH_FADE_DURATION_MILLIS)
                     .alpha(0f)
                     .withEndAction {
-                        // After the fade out, remove the
-                        // splash and set content view
                         splashScreenViewProvider.remove()
                         startMainActivity()
                     }.start()
@@ -67,6 +63,7 @@ class  SplashActivity : ComponentActivity() {
             startMainActivity()
         }
     }
+
     private fun startMainActivity() {
         launchActivity(
             packageName = packageName,
