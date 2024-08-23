@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,22 +23,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.DateFormatter
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.ui.theme.boxColor
 import com.diksed.kriptak.utils.components.getCornerRadius
 import com.diksed.kriptak.utils.formatters.formatDate
 import com.diksed.kriptak.utils.formatters.formatTime
 import com.diksed.kriptak.utils.isImageUrlValid
 import kotlinx.coroutines.launch
-
 
 @SuppressLint("NewApi")
 @Composable
@@ -85,11 +82,9 @@ fun CurrentNewsItem(
                     .align(Alignment.CenterVertically)
                     .weight(1f)
             ) {
-                Text(
+                KripTakText(
                     text = currentNews.title,
-                    color = Color.White,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
                     fontSize = 11.sp,
                     modifier = Modifier.padding(bottom = 2.dp)
                 )

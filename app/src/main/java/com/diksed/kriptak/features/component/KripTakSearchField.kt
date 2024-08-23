@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +27,7 @@ fun KripTakSearchField(query: String, onQueryChange: (String) -> Unit) {
             .fillMaxWidth()
             .padding(bottom = 8.dp, start = 24.dp, end = 24.dp)
             .background(boxColor, shape = RoundedCornerShape(12.dp)),
-        placeholder = { Text(stringResource(id = R.string.searchCrypto), color = Color.LightGray) },
+        placeholder = { KripTakText(stringResource(id = R.string.searchCrypto), color = Color.LightGray) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

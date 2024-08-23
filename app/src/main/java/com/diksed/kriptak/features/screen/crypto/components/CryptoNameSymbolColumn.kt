@@ -2,14 +2,13 @@ package com.diksed.kriptak.features.screen.crypto.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.diksed.kriptak.features.component.KripTakText
 
 @Composable
 fun CryptoNameSymbolColumn(
@@ -25,15 +24,14 @@ fun CryptoNameSymbolColumn(
         verticalArrangement = Arrangement.Center,
         modifier = modifier,
     ) {
-        Text(
+        KripTakText(
             text = cryptoName,
             color = cryptoNameColor,
             fontSize = cryptoNameFontSize,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.SemiBold
         )
-        Text(
+        KripTakText(
             text = cryptoSymbol,
             color = cryptoSymbolColor,
             fontSize = cryptoSymbolFontSize,

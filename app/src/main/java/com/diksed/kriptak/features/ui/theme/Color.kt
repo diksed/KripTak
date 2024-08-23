@@ -11,6 +11,7 @@ val noInternetBoxColor = Color(0xFF2C4079)
 
 val DarkModerateViolet = Color(0xFF6750A4)
 val White = Color(0xFFFFFFFF)
+val Gray69 = Color(0xFFB0B0B0)
 val VeryDarkGrayishViolet = Color(0xFF625B71)
 val LightGrayishViolet = Color(0xFFE8DEF8)
 val StrongRed = Color(0xFFB3261E)

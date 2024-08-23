@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.ui.theme.scaffoldBackgroundColor
 import com.diksed.kriptak.utils.noRippleClickable
 
@@ -38,9 +38,9 @@ fun TabButton(
             .padding(vertical = paddingVertical),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
+        KripTakText(
             text = text,
-            color = if (isSelected) Color.White else Color.LightGray,
+            color = if (!isSelected) Color.White else Color.LightGray,
             fontSize = 16.sp
         )
     }

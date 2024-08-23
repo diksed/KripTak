@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.component.SortDirection
 import com.diksed.kriptak.features.component.SortType
 import com.diksed.kriptak.features.ui.theme.boxColor
@@ -49,9 +49,8 @@ fun SortBox(
             .clickable { onSortChange() }
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
+            KripTakText(
                 text = sortName,
-                color = Color.White,
                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)
             )
             if (showIcon && currentSortType == sortType) {

@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,7 +30,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
@@ -39,6 +37,7 @@ import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakFavoriteButton
 import com.diksed.kriptak.features.component.KripTakScaffold
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
 import com.diksed.kriptak.features.screen.crypto.components.CryptoPricePercentChangeColumn
 import com.diksed.kriptak.features.screen.crypto_details.components.CoinDetailsContent
@@ -126,11 +125,9 @@ fun Content(
 
                         Spacer(modifier = Modifier.weight(1f))
 
-                        Text(
+                        KripTakText(
                             text = "${selectedCoin?.name}",
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color.White,
                             fontSize = 25.sp
                         )
 

@@ -3,7 +3,6 @@ package com.diksed.kriptak.features.screen.home.components.trending_coins
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.utils.formatters.decimalFormat
 
 @Composable
@@ -36,7 +36,7 @@ fun PercentChangeRow(
             contentDescription = null,
             tint = if (percentChange24h > 0) Color.Green else if (percentChange24h < 0) Color.Red else Color.White
         )
-        Text(
+        KripTakText(
             text = "% $formattedPercentChange" + if (isDetailsScreen) " (24h)" else "",
             color = if (percentChange24h > 0) Color.Green else if (percentChange24h < 0) Color.Red else Color.White,
             fontSize = 13.sp

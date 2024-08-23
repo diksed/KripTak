@@ -10,18 +10,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.data.model.CoinResponse
 import com.diksed.kriptak.features.component.BoxShape
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
 import com.diksed.kriptak.features.ui.theme.boxColor
 import com.diksed.kriptak.utils.COIN_IMAGE_URL
@@ -78,10 +77,9 @@ fun <T> TrendingCoinsItem(
                 modifier = Modifier.weight(1.1f)
             )
             Spacer(modifier = Modifier.width(2.dp))
-            Text(
+            KripTakText(
                 textAlign = TextAlign.Center,
                 text = formattedPrice,
-                color = Color.White,
                 fontSize = 13.sp,
                 modifier = Modifier.weight(0.9f)
             )

@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.R
-import com.diksed.kriptak.data.service.PushNotificationService
 import com.diksed.kriptak.features.component.KripTakNoInternet
 import com.diksed.kriptak.features.navigation.NavGraph
 import com.diksed.kriptak.features.ui.theme.KripTakTheme

@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakButton
+import com.diksed.kriptak.features.component.KripTakText
+import com.diksed.kriptak.features.ui.theme.Gray69
 import com.diksed.kriptak.features.ui.theme.bottomAppBarItemColor
 import com.diksed.kriptak.features.ui.theme.selectedButtonColor
 
@@ -43,17 +43,16 @@ fun EmptyFavoritesMessage(navigateToCrypto: () -> Unit) {
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        Text(
+        KripTakText(
             text = stringResource(id = R.string.noFavorites),
-            color = Color.White,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(
+        KripTakText(
             text = stringResource(id = R.string.noFavoritesMessage),
-            color = Color(0xFFB0B0B0),
+            color = Gray69,
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 24.dp)

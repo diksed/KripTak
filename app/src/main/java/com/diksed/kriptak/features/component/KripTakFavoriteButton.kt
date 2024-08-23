@@ -10,15 +10,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.ui.theme.White
-import android.os.Build
 import android.view.Gravity
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.diksed.kriptak.utils.vibrate
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun KripTakFavoriteButton(
     isFavorite: Boolean,
