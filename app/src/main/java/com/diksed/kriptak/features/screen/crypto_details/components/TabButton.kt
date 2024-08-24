@@ -19,7 +19,7 @@ import com.diksed.kriptak.utils.noRippleClickable
 
 @Composable
 fun TabButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,

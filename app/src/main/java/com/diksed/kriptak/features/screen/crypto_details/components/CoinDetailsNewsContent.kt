@@ -1,10 +1,11 @@
 package com.diksed.kriptak.features.screen.crypto_details.components
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -15,7 +16,7 @@ import com.diksed.kriptak.features.screen.home.components.current_news.CurrentNe
 
 @Composable
 fun CoinDetailsNewsContent(cryptoNews: List<Article>, isCryptoLoading: Boolean) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 12.dp)
@@ -30,16 +31,20 @@ fun CoinDetailsNewsContent(cryptoNews: List<Article>, isCryptoLoading: Boolean) 
             }
 
             else -> {
-                cryptoNews.forEachIndexed { index, article ->
-                    val boxShape = when (index) {
-                        0 -> BoxShape.TOP
-                        cryptoNews.size - 1 -> BoxShape.BOTTOM
-                        else -> BoxShape.MIDDLE
+                LazyColumn {
+                    items(cryptoNews.size) { index ->
+                        val article = cryptoNews[index]
+                        val boxShape = when (index) {
+                            0 -> BoxShape.TOP
+                            cryptoNews.size - 1 -> BoxShape.BOTTOM
+                            else -> BoxShape.MIDDLE
+                        }
+                        CurrentNewsItem(currentNews = article, boxShape = boxShape)
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
-                    CurrentNewsItem(currentNews = article, boxShape = boxShape)
-                    Spacer(modifier = Modifier.height(5.dp))
                 }
             }
         }
+
     }
 }
