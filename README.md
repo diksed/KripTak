@@ -13,8 +13,7 @@ KripTak is a mobile application developed for tracking cryptocurrency trends, ne
 
 - **Jetpack Compose**
 - **MVVM Architecture**
-- **Accompanist Libraries**
-- **Hilt for Dependency Injection**
+- **Dagger Hilt**
 - **Retrofit**
 - **Firebase Firestore**
 - **Firebase Analytics**
@@ -31,3 +30,9 @@ KripTak is a mobile application developed for tracking cryptocurrency trends, ne
 | Crypto List Screen | News Screen |
 |:--:|:--:|
 | <img src="https://github.com/user-attachments/assets/febaed81-d64f-43c4-adc2-09d7fbb35166" width="55%" height="55%"/> | <img src="https://github.com/user-attachments/assets/02031198-5f36-487c-8460-cdf757194083" width="55%" height="55%"/> |
+
+## Play Store
+
+KripTak is available for download on the Google Play Store. Stay updated with the latest trends in cryptocurrency right from your mobile device.
+
+[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/256px-Google_Play_Store_badge_EN.svg.png)](https://play.google.com/store/apps/details?id=com.example.kriptak)
