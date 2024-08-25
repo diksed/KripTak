@@ -35,4 +35,4 @@ KripTak is a mobile application developed for tracking cryptocurrency trends, ne
 
 KripTak is available for download on the Google Play Store. Stay updated with the latest trends in cryptocurrency right from your mobile device.
 
-[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/256px-Google_Play_Store_badge_EN.svg.png)](https://play.google.com/store/apps/details?id=com.example.kriptak)
+[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/256px-Google_Play_Store_badge_EN.svg.png)](https://play.google.com/store/apps/details?id=com.diksed.kriptak)
