@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Article
+import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.data.model.CoinResponse
 import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
@@ -24,7 +25,8 @@ import com.diksed.kriptak.features.screen.home.components.trending_coins.Trendin
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToNews: () -> Unit,
-    navigateToCrypto: () -> Unit
+    navigateToCrypto: () -> Unit,
+    navigateToCryptoDetails: (Coin) -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     val viewState by viewModel.uiState.collectAsState()
@@ -36,6 +38,7 @@ fun HomeScreen(
             Content(
                 navigateToNews,
                 navigateToCrypto,
+                navigateToCryptoDetails,
                 viewState.dailyTrendingCoins,
                 viewState.dailyNews,
                 viewState.isLoading,
@@ -49,6 +52,7 @@ fun HomeScreen(
 private fun Content(
     navigateToNews: () -> Unit,
     navigateToCrypto: () -> Unit,
+    navigateToCryptoDetails: (Coin) -> Unit,
     trendingCoins: List<CoinResponse?>,
     currentNews: List<Article>,
     isLoading: Boolean,
@@ -73,6 +77,7 @@ private fun Content(
                         CurrentNewsShimmerEffect(isDailyNews = true, newsCount = 3)
                     } else {
                         TrendingCoinsBox(
+                            navigateToCryptoDetails = navigateToCryptoDetails,
                             isDailyCoins = true,
                             trendingCoins = trendingCoins,
                             navigateToCrypto = navigateToCrypto

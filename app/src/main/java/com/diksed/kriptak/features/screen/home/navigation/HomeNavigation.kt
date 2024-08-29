@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.features.screen.home.HomeScreen
 import com.google.accompanist.navigation.animation.composable
 
@@ -17,14 +18,15 @@ fun NavController.navigateToHome(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.homeScreen(navigateToNews: () -> Unit, navigateToCrypto: () -> Unit) {
+fun NavGraphBuilder.homeScreen(navigateToNews: () -> Unit, navigateToCrypto: () -> Unit, navigateToCryptoDetails: (Coin) -> Unit) {
     composable(
         homeNavigationRoute,
         content = {
             HomeScreen(
                 viewModel = hiltViewModel(),
                 navigateToNews = navigateToNews,
-                navigateToCrypto = navigateToCrypto
+                navigateToCrypto = navigateToCrypto,
+                navigateToCryptoDetails = navigateToCryptoDetails
             )
         },
     )

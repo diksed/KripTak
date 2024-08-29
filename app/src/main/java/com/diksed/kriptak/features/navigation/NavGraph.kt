@@ -64,7 +64,7 @@ fun NavGraph() {
                     BottomNav.CRYPTO,
                     navController,
                 )
-            })
+            }, navigateToCryptoDetails = { navController.navigateToCryptoDetails(it.toJson()) })
             favoritesScreen(
                 navigateToDetail = { navController.navigateToCryptoDetails(it.toJson()) },
                 navigateToCrypto = {
