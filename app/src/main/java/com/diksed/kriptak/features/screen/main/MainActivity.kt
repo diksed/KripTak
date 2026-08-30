@@ -13,6 +13,7 @@ import javax.inject.Inject
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -22,6 +23,7 @@ import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakNoInternet
 import com.diksed.kriptak.features.navigation.NavGraph
 import com.diksed.kriptak.features.ui.theme.KripTakTheme
+import com.diksed.kriptak.utils.LocalKripTakApp
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -43,12 +45,14 @@ class MainActivity : AppCompatActivity() {
             if (!isConnected) {
                 KripTakNoInternet()
             } else {
-                KripTakTheme(darkTheme = application.isDark.value) {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        NavGraph()
+                CompositionLocalProvider(LocalKripTakApp provides application) {
+                    KripTakTheme(darkTheme = application.isDark.value) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            NavGraph()
+                        }
                     }
                 }
             }

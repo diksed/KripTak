@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.features.component.CurrencyToggleButton
 import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakFavoriteButton
 import com.diksed.kriptak.features.component.KripTakScaffold
@@ -100,7 +101,7 @@ fun Content(
     val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
     val percentChange24h = selectedCoin?.quote?.usd?.percentChange24h
     val price = selectedCoin?.quote?.usd?.price
-    val formattedPrice = "$${price?.let { formatPrice(it) }}"
+    val formattedPrice = price?.let { formatPrice(it) } ?: ""
 
     val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
@@ -151,6 +152,15 @@ fun Content(
                 ) {
                     selectedCoin?.symbol?.let { toggleFavorite(it) }
                 }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 6.dp)
+            ) {
+                CurrencyToggleButton()
             }
 
             Row(

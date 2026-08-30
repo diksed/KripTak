@@ -43,7 +43,7 @@ fun <T> TrendingCoinsItem(
     val cornerRadius = getCornerRadius(boxShape)
     val percentChange24h = coinData.quote.usd.percentChange24h
     val price = coinData.quote.usd.price
-    val formattedPrice = "$${formatPrice(price)}"
+    val formattedPrice = formatPrice(price)
     val imageUrl = COIN_IMAGE_URL + coinData.id + ".png"
     val sparkLine = SPARKLINE_URL + coinData.id + ".png"
 

@@ -7,6 +7,7 @@ import com.diksed.kriptak.domain.repository.ApiParams
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.usecase.coin.CoinFromSymbolUseCase
 import com.diksed.kriptak.domain.usecase.coin.TrendingCoinUseCase
+import com.diksed.kriptak.domain.usecase.exchange.GetExchangeRateUseCase
 import com.diksed.kriptak.domain.usecase.news.NewsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.home.HomeViewState
@@ -21,6 +22,7 @@ class HomeViewModel @Inject constructor(
     private val getDailyNewsUseCase: NewsUseCase,
     private val getTrendingCoinsUseCase: TrendingCoinUseCase,
     private val getCoinsFromSymbolUseCase: CoinFromSymbolUseCase,
+    private val getExchangeRateUseCase: GetExchangeRateUseCase,
     private val firestoreRepository: FirestoreRepository,
     private val application: KripTakApp
 ) : BaseViewModel<HomeViewState, HomeViewEvent>() {
@@ -28,6 +30,20 @@ class HomeViewModel @Inject constructor(
     init {
         setState { currentState.copy(isDark = application.isDark.value) }
         fetchApiParamsAndNews()
+        fetchExchangeRate()
+    }
+
+    // Fetched once per app session and cached on the Application; the currency
+    // toggle button stays disabled until this succeeds. A failure here is silent
+    // and non-fatal - the app just keeps showing USD.
+    private fun fetchExchangeRate() {
+        viewModelScope.launch {
+            try {
+                application.usdToTryRate.value = getExchangeRateUseCase()
+            } catch (e: Exception) {
+                // ignore - toggle stays disabled
+            }
+        }
     }
 
     private fun fetchApiParamsAndNews() {

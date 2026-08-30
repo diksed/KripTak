@@ -3,10 +3,13 @@ package com.diksed.kriptak.data.di
 import android.content.Context
 import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.data.remote.api.CoinService
+import com.diksed.kriptak.data.remote.api.ExchangeRateService
 import com.diksed.kriptak.data.remote.api.NewsApiService
 import com.diksed.kriptak.data.remote.api.TrendingCoinService
 import com.diksed.kriptak.domain.repository.CoinRepository
 import com.diksed.kriptak.domain.repository.CoinRepositoryImpl
+import com.diksed.kriptak.domain.repository.ExchangeRateRepository
+import com.diksed.kriptak.domain.repository.ExchangeRateRepositoryImpl
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.repository.NewsRepository
 import com.diksed.kriptak.domain.repository.NewsRepositoryImpl
@@ -61,6 +64,22 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CoinService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExchangeRateService(): ExchangeRateService {
+        return Retrofit.Builder()
+            .baseUrl("https://api.frankfurter.app/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ExchangeRateService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExchangeRateRepository(apiService: ExchangeRateService): ExchangeRateRepository {
+        return ExchangeRateRepositoryImpl(apiService)
     }
 
     @Provides
