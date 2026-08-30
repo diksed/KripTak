@@ -3,7 +3,6 @@ package com.diksed.kriptak
 import android.app.Application
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -11,6 +10,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.diksed.kriptak.data.worker.PriceAlertWorker
+import com.diksed.kriptak.data.worker.PriceAlertWorkerFactory
 import com.diksed.kriptak.utils.Currency
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
@@ -36,7 +36,7 @@ class KripTakApp : Application(), Configuration.Provider {
     }
 
     @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    lateinit var workerFactory: PriceAlertWorkerFactory
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()

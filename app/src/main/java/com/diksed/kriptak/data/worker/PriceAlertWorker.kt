@@ -1,25 +1,29 @@
 package com.diksed.kriptak.data.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
+import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.usecase.coin.CoinFromSymbolUseCase
 import com.diksed.kriptak.utils.NotificationHelper
 import com.diksed.kriptak.utils.PreferencesManager
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
 /**
  * Periodically checks every saved price alert against the latest coin price
  * and fires a local notification (via the existing FCM notification channel)
  * for any that have been hit, then clears them so they don't repeat.
+ *
+ * Deliberately NOT using @HiltWorker/@AssistedInject here: that combination
+ * hits a known kapt/Kotlin-metadata bug on CoroutineWorker subclasses
+ * (https://github.com/google/dagger/issues/4693, still open as of Kotlin 2.1+).
+ * PriceAlertWorkerFactory below wires this up to Hilt manually instead.
  */
-@HiltWorker
-class PriceAlertWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted params: WorkerParameters,
+class PriceAlertWorker(
+    context: Context,
+    params: WorkerParameters,
     private val preferencesManager: PreferencesManager,
     private val getCoinFromSymbolUseCase: CoinFromSymbolUseCase,
     private val firestoreRepository: FirestoreRepository
@@ -55,5 +59,28 @@ class PriceAlertWorker @AssistedInject constructor(
         }
 
         return Result.success()
+    }
+}
+
+class PriceAlertWorkerFactory @Inject constructor(
+    private val preferencesManager: PreferencesManager,
+    private val getCoinFromSymbolUseCase: CoinFromSymbolUseCase,
+    private val firestoreRepository: FirestoreRepository
+) : WorkerFactory() {
+    override fun createWorker(
+        appContext: Context,
+        workerClassName: String,
+        workerParameters: WorkerParameters
+    ): ListenableWorker? {
+        return when (workerClassName) {
+            PriceAlertWorker::class.java.name -> PriceAlertWorker(
+                appContext,
+                workerParameters,
+                preferencesManager,
+                getCoinFromSymbolUseCase,
+                firestoreRepository
+            )
+            else -> null
+        }
     }
 }

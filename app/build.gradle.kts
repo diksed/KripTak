@@ -97,10 +97,12 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // WorkManager (price alerts) + its Hilt integration
+    // WorkManager (price alerts). Wired to Hilt via a plain @Inject-constructor
+    // WorkerFactory in PriceAlertWorker.kt instead of androidx.hilt:hilt-work's
+    // @HiltWorker/@AssistedInject - that combination trips a known kapt/Kotlin
+    // metadata bug on CoroutineWorker subclasses
+    // (https://github.com/google/dagger/issues/4693).
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.hilt.work)
-    kapt(libs.androidx.hilt.compiler)
 
     // Retrofit
     implementation(libs.retrofit.core)
