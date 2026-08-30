@@ -1,0 +1,14 @@
+# Normalize line endings to LF in the repository regardless of the OS
+# used to check the files out (Windows/macOS/Linux), so the working tree
+# never shows whole-file diffs caused only by CRLF vs LF.
+* text=auto eol=lf
+
+# Binary assets: don't run text normalization on them.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.jks binary
+*.keystore binary
