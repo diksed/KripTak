@@ -22,6 +22,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakNoInternet
 import com.diksed.kriptak.features.navigation.NavGraph
+import com.diksed.kriptak.features.screen.crypto.navigation.cryptoNavigationRoute
+import com.diksed.kriptak.features.screen.favorites.navigation.favoritesNavigationRoute
+import com.diksed.kriptak.features.screen.home.navigation.homeNavigationRoute
 import com.diksed.kriptak.features.ui.theme.KripTakTheme
 import com.diksed.kriptak.utils.LocalKripTakApp
 
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkNotificationPermission()
+        val startDestination = startDestinationFromShortcut()
         setContent {
             val mainViewModel: MainViewModel = hiltViewModel()
             val isConnected by mainViewModel.isConnected.collectAsState()
@@ -51,11 +55,22 @@ class MainActivity : AppCompatActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            NavGraph()
+                            NavGraph(startDestination = startDestination)
                         }
                     }
                 }
             }
+        }
+    }
+
+    // Launcher long-press shortcuts (res/xml/shortcuts.xml) target this activity
+    // directly with a "shortcut_destination" extra so they jump straight to the
+    // right screen instead of always opening on Home.
+    private fun startDestinationFromShortcut(): String {
+        return when (intent?.getStringExtra("shortcut_destination")) {
+            "favorites" -> favoritesNavigationRoute
+            "crypto_list" -> cryptoNavigationRoute
+            else -> homeNavigationRoute
         }
     }
 

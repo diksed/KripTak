@@ -25,7 +25,7 @@ import com.diksed.kriptak.utils.Utility.toJson
 
 
 @Composable
-fun NavGraph() {
+fun NavGraph(startDestination: String = homeNavigationRoute) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -48,7 +48,7 @@ fun NavGraph() {
         NavHost(
             navController = navController,
             modifier = Modifier.background(scaffoldBackgroundColor),
-            startDestination = homeNavigationRoute,
+            startDestination = startDestination,
             popExitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },
             enterTransition = { EnterTransition.None },

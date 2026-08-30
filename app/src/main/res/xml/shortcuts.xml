@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorited"
+        android:shortcutShortLabel="@string/favorites"
+        android:shortcutLongLabel="@string/favorites">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.diksed.kriptak"
+            android:targetClass="com.diksed.kriptak.features.screen.main.MainActivity">
+            <extra android:name="shortcut_destination" android:value="favorites" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="crypto_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_crypto_list"
+        android:shortcutShortLabel="@string/cryptoList"
+        android:shortcutLongLabel="@string/cryptoList">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.diksed.kriptak"
+            android:targetClass="com.diksed.kriptak.features.screen.main.MainActivity">
+            <extra android:name="shortcut_destination" android:value="crypto_list" />
+        </intent>
+    </shortcut>
+</shortcuts>
