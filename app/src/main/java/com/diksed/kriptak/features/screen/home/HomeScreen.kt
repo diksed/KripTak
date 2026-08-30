@@ -7,10 +7,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Article
@@ -24,6 +29,7 @@ import com.diksed.kriptak.features.component.shimmer.current_news.CurrentNewsShi
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.current_news.CurrentNewsBox
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsBox
+import com.diksed.kriptak.utils.vibrate
 
 @Composable
 fun HomeScreen(
@@ -67,6 +73,15 @@ private fun Content(
     isError: Boolean,
     onRefresh: () -> Unit
 ) {
+    val context = LocalContext.current
+    var wasRefreshing by remember { mutableStateOf(false) }
+    LaunchedEffect(isRefreshing) {
+        if (wasRefreshing && !isRefreshing) {
+            vibrate(context)
+        }
+        wasRefreshing = isRefreshing
+    }
+
     if (isError) {
         KripTakErrorScreen()
     } else {

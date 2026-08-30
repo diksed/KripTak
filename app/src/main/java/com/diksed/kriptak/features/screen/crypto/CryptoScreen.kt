@@ -13,10 +13,15 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.diksed.kriptak.data.model.Coin
@@ -32,6 +37,7 @@ import com.diksed.kriptak.features.component.SortType
 import com.diksed.kriptak.features.component.coin_filter.KripTakSortRow
 import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
 import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsItem
+import com.diksed.kriptak.utils.vibrate
 
 @Composable
 fun CryptoScreen(
@@ -82,6 +88,15 @@ private fun Content(
     onQueryChange: (String) -> Unit,
     isError: Boolean
 ) {
+    val context = LocalContext.current
+    var wasRefreshing by remember { mutableStateOf(false) }
+    LaunchedEffect(isRefreshing) {
+        if (wasRefreshing && !isRefreshing) {
+            vibrate(context)
+        }
+        wasRefreshing = isRefreshing
+    }
+
     if (isError) {
         KripTakErrorScreen()
     } else {
