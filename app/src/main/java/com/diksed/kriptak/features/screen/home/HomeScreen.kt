@@ -4,6 +4,8 @@ package com.diksed.kriptak.features.screen.home
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,12 +44,15 @@ fun HomeScreen(
                 viewState.dailyTrendingCoins,
                 viewState.dailyNews,
                 viewState.isLoading,
-                viewState.isError
+                viewState.isRefreshing,
+                viewState.isError,
+                onRefresh = { viewModel.refresh() }
             )
         },
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     navigateToNews: () -> Unit,
@@ -56,12 +61,16 @@ private fun Content(
     trendingCoins: List<CoinResponse?>,
     currentNews: List<Article>,
     isLoading: Boolean,
-    isError: Boolean
+    isRefreshing: Boolean,
+    isError: Boolean,
+    onRefresh: () -> Unit
 ) {
     if (isError) {
         KripTakErrorScreen()
     } else {
-        Box(
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),

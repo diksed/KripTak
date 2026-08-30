@@ -78,6 +78,22 @@ class CryptoViewModel @Inject constructor(
         }
     }
 
+    fun refresh() {
+        viewModelScope.launch {
+            setState { currentState.copy(isRefreshing = true) }
+            try {
+                currentStart = 1
+                setState { currentState.copy(coins = emptyList()) }
+                val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
+                loadMoreCoins(apiKey)
+            } catch (e: Exception) {
+                setState { currentState.copy(isError = true) }
+            } finally {
+                setState { currentState.copy(isRefreshing = false) }
+            }
+        }
+    }
+
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
     }

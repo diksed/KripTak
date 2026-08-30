@@ -11,5 +11,6 @@ data class HomeViewState(
     val dailyNews: List<Article> = emptyList(),
     val dailyTrendingCoins: List<CoinResponse?> = emptyList(),
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val isError: Boolean = false
 ) : IViewState

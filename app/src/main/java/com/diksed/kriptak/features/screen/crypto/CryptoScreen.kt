@@ -2,13 +2,14 @@ package com.diksed.kriptak.features.screen.crypto
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,8 +47,10 @@ fun CryptoScreen(
             Content(
                 navigateToCryptoDetails = { navigateToCryptoDetails(it) },
                 isLoading = viewState.isLoading,
+                isRefreshing = viewState.isRefreshing,
                 coins = viewState.coins,
                 onLoadMore = { viewModel.fetchNextPage() },
+                onRefresh = { viewModel.refresh() },
                 query = searchQuery,
                 sortType = sortType,
                 sortDirection = sortDirection,
@@ -59,12 +62,15 @@ fun CryptoScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     navigateToCryptoDetails: (Coin) -> Unit,
     coins: List<Coin?>,
     isLoading: Boolean,
+    isRefreshing: Boolean,
     onLoadMore: () -> Unit,
+    onRefresh: () -> Unit,
     query: String,
     sortType: SortType,
     sortDirection: SortDirection,
@@ -75,7 +81,9 @@ private fun Content(
     if (isError) {
         KripTakErrorScreen()
     } else {
-        Box(
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 10.dp, end = 10.dp, bottom = 80.dp),

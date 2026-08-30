@@ -32,29 +32,40 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchApiParamsAndNews() {
         viewModelScope.launch {
-            var errorOccurred = false
             setState { currentState.copy(isLoading = true) }
+            val errorOccurred = loadHomeData()
+            setState { currentState.copy(isLoading = false, isError = errorOccurred) }
+        }
+    }
 
+    fun refresh() {
+        viewModelScope.launch {
+            setState { currentState.copy(isRefreshing = true) }
+            val errorOccurred = loadHomeData()
+            setState { currentState.copy(isRefreshing = false, isError = errorOccurred) }
+        }
+    }
+
+    private suspend fun loadHomeData(): Boolean {
+        var errorOccurred = false
+        try {
+            val params = firestoreRepository.getDailyNewsApiParams("apiDailyKey")
             try {
-                val params = firestoreRepository.getDailyNewsApiParams("apiDailyKey")
-                try {
-                    getDailyNews(params)
-                } catch (e: Exception) {
-                    errorOccurred = true
-                }
-
-                try {
-                    getTrendingCoins()
-                } catch (e: Exception) {
-                    errorOccurred = true
-                }
-
+                getDailyNews(params)
             } catch (e: Exception) {
                 errorOccurred = true
-            } finally {
-                setState { currentState.copy(isLoading = false, isError = errorOccurred) }
             }
+
+            try {
+                getTrendingCoins()
+            } catch (e: Exception) {
+                errorOccurred = true
+            }
+
+        } catch (e: Exception) {
+            errorOccurred = true
         }
+        return errorOccurred
     }
 
     private suspend fun getTrendingCoins() {
