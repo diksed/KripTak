@@ -76,7 +76,21 @@ class PreferencesManager @Inject constructor(context: Context) {
         preferences.edit().putString(PRICE_ALERTS_KEY, gson.toJson(alerts)).apply()
     }
 
+    /**
+     * Whether we've already asked the user for the notification permission at
+     * least once. Used so MainActivity only prompts on the very first launch
+     * instead of re-requesting (and re-toasting "denied") on every app open.
+     */
+    fun hasAskedNotificationPermission(): Boolean {
+        return preferences.getBoolean(NOTIFICATION_PERMISSION_ASKED_KEY, false)
+    }
+
+    fun setAskedNotificationPermission() {
+        preferences.edit().putBoolean(NOTIFICATION_PERMISSION_ASKED_KEY, true).apply()
+    }
+
     companion object {
         private const val PRICE_ALERTS_KEY = "price_alerts"
+        private const val NOTIFICATION_PERMISSION_ASKED_KEY = "notification_permission_asked"
     }
 }

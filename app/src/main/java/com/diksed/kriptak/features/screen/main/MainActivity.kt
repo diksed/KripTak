@@ -27,6 +27,7 @@ import com.diksed.kriptak.features.screen.favorites.navigation.favoritesNavigati
 import com.diksed.kriptak.features.screen.home.navigation.homeNavigationRoute
 import com.diksed.kriptak.features.ui.theme.KripTakTheme
 import com.diksed.kriptak.utils.LocalKripTakApp
+import com.diksed.kriptak.utils.PreferencesManager
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var application: KripTakApp
+
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,12 +78,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Only ever prompted once (per install) - re-requesting on every launch made
+    // Android silently auto-deny (since the user had already dismissed it once)
+    // and onRequestPermissionsResult still fired, toasting "denied" every time
+    // the app opened. If the user wants to grant it later they can do so from
+    // system app settings.
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+                ) != PackageManager.PERMISSION_GRANTED &&
+                !preferencesManager.hasAskedNotificationPermission()
             ) {
                 ActivityCompat.requestPermissions(
                     this,
@@ -97,6 +107,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            preferencesManager.setAskedNotificationPermission()
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                     this,
