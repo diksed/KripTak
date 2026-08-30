@@ -9,14 +9,14 @@ plugins {
 
 android {
     namespace = "com.diksed.kriptak"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.diksed.kriptak"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 36
+        versionCode = 3
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.appcompat)
     implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.shimmer.compose)
     implementation(libs.lottie.animation)
 
@@ -92,6 +93,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
