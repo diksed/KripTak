@@ -3,6 +3,7 @@ package com.diksed.kriptak.domain.viewstate.crypto_details
 import androidx.compose.runtime.Stable
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.data.model.PriceAlert
 import com.diksed.kriptak.domain.viewstate.IViewState
 
 @Stable
@@ -13,5 +14,6 @@ data class CryptoDetailsViewState(
     val cryptoNews: List<Article> = emptyList(),
     val selectedCoin: Coin? = null,
     val isFavorite: Boolean = false,
+    val priceAlert: PriceAlert? = null,
     val isError : Boolean = false,
 ) : IViewState

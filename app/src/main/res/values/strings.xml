@@ -45,5 +45,18 @@
     <string name="defaultNotificationChannelId">KripTak_Notifications_Channel</string>
     <string name="notificationPermissionGranted">Notification permission granted!</string>
     <string name="notificationPermissionDenied">Notification permission denied!</string>
+    <string name="priceAlert">Price Alert</string>
+    <string name="setPriceAlert">Set Price Alert</string>
+    <string name="removePriceAlert">Remove Alert</string>
+    <string name="priceAlertTargetHint">Target price</string>
+    <string name="priceAlertActiveMessage">Alert active: notify me at %1$s</string>
+    <string name="priceAlertSetMessage">Alert set for %1$s!</string>
+    <string name="priceAlertRemovedMessage">Alert removed for %1$s!</string>
+    <string name="priceAlertInvalidPrice">Enter a valid target price</string>
+    <string name="cancel">Cancel</string>
+    <string name="setAction">Set</string>
+    <string name="priceAlertNotificationTitleAbove">%1$s reached your target!</string>
+    <string name="priceAlertNotificationTitleBelow">%1$s dropped to your target!</string>
+    <string name="priceAlertNotificationBody">%1$s is now %2$s</string>
 
 </resources>

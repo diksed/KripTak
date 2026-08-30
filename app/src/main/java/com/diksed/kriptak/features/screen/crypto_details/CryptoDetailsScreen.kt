@@ -33,11 +33,13 @@ import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Article
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.data.model.PriceAlert
 import com.diksed.kriptak.features.component.CurrencyToggleButton
 import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakFavoriteButton
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakText
+import com.diksed.kriptak.features.component.PriceAlertButton
 import com.diksed.kriptak.features.screen.crypto.components.CryptoNameSymbolColumn
 import com.diksed.kriptak.features.screen.crypto.components.CryptoPricePercentChangeColumn
 import com.diksed.kriptak.features.screen.crypto_details.components.CoinDetailsContent
@@ -80,6 +82,9 @@ fun CryptoDetailsScreen(
                 toggleFavorite = { coinId ->
                     viewModel.toggleFavorite(coinId)
                 },
+                priceAlert = viewState.priceAlert,
+                onSetPriceAlert = { coin, target -> viewModel.setPriceAlert(coin, target) },
+                onRemovePriceAlert = { coinId -> viewModel.removePriceAlert(coinId) },
                 isError = viewState.isError
             )
         },
@@ -96,6 +101,9 @@ fun Content(
     navigateToBack: () -> Unit,
     fetchNews: (String) -> Unit,
     toggleFavorite: (String) -> Unit,
+    priceAlert: PriceAlert? = null,
+    onSetPriceAlert: (Coin, Double) -> Unit = { _, _ -> },
+    onRemovePriceAlert: (Int) -> Unit = {},
     isError: Boolean = false
 ) {
     val imageUrl = COIN_IMAGE_URL + (selectedCoin?.id ?: "") + ".png"
@@ -155,11 +163,23 @@ fun Content(
             }
 
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 6.dp)
             ) {
+                PriceAlertButton(
+                    coinName = selectedCoin?.name ?: "",
+                    currentPrice = price,
+                    activeAlert = priceAlert,
+                    onSetAlert = { target ->
+                        selectedCoin?.let { onSetPriceAlert(it, target) }
+                    },
+                    onRemoveAlert = {
+                        selectedCoin?.let { onRemovePriceAlert(it.id) }
+                    }
+                )
                 CurrencyToggleButton()
             }
 

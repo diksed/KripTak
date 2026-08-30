@@ -46,4 +46,17 @@
     <string name="defaultNotificationChannelId">KripTak_Notifications_Channel</string>
     <string name="notificationPermissionGranted">Bildirim izni verildi!</string>
     <string name="notificationPermissionDenied">Bildirim izni reddedildi!</string>
+    <string name="priceAlert">Fiyat Alarmı</string>
+    <string name="setPriceAlert">Fiyat Alarmı Kur</string>
+    <string name="removePriceAlert">Alarmı Kaldır</string>
+    <string name="priceAlertTargetHint">Hedef fiyat</string>
+    <string name="priceAlertActiveMessage">Alarm aktif: %1$s olunca haber ver</string>
+    <string name="priceAlertSetMessage">%1$s için alarm kuruldu!</string>
+    <string name="priceAlertRemovedMessage">%1$s için alarm kaldırıldı!</string>
+    <string name="priceAlertInvalidPrice">Geçerli bir hedef fiyat girin</string>
+    <string name="cancel">İptal</string>
+    <string name="setAction">Kur</string>
+    <string name="priceAlertNotificationTitleAbove">%1$s hedefine ulaştı!</string>
+    <string name="priceAlertNotificationTitleBelow">%1$s hedefine düştü!</string>
+    <string name="priceAlertNotificationBody">%1$s şimdi %2$s</string>
 </resources>

@@ -97,6 +97,11 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // WorkManager (price alerts) + its Hilt integration
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    kapt(libs.androidx.hilt.compiler)
+
     // Retrofit
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)

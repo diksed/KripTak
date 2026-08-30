@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.data.model.Coin
+import com.diksed.kriptak.data.model.PriceAlert
 import com.diksed.kriptak.domain.repository.ApiParams
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.usecase.news.NewsUseCase
@@ -30,9 +31,31 @@ class CryptoDetailsViewModel @Inject constructor(
             setState { currentState.copy(isLoading = false, selectedCoin = selectedCoin) }
             if (selectedCoin != null) {
                 checkFavoriteStatus(selectedCoin.symbol)
+                setState { currentState.copy(priceAlert = preferencesManager.getPriceAlert(selectedCoin.id)) }
             }
         } ?: run {
             setState { currentState.copy(isLoading = true) }
+        }
+    }
+
+    fun setPriceAlert(coin: Coin, targetPrice: Double) {
+        viewModelScope.launch {
+            val alert = PriceAlert(
+                coinId = coin.id,
+                coinSymbol = coin.symbol,
+                coinName = coin.name,
+                targetPrice = targetPrice,
+                isAbove = targetPrice >= coin.quote.usd.price
+            )
+            preferencesManager.setPriceAlert(alert)
+            setState { currentState.copy(priceAlert = alert) }
+        }
+    }
+
+    fun removePriceAlert(coinId: Int) {
+        viewModelScope.launch {
+            preferencesManager.removePriceAlert(coinId)
+            setState { currentState.copy(priceAlert = null) }
         }
     }
 

@@ -2,6 +2,9 @@ package com.diksed.kriptak.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.diksed.kriptak.data.model.PriceAlert
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,6 +12,7 @@ import javax.inject.Inject
 
 class PreferencesManager @Inject constructor(context: Context) {
     private val preferences: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    private val gson = Gson()
 
     private val _favoritesFlow = MutableStateFlow<List<String>>(emptyList())
     val favoritesFlow: StateFlow<List<String>> = _favoritesFlow.asStateFlow()
@@ -42,5 +46,37 @@ class PreferencesManager @Inject constructor(context: Context) {
         favorites.remove(symbol)
         preferences.edit().putStringSet("favorites", favorites).apply()
         _favoritesFlow.value = favorites.toList()
+    }
+
+    fun getPriceAlerts(): List<PriceAlert> {
+        val json = preferences.getString(PRICE_ALERTS_KEY, null) ?: return emptyList()
+        return try {
+            val type = object : TypeToken<List<PriceAlert>>() {}.type
+            gson.fromJson(json, type)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    fun getPriceAlert(coinId: Int): PriceAlert? {
+        return getPriceAlerts().find { it.coinId == coinId }
+    }
+
+    /** One alert per coin - setting a new one for a coin replaces its previous alert. */
+    fun setPriceAlert(alert: PriceAlert) {
+        val alerts = getPriceAlerts().filterNot { it.coinId == alert.coinId } + alert
+        savePriceAlerts(alerts)
+    }
+
+    fun removePriceAlert(coinId: Int) {
+        savePriceAlerts(getPriceAlerts().filterNot { it.coinId == coinId })
+    }
+
+    private fun savePriceAlerts(alerts: List<PriceAlert>) {
+        preferences.edit().putString(PRICE_ALERTS_KEY, gson.toJson(alerts)).apply()
+    }
+
+    companion object {
+        private const val PRICE_ALERTS_KEY = "price_alerts"
     }
 }
