@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.compose)
     alias(libs.plugins.google.services)
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
@@ -9,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.diksed.kriptak"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.diksed.kriptak"
         minSdk = 27
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 3
         versionName = "1.0.2"
 
@@ -39,17 +40,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -58,9 +53,14 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
 dependencies {
 
-    implementation(libs.androidx.runtime.v168)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -70,17 +70,17 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.shimmer.compose)
     implementation(libs.lottie.animation)
 
     //Firebase
-    implementation(libs.google.services)
-    implementation(libs.firebase.common.ktx)
-    implementation(libs.firebase.analytics)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.common)
+    implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.messaging)
 
@@ -100,15 +100,6 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
-
-    //Accompanist
-    implementation(libs.accompanist.insets)
-    implementation(libs.accompanist.pager)
-    implementation(libs.accompanist.pager.indicators)
-    implementation(libs.accompanist.placeholder)
-    implementation(libs.accompanist.swiperefresh)
-    implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.permissions)
 
     //Splash
     implementation(libs.androidx.core.splashscreen)

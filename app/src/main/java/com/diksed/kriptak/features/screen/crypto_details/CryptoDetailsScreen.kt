@@ -48,9 +48,9 @@ import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
 import com.diksed.kriptak.utils.COIN_IMAGE_URL
 import com.diksed.kriptak.utils.formatters.formatPrice
 import com.diksed.kriptak.utils.springPagerFlingBehavior
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -85,7 +85,7 @@ fun CryptoDetailsScreen(
     )
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Content(
     selectedCoin: Coin?,
@@ -102,7 +102,7 @@ fun Content(
     val price = selectedCoin?.quote?.usd?.price
     val formattedPrice = "$${price?.let { formatPrice(it) }}"
 
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(pagerState.currentPage) {
@@ -232,7 +232,6 @@ fun Content(
             }
 
             HorizontalPager(
-                count = 3,
                 state = pagerState,
                 flingBehavior = springPagerFlingBehavior(pagerState = pagerState),
                 modifier = Modifier.fillMaxSize()

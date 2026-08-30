@@ -1,13 +1,12 @@
 package com.diksed.kriptak.utils
 
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerDefaults
-import com.google.accompanist.pager.PagerState
-import dev.chrisbanes.snapper.ExperimentalSnapperApi
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalSnapperApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun springPagerFlingBehavior(pagerState: PagerState) =
     PagerDefaults.flingBehavior(
