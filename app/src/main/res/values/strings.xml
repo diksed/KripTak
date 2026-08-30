@@ -58,5 +58,8 @@
     <string name="priceAlertNotificationTitleAbove">%1$s reached your target!</string>
     <string name="priceAlertNotificationTitleBelow">%1$s dropped to your target!</string>
     <string name="priceAlertNotificationBody">%1$s is now %2$s</string>
+    <string name="language">Language</string>
+    <string name="settingsCurrencyLabel">Currency</string>
+    <string name="settingsCurrencyWaiting">Fetching exchange rate…</string>
 
 </resources>

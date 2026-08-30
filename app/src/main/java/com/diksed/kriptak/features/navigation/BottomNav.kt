@@ -7,6 +7,7 @@ import com.diksed.kriptak.features.screen.crypto.navigation.cryptoNavigationRout
 import com.diksed.kriptak.features.screen.favorites.navigation.favoritesNavigationRoute
 import com.diksed.kriptak.features.screen.home.navigation.homeNavigationRoute
 import com.diksed.kriptak.features.screen.news.navigation.newsNavigationRoute
+import com.diksed.kriptak.features.screen.settings.navigation.settingsNavigationRoute
 
 enum class BottomNav(
     val route: String,
@@ -32,5 +33,10 @@ enum class BottomNav(
         newsNavigationRoute,
         R.drawable.ic_news,
         R.string.news,
+    ),
+    SETTINGS(
+        settingsNavigationRoute,
+        R.drawable.ic_settings,
+        R.string.settings,
     ),
 }

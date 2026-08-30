@@ -59,4 +59,7 @@
     <string name="priceAlertNotificationTitleAbove">%1$s hedefine ulaştı!</string>
     <string name="priceAlertNotificationTitleBelow">%1$s hedefine düştü!</string>
     <string name="priceAlertNotificationBody">%1$s şimdi %2$s</string>
+    <string name="language">Dil</string>
+    <string name="settingsCurrencyLabel">Para Birimi</string>
+    <string name="settingsCurrencyWaiting">Kur bilgisi alınıyor…</string>
 </resources>

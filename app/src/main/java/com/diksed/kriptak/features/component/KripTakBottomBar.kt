@@ -26,6 +26,7 @@ import com.diksed.kriptak.features.screen.crypto.navigation.navigateToCrypto
 import com.diksed.kriptak.features.screen.favorites.navigation.navigateToFavorites
 import com.diksed.kriptak.features.screen.home.navigation.navigateToHome
 import com.diksed.kriptak.features.screen.news.navigation.navigateToNews
+import com.diksed.kriptak.features.screen.settings.navigation.navigateToSettings
 import com.diksed.kriptak.features.ui.theme.bottomAppBarColor
 import com.diksed.kriptak.features.ui.theme.bottomAppBarItemColor
 
@@ -95,6 +96,7 @@ fun navigateToBottomNavDestination(bottomNav: BottomNav, navController: NavContr
             BottomNav.FAVORITES -> navController.navigateToFavorites(bottomNavOptions)
             BottomNav.CRYPTO -> navController.navigateToCrypto(bottomNavOptions)
             BottomNav.NEWS -> navController.navigateToNews(bottomNavOptions)
+            BottomNav.SETTINGS -> navController.navigateToSettings(bottomNavOptions)
         }
     }
 }

@@ -23,7 +23,11 @@ fun KripTakTopBar(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.kriptak_logo),
                 contentDescription = "Logo",
-                modifier = modifier.scale(0.7f)
+                // Was reusing the caller's `modifier` here too (on top of the outer
+                // Box), which double-applied it and made the logo's available width
+                // depend on whatever the caller passed in. It should only ever
+                // scale, independent of the outer container.
+                modifier = Modifier.scale(0.7f)
             )
             Spacer(modifier =  Modifier.height(10.dp))
         }

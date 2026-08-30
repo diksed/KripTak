@@ -14,6 +14,13 @@ import com.diksed.kriptak.features.component.SortDirection
 import com.diksed.kriptak.features.component.SortType
 import com.diksed.kriptak.utils.vibrate
 
+/**
+ * A row of compact filter chips, each sized to its own label - not an attempt
+ * to line up under TrendingCoinsItem's columns (weight-matching two separate
+ * composables that way proved fragile: any layout tweak to one silently broke
+ * alignment with the other). Reads as its own filter bar instead of a table
+ * header.
+ */
 @Composable
 fun KripTakSortRow(
     onSortChange: (SortType) -> Unit,
@@ -30,14 +37,13 @@ fun KripTakSortRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         SortBox(
             sortName = stringResource(id = R.string.name),
             onSortChange = { onSortChangeWithFeedback(SortType.NAME) },
             sortType = SortType.NAME,
             currentSortType = sortType,
-            modifier = Modifier.weight(1.2f),
             firstSort = true,
             sortDirection = sortDirection
         )
@@ -47,7 +53,6 @@ fun KripTakSortRow(
             sortType = SortType.NONE,
             currentSortType = sortType,
             showIcon = false,
-            modifier = Modifier.weight(1f),
             sortDirection = SortDirection.DEFAULT
         )
         SortBox(
@@ -55,7 +60,6 @@ fun KripTakSortRow(
             onSortChange = { onSortChangeWithFeedback(SortType.PRICE) },
             sortType = SortType.PRICE,
             currentSortType = sortType,
-            modifier = Modifier.weight(0.75f),
             sortDirection = sortDirection
         )
         SortBox(
@@ -63,7 +67,6 @@ fun KripTakSortRow(
             onSortChange = { onSortChangeWithFeedback(SortType.PERCENTAGE) },
             sortType = SortType.PERCENTAGE,
             currentSortType = sortType,
-            modifier = Modifier.weight(0.8f),
             lastSort = true,
             sortDirection = sortDirection,
         )

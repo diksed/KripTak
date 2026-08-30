@@ -28,14 +28,16 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".features.screen.main.MainActivity"
-            android:exported="true">
+            <!-- Static shortcuts (long-press the launcher icon) must be declared on
+                 the LAUNCHER activity to be picked up - the shortcuts themselves still
+                 target MainActivity directly via their own <intent> in shortcuts.xml. -->
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+        <activity
+            android:name=".features.screen.main.MainActivity"
+            android:exported="true" />
 
         <service
             android:name=".data.service.PushNotificationService"

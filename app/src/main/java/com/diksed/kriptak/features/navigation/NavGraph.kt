@@ -20,6 +20,7 @@ import com.diksed.kriptak.features.screen.favorites.navigation.favoritesScreen
 import com.diksed.kriptak.features.screen.home.navigation.homeNavigationRoute
 import com.diksed.kriptak.features.screen.home.navigation.homeScreen
 import com.diksed.kriptak.features.screen.news.navigation.newsScreen
+import com.diksed.kriptak.features.screen.settings.navigation.settingsScreen
 import com.diksed.kriptak.features.ui.theme.scaffoldBackgroundColor
 import com.diksed.kriptak.utils.Utility.toJson
 
@@ -77,6 +78,7 @@ fun NavGraph(startDestination: String = homeNavigationRoute) {
             cryptoScreen { navController.navigateToCryptoDetails(it.toJson()) }
             cryptoDetailsScreen { navController.popBackStack() }
             newsScreen()
+            settingsScreen()
         }
     }
 }
