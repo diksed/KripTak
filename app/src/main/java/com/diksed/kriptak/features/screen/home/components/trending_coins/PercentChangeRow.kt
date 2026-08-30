@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakText
@@ -39,7 +40,9 @@ fun PercentChangeRow(
         KripTakText(
             text = "% $formattedPercentChange" + if (isDetailsScreen) " (24h)" else "",
             color = if (percentChange24h > 0) Color.Green else if (percentChange24h < 0) Color.Red else Color.White,
-            fontSize = 13.sp
+            fontSize = 13.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

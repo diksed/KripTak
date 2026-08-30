@@ -3,6 +3,7 @@ package com.diksed.kriptak.features.screen.home.components.trending_coins
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diksed.kriptak.data.model.Coin
@@ -74,16 +76,30 @@ fun <T> TrendingCoinsItem(
             CoinSparklineImage(
                 sparkLine = sparkLine,
                 percentChange24h = percentChange24h,
-                modifier = Modifier.weight(1.1f)
-            )
-            Spacer(modifier = Modifier.width(2.dp))
-            KripTakText(
-                textAlign = TextAlign.Center,
-                text = formattedPrice,
-                fontSize = 13.sp,
                 modifier = Modifier.weight(0.9f)
             )
-            PercentChangeRow(percentChange24h = percentChange24h, modifier = Modifier.weight(1.3f))
+            Spacer(modifier = Modifier.width(2.dp))
+            // Price and 24h change stacked in one column (instead of two separate
+            // weighted cells) so a long converted price or a large percentage never
+            // has to wrap onto a second line - it gets more combined width and
+            // ellipsizes as a last resort instead of breaking the row's layout.
+            Column(
+                horizontalAlignment = Alignment.End,
+                modifier = Modifier.weight(2f)
+            ) {
+                KripTakText(
+                    textAlign = TextAlign.End,
+                    text = formattedPrice,
+                    fontSize = 13.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                PercentChangeRow(
+                    percentChange24h = percentChange24h,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

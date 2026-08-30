@@ -5,12 +5,15 @@ import android.view.Gravity
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,11 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.PriceAlert
+import com.diksed.kriptak.features.ui.theme.Gray69
+import com.diksed.kriptak.features.ui.theme.PaleViolet
 import com.diksed.kriptak.features.ui.theme.White
+import com.diksed.kriptak.features.ui.theme.boxColor
+import com.diksed.kriptak.features.ui.theme.scaffoldBackgroundColor
 import com.diksed.kriptak.utils.vibrate
 
 /**
@@ -94,6 +102,10 @@ private fun PriceAlertDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = boxColor,
+        titleContentColor = White,
+        textContentColor = White,
+        shape = RoundedCornerShape(16.dp),
         title = { KripTakText(text = stringResource(id = R.string.setPriceAlert)) },
         text = {
             OutlinedTextField(
@@ -102,33 +114,50 @@ private fun PriceAlertDialog(
                     input = it
                     isInvalid = false
                 },
-                label = { KripTakText(text = stringResource(id = R.string.priceAlertTargetHint)) },
+                label = { KripTakText(text = stringResource(id = R.string.priceAlertTargetHint), color = Gray69) },
                 singleLine = true,
                 isError = isInvalid,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                textStyle = TextStyle(color = White),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = White,
+                    unfocusedTextColor = White,
+                    cursorColor = White,
+                    focusedBorderColor = PaleViolet,
+                    unfocusedBorderColor = Gray69,
+                    focusedContainerColor = scaffoldBackgroundColor,
+                    unfocusedContainerColor = scaffoldBackgroundColor,
+                    errorContainerColor = scaffoldBackgroundColor,
+                )
             )
             if (isInvalid) {
                 KripTakText(
                     text = stringResource(id = R.string.priceAlertInvalidPrice),
-                    color = Color.Red,
+                    color = Color(0xFFFF6B6B),
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }
         },
         confirmButton = {
-            TextButton(onClick = {
-                val target = input.replace(',', '.').toDoubleOrNull()
-                if (target == null || target <= 0.0) {
-                    isInvalid = true
-                } else {
-                    onConfirm(target)
-                }
-            }) {
+            TextButton(
+                onClick = {
+                    val target = input.replace(',', '.').toDoubleOrNull()
+                    if (target == null || target <= 0.0) {
+                        isInvalid = true
+                    } else {
+                        onConfirm(target)
+                    }
+                },
+                colors = ButtonDefaults.textButtonColors(contentColor = PaleViolet)
+            ) {
                 KripTakText(text = stringResource(id = R.string.setAction))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(contentColor = Gray69)
+            ) {
                 KripTakText(text = stringResource(id = R.string.cancel))
             }
         }
