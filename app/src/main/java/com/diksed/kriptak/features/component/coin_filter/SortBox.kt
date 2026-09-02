@@ -2,6 +2,7 @@ package com.diksed.kriptak.features.component.coin_filter
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -19,6 +21,8 @@ import com.diksed.kriptak.R
 import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.component.SortDirection
 import com.diksed.kriptak.features.component.SortType
+import com.diksed.kriptak.features.ui.theme.Gray69
+import com.diksed.kriptak.features.ui.theme.PaleViolet
 import com.diksed.kriptak.features.ui.theme.boxColor
 
 @Composable
@@ -29,56 +33,56 @@ fun SortBox(
     currentSortType: SortType,
     sortName: String,
     showIcon: Boolean = true,
-    firstSort: Boolean = false,
-    lastSort: Boolean = false,
     sortDirection: SortDirection
 ) {
+    val isSelected = showIcon && currentSortType == sortType
+    val shape = RoundedCornerShape(10.dp)
+    val contentColor = if (isSelected) PaleViolet else Gray69
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .padding(horizontal = 4.dp)
-            .background(
-                color = boxColor,
-                shape = RoundedCornerShape(
-                    if (firstSort) 8.dp else 0.dp,
-                    if (lastSort) 8.dp else 0.dp,
-                    if (lastSort) 8.dp else 0.dp,
-                    if (firstSort) 8.dp else 0.dp
-                )
+            .clip(shape)
+            .background(color = boxColor, shape = shape)
+            .then(
+                if (isSelected) Modifier.border(1.5.dp, PaleViolet, shape) else Modifier
             )
             .clickable { onSortChange() }
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             KripTakText(
                 text = sortName,
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 2.dp)
+                color = contentColor,
+                modifier = Modifier.padding(end = 4.dp)
             )
-            if (showIcon && currentSortType == sortType) {
-                SortIcon(sortDirection = sortDirection)
-            } else {
-                if (showIcon)
+            if (showIcon) {
+                if (currentSortType == sortType) {
+                    SortIcon(sortDirection = sortDirection, tint = contentColor)
+                } else {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_minus),
-                        colorFilter = ColorFilter.tint(Color.White),
+                        painter = painterResource(id = R.drawable.ic_swap_vert),
+                        colorFilter = ColorFilter.tint(contentColor),
                         contentDescription = null,
                         modifier = Modifier.size(16.dp)
                     )
+                }
             }
         }
     }
 }
 
 @Composable
-fun SortIcon(sortDirection: SortDirection, modifier: Modifier = Modifier) {
+fun SortIcon(sortDirection: SortDirection, modifier: Modifier = Modifier, tint: Color = Color.White) {
     val icon = when (sortDirection) {
         SortDirection.ASCENDING -> R.drawable.ic_down_arrow
         SortDirection.DESCENDING -> R.drawable.ic_up_arrow
-        else -> R.drawable.ic_minus
+        else -> R.drawable.ic_swap_vert
     }
     Image(
-        colorFilter = ColorFilter.tint(Color.White),
+        colorFilter = ColorFilter.tint(tint),
         painter = painterResource(id = icon),
         contentDescription = null,
-        modifier = modifier
+        modifier = modifier.size(16.dp)
     )
 }

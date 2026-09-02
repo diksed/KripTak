@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -20,20 +21,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Coin
-import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCircularProgressIndicator
 import com.diksed.kriptak.features.component.KripTakErrorScreen
 import com.diksed.kriptak.features.component.KripTakScaffold
 import com.diksed.kriptak.features.component.KripTakSearchField
+import com.diksed.kriptak.features.component.KripTakText
 import com.diksed.kriptak.features.component.KripTakTopBar
 import com.diksed.kriptak.features.component.SortDirection
 import com.diksed.kriptak.features.component.SortType
 import com.diksed.kriptak.features.component.coin_filter.KripTakSortRow
-import com.diksed.kriptak.features.component.shimmer.trending_coins.TrendingCoinsShimmerEffect
-import com.diksed.kriptak.features.screen.home.components.trending_coins.TrendingCoinsItem
+import com.diksed.kriptak.features.screen.crypto.components.CryptoListItem
+import com.diksed.kriptak.features.screen.crypto.components.CryptoListItemShimmer
+import com.diksed.kriptak.features.screen.crypto.components.MarketOverviewCard
 import com.diksed.kriptak.utils.vibrate
 
 @Composable
@@ -56,6 +62,8 @@ fun CryptoScreen(
                 isLoading = viewState.isLoading,
                 isRefreshing = viewState.isRefreshing,
                 coins = viewState.coins,
+                totalMarketCap = viewState.totalMarketCap,
+                activeCryptocurrencies = viewState.activeCryptocurrencies,
                 onLoadMore = { viewModel.fetchNextPage() },
                 onRefresh = { viewModel.refresh() },
                 query = searchQuery,
@@ -76,6 +84,8 @@ private fun Content(
     coins: List<Coin?>,
     isLoading: Boolean,
     isRefreshing: Boolean,
+    totalMarketCap: Double?,
+    activeCryptocurrencies: Int?,
     onLoadMore: () -> Unit,
     onRefresh: () -> Unit,
     query: String,
@@ -109,6 +119,13 @@ private fun Content(
                     KripTakTopBar()
                 }
                 item {
+                    MarketOverviewCard(
+                        totalMarketCap = totalMarketCap,
+                        activeCryptocurrencies = activeCryptocurrencies,
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+                }
+                item {
                     KripTakSearchField(query = query, onQueryChange = onQueryChange)
                 }
                 item {
@@ -118,41 +135,40 @@ private fun Content(
                         sortDirection = sortDirection,
                     )
                 }
+                item {
+                    KripTakText(
+                        text = stringResource(id = R.string.allCrypto),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
                 if (isRefreshing) {
-                    // Pull-to-refresh clears the list before re-fetching page 1 - show a
-                    // shimmer instead of leaving the screen blank while that's in flight.
-                    item {
-                        TrendingCoinsShimmerEffect(coinsCount = 6)
+                    items(6) {
+                        CryptoListItemShimmer()
+                        Spacer(modifier = Modifier.height(6.dp))
                     }
                 } else {
-                    itemsIndexed(coins.filter {
-                        it?.name?.contains(
-                            query,
-                            ignoreCase = true
-                        ) == true
-                    }) { index, coin ->
-                        val boxShape = when (index) {
-                            0 -> BoxShape.TOP
-                            coins.size - 1 -> BoxShape.BOTTOM
-                            else -> BoxShape.MIDDLE
-                        }
+                    val filteredCoins = coins.filter {
+                        it?.name?.contains(query, ignoreCase = true) == true
+                    }
+                    itemsIndexed(filteredCoins) { index, coin ->
                         if (coin != null) {
-                            TrendingCoinsItem(
-                                navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) },
+                            CryptoListItem(
                                 trendCoin = coin,
-                                boxShape = boxShape
+                                navigateToCryptoDetails = { navigateToCryptoDetails.invoke(it) }
                             )
                         }
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(6.dp))
 
-                        if (index == coins.size - 1 && !isLoading) {
+                        if (index == filteredCoins.size - 1 && !isLoading) {
                             onLoadMore()
                             KripTakCircularProgressIndicator()
                         }
                     }
-                    item {
-                        if (isLoading) {
-                            TrendingCoinsShimmerEffect()
+                    if (isLoading) {
+                        item {
+                            CryptoListItemShimmer()
                         }
                     }
                 }

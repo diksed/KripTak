@@ -16,7 +16,7 @@ import com.diksed.kriptak.utils.vibrate
 
 /**
  * A row of compact filter chips, each sized to its own label - not an attempt
- * to line up under TrendingCoinsItem's columns (weight-matching two separate
+ * to line up under CryptoListItem's columns (weight-matching two separate
  * composables that way proved fragile: any layout tweak to one silently broke
  * alignment with the other). Reads as its own filter bar instead of a table
  * header.
@@ -44,7 +44,6 @@ fun KripTakSortRow(
             onSortChange = { onSortChangeWithFeedback(SortType.NAME) },
             sortType = SortType.NAME,
             currentSortType = sortType,
-            firstSort = true,
             sortDirection = sortDirection
         )
         SortBox(
@@ -67,7 +66,6 @@ fun KripTakSortRow(
             onSortChange = { onSortChangeWithFeedback(SortType.PERCENTAGE) },
             sortType = SortType.PERCENTAGE,
             currentSortType = sortType,
-            lastSort = true,
             sortDirection = sortDirection,
         )
     }

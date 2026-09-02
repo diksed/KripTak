@@ -2,6 +2,7 @@ package com.diksed.kriptak.data.remote.api
 
 import com.diksed.kriptak.data.model.CoinListResponse
 import com.diksed.kriptak.data.model.CoinResponse
+import com.diksed.kriptak.data.model.GlobalMetricsResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -19,4 +20,9 @@ interface CoinService {
         @Header("X-CMC_PRO_API_KEY") apiKey: String,
         @Query("symbol") symbol: String
     ): CoinListResponse
+
+    @GET("v1/global-metrics/quotes/latest")
+    suspend fun getGlobalMetrics(
+        @Header("X-CMC_PRO_API_KEY") apiKey: String
+    ): GlobalMetricsResponse
 }

@@ -1,12 +1,13 @@
-package com.diksed.kriptak.features.component.shimmer.trending_coins
+package com.diksed.kriptak.features.screen.crypto.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,35 +21,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.ui.theme.boxColor
-import com.diksed.kriptak.utils.components.getCornerRadius
 import com.valentinilk.shimmer.shimmer
 
-/**
- * Mirrors TrendingCoinsItem's layout (same fixed sizes/spacers/weights) so the
- * loading state doesn't visibly reflow once real data comes in.
- */
+/** Mirrors CryptoListItem's layout so the loading state doesn't reflow. */
 @Composable
-fun TrendingCoinsShimmerItem(boxShape: BoxShape) {
-    val cornerRadius = getCornerRadius(boxShape)
-
-    Box(
+fun CryptoListItemShimmer() {
+    Row(
         modifier = Modifier
-            .background(boxColor, shape = cornerRadius)
-            .padding(horizontal = 4.dp, vertical = 8.dp)
             .fillMaxWidth()
-            .height(65.dp)
+            .height(IntrinsicSize.Min)
+            .clip(RoundedCornerShape(12.dp))
+            .background(boxColor)
     ) {
-        Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .width(4.dp)
+                .fillMaxHeight()
+                .background(Color.Gray)
+                .shimmer()
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Box(
                 modifier = Modifier
-                    .size(65.dp)
+                    .size(55.dp)
                     .clip(CircleShape)
-                    .background(Color.Gray, shape = CircleShape)
+                    .background(Color.Gray)
                     .shimmer()
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.weight(1f)
@@ -69,18 +75,18 @@ fun TrendingCoinsShimmerItem(boxShape: BoxShape) {
                         .shimmer()
                 )
             }
-            Spacer(modifier = Modifier.width(5.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Box(
                 modifier = Modifier
                     .weight(0.9f)
-                    .height(30.dp)
+                    .height(28.dp)
                     .background(Color.Gray, shape = RoundedCornerShape(4.dp))
                     .shimmer()
             )
-            Spacer(modifier = Modifier.width(2.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Column(
                 horizontalAlignment = Alignment.End,
-                modifier = Modifier.weight(2f)
+                modifier = Modifier.weight(1.3f)
             ) {
                 Box(
                     modifier = Modifier
@@ -93,8 +99,8 @@ fun TrendingCoinsShimmerItem(boxShape: BoxShape) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
-                        .height(13.dp)
-                        .background(Color.Gray, shape = RoundedCornerShape(4.dp))
+                        .height(16.dp)
+                        .background(Color.Gray, shape = RoundedCornerShape(6.dp))
                         .shimmer()
                 )
             }

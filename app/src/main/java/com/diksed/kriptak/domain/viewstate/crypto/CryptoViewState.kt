@@ -10,5 +10,7 @@ data class CryptoViewState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val coins: List<Coin> = emptyList(),
+    val totalMarketCap: Double? = null,
+    val activeCryptocurrencies: Int? = null,
     val isError: Boolean = false
 ) : IViewState

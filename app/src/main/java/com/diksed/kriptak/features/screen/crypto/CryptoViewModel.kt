@@ -5,6 +5,7 @@ import com.diksed.kriptak.KripTakApp
 import com.diksed.kriptak.data.model.Coin
 import com.diksed.kriptak.domain.repository.FirestoreRepository
 import com.diksed.kriptak.domain.usecase.coin.CoinUseCase
+import com.diksed.kriptak.domain.usecase.coin.GetGlobalMetricsUseCase
 import com.diksed.kriptak.domain.viewstate.IViewEvent
 import com.diksed.kriptak.domain.viewstate.crypto.CryptoViewState
 import com.diksed.kriptak.features.base.BaseViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CryptoViewModel @Inject constructor(
     private val getCoinsUseCase: CoinUseCase,
+    private val getGlobalMetricsUseCase: GetGlobalMetricsUseCase,
     private val firestoreRepository: FirestoreRepository,
     private val application: KripTakApp
 ) : BaseViewModel<CryptoViewState, CryptoViewEvent>() {
@@ -46,9 +48,26 @@ class CryptoViewModel @Inject constructor(
                 setState { currentState.copy(isLoading = true) }
                 val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
                 loadMoreCoins(apiKey)
+                fetchGlobalMetrics(apiKey)
             } catch (e: Exception) {
                 setState { currentState.copy(isLoading = false, isError = true) }
             }
+        }
+    }
+
+    // Non-fatal on failure - the coin list is the important part of this screen,
+    // the overview card just stays hidden if this fails.
+    private suspend fun fetchGlobalMetrics(apiKey: String) {
+        try {
+            val response = getGlobalMetricsUseCase(apiKey)
+            setState {
+                currentState.copy(
+                    totalMarketCap = response.data.quote["USD"]?.totalMarketCap,
+                    activeCryptocurrencies = response.data.activeCryptocurrencies
+                )
+            }
+        } catch (e: Exception) {
+            // ignore - overview card just won't show
         }
     }
 
@@ -86,6 +105,7 @@ class CryptoViewModel @Inject constructor(
                 setState { currentState.copy(coins = emptyList()) }
                 val apiKey = firestoreRepository.getCoinMarketApiKey().coinMarketCapKey
                 loadMoreCoins(apiKey)
+                fetchGlobalMetrics(apiKey)
             } catch (e: Exception) {
                 setState { currentState.copy(isError = true) }
             } finally {

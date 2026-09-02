@@ -2,12 +2,14 @@ package com.diksed.kriptak.domain.repository
 
 import com.diksed.kriptak.data.model.CoinListResponse
 import com.diksed.kriptak.data.model.CoinResponse
+import com.diksed.kriptak.data.model.GlobalMetricsResponse
 import com.diksed.kriptak.data.remote.api.CoinService
 import javax.inject.Inject
 
 interface CoinRepository {
     suspend fun getCoins(apiKey: String, start: Int, limit: Int): CoinResponse
     suspend fun getCoinWithSymbol(apiKey: String, symbol: String): CoinListResponse
+    suspend fun getGlobalMetrics(apiKey: String): GlobalMetricsResponse
 }
 
 class CoinRepositoryImpl @Inject constructor(
@@ -21,5 +23,8 @@ class CoinRepositoryImpl @Inject constructor(
             apiKey = apiKey,
             symbol = symbol
         )
+    }
+    override suspend fun getGlobalMetrics(apiKey: String): GlobalMetricsResponse {
+        return apiService.getGlobalMetrics(apiKey = apiKey)
     }
 }

@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.palette.ktx)
     implementation(libs.shimmer.compose)
     implementation(libs.lottie.animation)
 

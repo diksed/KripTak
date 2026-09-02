@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
-import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
+import com.diksed.kriptak.features.screen.crypto.components.CryptoListItemShimmer
 import com.valentinilk.shimmer.shimmer
 
 @Composable
@@ -27,13 +27,8 @@ fun TrendingCoinsShimmerEffect(
                 modifier = Modifier.shimmer()
             )
         }
-        repeat(coinsCount) { index ->
-            val boxShape = when (index) {
-                0 -> BoxShape.TOP
-                coinsCount - 1 -> BoxShape.BOTTOM
-                else -> BoxShape.MIDDLE
-            }
-            TrendingCoinsShimmerItem(boxShape = boxShape)
+        repeat(coinsCount) {
+            CryptoListItemShimmer()
             Spacer(modifier = Modifier.height(5.dp))
         }
         if (isDailyCoins && titleId == R.string.trendsOfDay) {

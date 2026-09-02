@@ -10,9 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.diksed.kriptak.R
 import com.diksed.kriptak.data.model.Coin
-import com.diksed.kriptak.features.component.BoxShape
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTextButton
 import com.diksed.kriptak.features.component.KripTakCurrentBoxTitle
+import com.diksed.kriptak.features.screen.crypto.components.CryptoListItem
 
 @Composable
 fun <T> TrendingCoinsBox(
@@ -24,16 +24,10 @@ fun <T> TrendingCoinsBox(
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         if (isDailyCoins) KripTakCurrentBoxTitle(title = stringResource(id = titleId))
-        trendingCoins.forEachIndexed { index, coin ->
-            val boxShape = when (index) {
-                0 -> BoxShape.TOP
-                trendingCoins.size - 1 -> BoxShape.BOTTOM
-                else -> BoxShape.MIDDLE
-            }
+        trendingCoins.forEach { coin ->
             if (coin != null) {
-                TrendingCoinsItem(
+                CryptoListItem(
                     trendCoin = coin,
-                    boxShape = boxShape,
                     navigateToCryptoDetails = navigateToCryptoDetails
                 )
             }
