@@ -57,6 +57,18 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/white" />
 
+        <!-- KripTakApp supplies its own WorkManager Configuration (Hilt worker factory),
+             so the default on-demand initializer must be removed. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
     </application>
 
 </manifest>
